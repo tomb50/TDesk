@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="tomb.supportsim.models.SupportTicket" table="TICKET">
+    <id name="id" column="ID" type="integer">
+      <generator class="increment"></generator>
+    </id>
+    <property name="type" column="TYPE" not-null="true">
+      <type name="org.hibernate.type.EnumType">
+         <param name="enumClass">tomb.supportsim.models.enums.TicketTypeEnum</param>
+         <param name="type">12</param>
+      </type>
+    </property>
+    <property name="description" column="DESCRIPTION" type="string"></property>
+      <property name="state" column="STATE" not-null="true">
+      <type name="org.hibernate.type.EnumType">
+         <param name="enumClass">tomb.supportsim.models.enums.TicketStateEnum</param>
+         <param name="type">12</param>
+      </type>
+    </property>
+    <property name="assigneeId" column="ASSIGNEEID" type="int"></property>
+    <property name="estimatedCompletionTime" column="ESTCOMPTIME" type="big_decimal"></property>
+    <property name="customerId" column="CUSTOMERID" type="int"></property>
+    <property name="timeAssigned" column="TIMEASSIGNED" type="timestamp"></property>
+  </class>
+</hibernate-mapping>

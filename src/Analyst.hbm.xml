@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="tomb.supportsim.models.Analyst" table="ANALYST">
+    <id name="id" column="ID" type="integer">
+      <generator class="increment"></generator>
+    </id>
+    <property name="name" column="NAME" type="string"></property>
+    <property name="role" column="ROLE" not-null="true">
+      <type name="org.hibernate.type.EnumType">
+         <param name="enumClass">tomb.supportsim.models.enums.RoleEnum</param>
+         <param name="type">12</param>
+      </type>
+    </property>
+    <property name="state" column="STATE" not-null="true">
+      <type name="org.hibernate.type.EnumType">
+         <param name="enumClass">tomb.supportsim.models.enums.WorkingStateEnum</param>
+         <param name="type">12</param>
+      </type>
+    </property>
+  </class>
+</hibernate-mapping>
