@@ -1,14 +1,14 @@
 package tomb.supportsim.controllers;
 
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import tomb.supportsim.connection.HibernateUtil;
 import tomb.supportsim.models.DescriptionTemplate;
 import tomb.supportsim.models.DescriptionTemplatePK;
 import tomb.supportsim.models.enums.TicketTypeEnum;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -20,87 +20,57 @@ public class DescriptionManager
 
   public int getNextSequence( final TicketTypeEnum ticketTypeEnum )
   {
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    session.beginTransaction();
-    Criteria criteria = session.createCriteria( DescriptionTemplate.class );
-    criteria.add( Restrictions.eq( "id.type", ticketTypeEnum ) );
-    Number max = (Number) criteria.setProjection( Projections.max( "id.id" ) ).uniqueResult();
-    session.getTransaction().commit();
-    session.close();
-    return max != null ? max.intValue() + 1 : 1;
+    final List<Criterion> restrictions = new ArrayList<Criterion>();
+    restrictions.add( Restrictions.eq( "id.type", ticketTypeEnum ) );
+    final Integer max = HibernateUtil.getEntityMax( DescriptionTemplate.class, "id.id", restrictions );
+    return max != null ? max + 1 : 1;
   }
 
-  public void addDescription( final DescriptionTemplatePK pk, final String text1, final String text2,
-                              final String text3 )
+  public void addNewDescription( final TicketTypeEnum ticketTypeEnum, final String text1, final String text2,
+                                 final String text3 )
   {
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    session.beginTransaction();
-    DescriptionTemplate descriptionTemplate = new DescriptionTemplate();
+    final DescriptionTemplatePK pk = new DescriptionTemplatePK( ticketTypeEnum, getNextSequence( ticketTypeEnum ) );
+    final DescriptionTemplate descriptionTemplate = new DescriptionTemplate();
     descriptionTemplate.setId( pk );
     descriptionTemplate.setText1( text1 );
     descriptionTemplate.setText2( text2 );
     descriptionTemplate.setText3( text3 );
-    session.save( descriptionTemplate );
-    session.getTransaction().commit();
-    session.close();
+    HibernateUtil.insertEntity( descriptionTemplate );
   }
 
-  public void addDescription( final TicketTypeEnum ticketTypeEnum, final String text1, final String text2,
-                              final String text3 )
-  {
-    DescriptionTemplatePK pk = new DescriptionTemplatePK( ticketTypeEnum, getNextSequence( ticketTypeEnum ) );
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    session.beginTransaction();
-    DescriptionTemplate descriptionTemplate = new DescriptionTemplate();
-    descriptionTemplate.setId( pk );
-    descriptionTemplate.setText1( text1 );
-    descriptionTemplate.setText2( text2 );
-    descriptionTemplate.setText3( text3 );
-    session.save( descriptionTemplate );
-    session.getTransaction().commit();
-    session.close();
-  }
-
-  public String getRandomDescriptionElement1( TicketTypeEnum ticketTypeEnum )
+  public String getRandomDescriptionElement1( final TicketTypeEnum ticketTypeEnum )
   {
     int i = getByTypeCount( ticketTypeEnum );
     return getText1( new DescriptionTemplatePK( ticketTypeEnum, randomGenerater.nextInt( i ) + 1 ) );
   }
 
-  public String getRandomDescriptionElement2( TicketTypeEnum ticketTypeEnum )
+  public String getRandomDescriptionElement2( final TicketTypeEnum ticketTypeEnum )
   {
     int i = getByTypeCount( ticketTypeEnum );
     return getText2( new DescriptionTemplatePK( ticketTypeEnum, randomGenerater.nextInt( i ) + 1 ) );
   }
 
+
   private int getByTypeCount( final TicketTypeEnum ticketTypeEnum )
   {
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    session.beginTransaction();
-    Criteria criteria = session.createCriteria( DescriptionTemplate.class );
-    criteria.add( Restrictions.eq( "id.type", ticketTypeEnum ) );
-    Number count = (Number) criteria.setProjection( Projections.count( "id.id" ) ).uniqueResult();
-    session.getTransaction().commit();
-    session.close();
+    final List<Criterion> restrictions = new ArrayList<Criterion>();
+    restrictions.add( Restrictions.eq( "id.type", ticketTypeEnum ) );
+    Integer count = HibernateUtil.getEntityCount( DescriptionTemplate.class, restrictions );
     return count != null ? count.intValue() + 1 : 0;
   }
 
 
   public String getText1( final DescriptionTemplatePK pk )
   {
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    session.beginTransaction();
-    DescriptionTemplate descriptionTemplate = (DescriptionTemplate) session.get( DescriptionTemplate.class, pk );
-    session.getTransaction().commit();
+    final DescriptionTemplate descriptionTemplate =
+      DescriptionTemplate.class.cast( HibernateUtil.getEntity( DescriptionTemplate.class, pk ) );
     return descriptionTemplate != null ? descriptionTemplate.getText1() : "";
   }
 
   public String getText2( final DescriptionTemplatePK pk )
   {
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    session.beginTransaction();
-    DescriptionTemplate descriptionTemplate = (DescriptionTemplate) session.get( DescriptionTemplate.class, pk );
-    session.getTransaction().commit();
+    final DescriptionTemplate descriptionTemplate =
+      DescriptionTemplate.class.cast( HibernateUtil.getEntity( DescriptionTemplate.class, pk ) );
     return descriptionTemplate != null ? descriptionTemplate.getText2() : "";
   }
 }

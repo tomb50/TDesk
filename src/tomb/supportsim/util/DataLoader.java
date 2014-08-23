@@ -1,13 +1,5 @@
 package tomb.supportsim.util;
 
-import tomb.supportsim.controllers.AnalystManager;
-import tomb.supportsim.controllers.CustomerManager;
-import tomb.supportsim.controllers.DescriptionManager;
-import tomb.supportsim.models.enums.RoleEnum;
-import tomb.supportsim.models.enums.TicketTypeEnum;
-import tomb.supportsim.models.enums.TimeZoneEnum;
-import tomb.supportsim.models.enums.WorkingStateEnum;
-
 /**
  * Created with IntelliJ IDEA. User: tombeadman Date: 20/08/2014 Time: 12:30 This is used to for initial data migration
  */
@@ -32,8 +24,8 @@ public class DataLoader
   private void loadDescriptions()
   {
     //DescriptionManager descriptionManager = new DescriptionManager();
-    //descriptionManager.addDescription( TicketTypeEnum.LOCKEDDOCUMENT, "Contract is Locked", "Please Unlock", "" );
-    //descriptionManager.addDescription( TicketTypeEnum.DBA, "Live to dev data migration request", "low priority", "" );
+    //descriptionManager.addNewDescription( TicketTypeEnum.LOCKEDDOCUMENT, "Contract is Locked", "Please Unlock", "" );
+    //descriptionManager.addNewDescription( TicketTypeEnum.DBA, "Live to dev data migration request", "low priority", "" );
 
   }
 

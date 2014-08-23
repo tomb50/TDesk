@@ -107,4 +107,19 @@ public class SupportTicket implements Serializable
   {
     this.timeAssigned = timeAssigned;
   }
+
+  @Override
+  public String toString()
+  {
+    return "SupportTicket{" +
+      "id=" + id +
+      ", type=" + type +
+      ", description='" + description + '\'' +
+      ", state=" + state +
+      ", assigneeId=" + assigneeId +
+      ", estimatedCompletionTime=" + estimatedCompletionTime +
+      ", customerId=" + customerId +
+      ", timeAssigned=" + timeAssigned +
+      '}';
+  }
 }

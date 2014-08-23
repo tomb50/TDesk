@@ -26,10 +26,10 @@ public class AssignmentController
   public Analyst getAnalyst( final TicketTypeEnum type )
   {
 
-    RoleEnum role = getRoleFromTicketType( type );
+    final RoleEnum role = getRoleFromTicketType( type );
     Analyst analyst = null;
-    AnalystReporter analystReporter = new AnalystReporter();
-    List<Analyst> suitableAnalysts = analystReporter.getSuitableFreeAnalysts( role );
+    final AnalystReporter analystReporter = new AnalystReporter();
+    final List<Analyst> suitableAnalysts = analystReporter.getSuitableFreeAnalysts( role );
     switch ( this.assignmentMethodEnum )
     {
       case REALWORLD:
@@ -40,8 +40,8 @@ public class AssignmentController
         analyst = getAnyAnalyst( suitableAnalysts );
         break;
       case RANDOM:
-        TicketReporter ticketReporter = new TicketReporter();
-        List<Analyst> suitableFreeAnalysts = new ArrayList<Analyst>();
+        final TicketReporter ticketReporter = new TicketReporter();
+        final List<Analyst> suitableFreeAnalysts = new ArrayList<Analyst>();
         for ( Analyst analyst1 : suitableAnalysts )
         {
           if ( ticketReporter.getOpenTicketCount( analyst1.getId() ) == 0 )
@@ -89,7 +89,7 @@ public class AssignmentController
 
   public void assignTicket( final SupportTicket ticket, final Analyst analyst )
   {
-    TicketManager ticketManager = new TicketManager();
+    final TicketManager ticketManager = new TicketManager();
     ticketManager.assignTicket( ticket.getId(), analyst.getId() );
   }
 }

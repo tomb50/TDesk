@@ -12,12 +12,12 @@ public class UpdateController
 {
   public void closeTickets( final List<SupportTicket> wipTickets )
   {
-    TicketManager ticketManager = new TicketManager();
+    final TicketManager ticketManager = new TicketManager();
     for ( SupportTicket ticket : wipTickets )
     {
-      Long timeAssigned = ticket.getTimeAssigned().getTime();
-      Long estimatedCompTime = ticket.getEstimatedCompletionTime().longValue() * 60 * 60 * 1000;
-      Long now = TimeModel.getTime();
+      final Long timeAssigned = ticket.getTimeAssigned().getTime();
+      final Long estimatedCompTime = ticket.getEstimatedCompletionTime().longValue() * 60 * 60 * 1000;
+      final Long now = TimeModel.getTime();
       if ( ( timeAssigned + estimatedCompTime < now ) ) //todo time interface
       {
         ticketManager.closeTicket( ticket.getId() );

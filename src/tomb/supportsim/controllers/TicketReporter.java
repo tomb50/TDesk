@@ -1,13 +1,12 @@
 package tomb.supportsim.controllers;
 
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import tomb.supportsim.connection.HibernateUtil;
 import tomb.supportsim.models.SupportTicket;
 import tomb.supportsim.models.enums.TicketStateEnum;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,43 +14,27 @@ import java.util.List;
  */
 public class TicketReporter
 {
-  public static int UNASSIGNED = 0;
+  public static final int UNASSIGNED = 0;
 
   public List<SupportTicket> getAllUnassignedTickets()
   {
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    session.beginTransaction();
-    Criteria criteria = session.createCriteria( SupportTicket.class );
-    criteria.add( Restrictions.eq( "assigneeId", UNASSIGNED ) );
-    List<SupportTicket> tickets = criteria.list();
-    session.getTransaction().commit();
-    session.close();
-
-    return tickets;
+    final List<Criterion> restrictions = new ArrayList<Criterion>();
+    restrictions.add( Restrictions.eq( "assigneeId", UNASSIGNED ) );
+    return (List<SupportTicket>) HibernateUtil.getEntityList( SupportTicket.class, restrictions );
   }
 
   public Integer getOpenTicketCount( final int id )
   {
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    session.beginTransaction();
-    Criteria criteria = session.createCriteria( SupportTicket.class );
-    criteria.add(
+    final List<Criterion> restrictions = new ArrayList<Criterion>();
+    restrictions.add(
       Restrictions.and( Restrictions.eq( "assigneeId", id ), Restrictions.ne( "state", TicketStateEnum.CLOSED ) ) );
-    Number count = (Number) criteria.setProjection( Projections.rowCount() ).uniqueResult();
-    session.getTransaction().commit();
-    session.close();
-    return new Integer( count.intValue() );
+    return HibernateUtil.getEntityCount( SupportTicket.class, restrictions );
   }
 
-  public List<SupportTicket> getTickets( final TicketStateEnum wip )
+  public List<SupportTicket> getTicketsByState( final TicketStateEnum ticketStateEnum )
   {
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    session.beginTransaction();
-    Criteria criteria = session.createCriteria( SupportTicket.class );
-    criteria.add( Restrictions.eq( "state", wip ) );
-    List<SupportTicket> tickets = criteria.list();
-    session.getTransaction().commit();
-    session.close();
-    return tickets;
+    final List<Criterion> restrictions = new ArrayList<Criterion>();
+    restrictions.add( Restrictions.eq( "state", ticketStateEnum ) );
+    return HibernateUtil.getEntityList( SupportTicket.class, restrictions );
   }
 }

@@ -12,13 +12,11 @@ public class CustomerManager
 {
   public void addNewCustomer( final String name, final TimeZoneEnum timeZoneEnum )
   {
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    session.beginTransaction();
-    Customer customer = new Customer();
+    final Session session = HibernateUtil.beginTransaction();
+    final Customer customer = new Customer();
     customer.setName( name );
     customer.setTimeZone( timeZoneEnum );
     session.save( customer );
-    session.getTransaction().commit();
-    session.close();
+    HibernateUtil.commitAndClose( session );
   }
 }

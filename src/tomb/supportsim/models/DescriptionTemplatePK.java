@@ -80,4 +80,14 @@ public class DescriptionTemplatePK implements Serializable, Comparable
     }
     return compare;
   }
+
+  @Override
+  public String toString()
+  {
+    return "DescriptionTemplatePK{" +
+      "type=" + type +
+      ", id=" + id +
+      ", hCode=" + hCode +
+      '}';
+  }
 }

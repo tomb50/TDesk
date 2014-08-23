@@ -60,4 +60,15 @@ public class Analyst implements Serializable
   {
     this.state = state;
   }
+
+  @Override
+  public String toString()
+  {
+    return "Analyst{" +
+      "id=" + id +
+      ", name='" + name + '\'' +
+      ", role=" + role +
+      ", state=" + state +
+      '}';
+  }
 }

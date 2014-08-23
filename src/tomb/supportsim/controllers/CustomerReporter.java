@@ -1,7 +1,5 @@
 package tomb.supportsim.controllers;
 
-import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
 import tomb.supportsim.connection.HibernateUtil;
 import tomb.supportsim.models.Customer;
 
@@ -12,22 +10,12 @@ public class CustomerReporter
 {
   public String getCustomerName( final int i )
   {
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    session.getTransaction().begin();
-    Customer customer = (Customer) session.get( Customer.class, i );
-    session.getTransaction().commit();
-    session.close();
-    return customer.getName();
+    final Customer customer = (Customer) HibernateUtil.getEntity( Customer.class, i );
+    return customer != null ? customer.getName() : "";
   }
 
   public int getNumberOfCustomers()
   {
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    session.beginTransaction();
-    Number count =
-      (Number) session.createCriteria( Customer.class ).setProjection( Projections.rowCount() ).uniqueResult();
-    session.getTransaction().commit();
-    session.close();
-    return count.intValue();
+    return HibernateUtil.getEntityCount( Customer.class );
   }
 }

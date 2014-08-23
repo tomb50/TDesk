@@ -14,8 +14,8 @@ import java.util.Random;
  */
 public abstract class DetailsGenerator
 {
-  String delimiter = " - ";
   protected Random randomGenerator;
+  final String delimiter = " - ";
 
   public DetailsGenerator()
   {
@@ -35,7 +35,7 @@ public abstract class DetailsGenerator
   {
     CustomerReporter customerReporter = new CustomerReporter();
     int noCustomers = customerReporter.getNumberOfCustomers();
-    return randomGenerator.nextInt( noCustomers );
+    return randomGenerator.nextInt( noCustomers ) + 1;
   }
 
   protected abstract TicketTypeEnum getType();

@@ -36,37 +36,28 @@ public class TicketManager
 
   private void createNewTicket()
   {
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    session.beginTransaction();
-    SupportTicket newTicket = new SupportTicket();
-    DetailsManager detailsManager = new DetailsManager();
+    final Session session = HibernateUtil.beginTransaction();
+    final SupportTicket newTicket = new SupportTicket();
+    final DetailsManager detailsManager = new DetailsManager();
     detailsManager.createDetailsForNewTicket( newTicket );
     session.save( newTicket );
-    session.getTransaction().commit();
-    session.close();
+    HibernateUtil.commitAndClose( session );
   }
 
   public SupportTicket getTicket( int id )
   {
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    session.beginTransaction();
-    SupportTicket ticket = (SupportTicket) session.get( SupportTicket.class, id );
-    session.getTransaction().commit();
-    session.close();
-    return ticket;
+    return SupportTicket.class.cast( HibernateUtil.getEntity( SupportTicket.class, id ) );
   }
 
   public void closeTicket( int id )
   {
     if ( getTicket( id ) != null )
     {
-      Session session = HibernateUtil.getSessionFactory().openSession();
-      session.beginTransaction();
-      SupportTicket ticket = (SupportTicket) session.get( SupportTicket.class, id );
+      final Session session = HibernateUtil.beginTransaction();
+      final SupportTicket ticket = (SupportTicket) session.get( SupportTicket.class, id );
       ticket.setState( TicketStateEnum.CLOSED );
       session.save( ticket );
-      session.getTransaction().commit();
-      session.close();
+      HibernateUtil.commitAndClose( session );
     }
   }
 
@@ -74,28 +65,22 @@ public class TicketManager
   {
     if ( getTicket( ticketId ) != null && getAnalyst( analystId ) != null )
     {
-
-      Session session = HibernateUtil.getSessionFactory().openSession();
-      session.beginTransaction();
-      SupportTicket ticket = (SupportTicket) session.get( SupportTicket.class, ticketId );
+      final Session session = HibernateUtil.beginTransaction();
+      final SupportTicket ticket = (SupportTicket) session.get( SupportTicket.class, ticketId );
       ticket.setAssigneeId( analystId );
       ticket.setState( TicketStateEnum.WIP );
       ticket.setTimeAssigned( new Timestamp( TimeModel.getTime() ) );
       session.save( ticket );
-      session.getTransaction().commit();
-      session.close();
+      HibernateUtil.commitAndClose( session );
     }
   }
-
 
   //todo refactor this out of Class
   public Analyst getAnalyst( int id )
   {
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    session.beginTransaction();
-    Analyst analyst = (Analyst) session.get( Analyst.class, id );
-    session.getTransaction().commit();
-    session.close();
+    final Session session = HibernateUtil.beginTransaction();
+    final Analyst analyst = (Analyst) session.get( Analyst.class, id );
+    HibernateUtil.commitAndClose( session );
     return analyst;
   }
 }

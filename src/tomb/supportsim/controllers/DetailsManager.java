@@ -20,7 +20,7 @@ public class DetailsManager
 
   public void createDetailsForNewTicket( final SupportTicket ticket )
   {
-    DetailsGenerator detailsGenerator = getDetailsGenerator( randomGenerator.nextInt( 100 ) );
+    final DetailsGenerator detailsGenerator = getDetailsGenerator( randomGenerator.nextInt( 100 ) );
     detailsGenerator.addDetails( ticket );
   }
 

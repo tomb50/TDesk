@@ -12,56 +12,37 @@ import tomb.supportsim.models.enums.WorkingStateEnum;
 public class AnalystManager
 {
 
-  public static void main( String[] args )
-  {
-    AnalystManager analystManager = new AnalystManager();
-    Analyst robb = analystManager.getAnalyst( 1 );
-
-    boolean caught = true;
-
-    Analyst none = analystManager.getAnalyst( 2 );
-
-    boolean caught2 = true;
-
-    analystManager.deleteAnalyst( 2 );
-  }
-
   public void recruitAnalyst( final String name, final RoleEnum role, final WorkingStateEnum workingState )
   {
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    session.beginTransaction();
+    final Session session = HibernateUtil.beginTransaction();
     Analyst newAnalyst = new Analyst();
     newAnalyst.setName( name );
     newAnalyst.setRole( role );
     newAnalyst.setState( workingState );
     session.save( newAnalyst );
-    session.getTransaction().commit();
-    session.close();
+    HibernateUtil.commitAndClose( session );
   }
 
   public void updateAnalyst( final int id, final String name, final RoleEnum role, final WorkingStateEnum workingState )
   {
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    session.beginTransaction();
+    final Session session = HibernateUtil.beginTransaction();
     Analyst analyst = (Analyst) session.get( Analyst.class, id );
     analyst.setName( name );
     analyst.setRole( role );
     analyst.setState( workingState );
     session.save( analyst );
-    session.getTransaction().commit();
-    session.close();
+    HibernateUtil.commitAndClose( session );
   }
 
   public void clockInAnalyst( int id )
   {
     if ( getAnalyst( id ) != null )
     {
-      Session session = HibernateUtil.getSessionFactory().openSession();
-      session.beginTransaction();
+      final Session session = HibernateUtil.beginTransaction();
       Analyst analyst = (Analyst) session.get( Analyst.class, id );
       analyst.setState( WorkingStateEnum.WORKING );
-      session.getTransaction().commit();
-      session.close();
+      session.save( analyst );
+      HibernateUtil.commitAndClose( session );
     }
   }
 
@@ -69,12 +50,11 @@ public class AnalystManager
   {
     if ( getAnalyst( id ) != null )
     {
-      Session session = HibernateUtil.getSessionFactory().openSession();
-      session.beginTransaction();
+      final Session session = HibernateUtil.beginTransaction();
       Analyst analyst = (Analyst) session.get( Analyst.class, id );
       analyst.setState( WorkingStateEnum.NOTWORKING );
-      session.getTransaction().commit();
-      session.close();
+      session.save( analyst );
+      HibernateUtil.commitAndClose( session );
     }
   }
 
@@ -82,21 +62,12 @@ public class AnalystManager
   {
     if ( getAnalyst( id ) != null )
     {
-      Session session = HibernateUtil.getSessionFactory().openSession();
-      session.beginTransaction();
-      session.delete( session.get( Analyst.class, id ) );
-      session.getTransaction().commit();
-      session.close();
+      HibernateUtil.deleteEntity( Analyst.class, id );
     }
   }
 
   public Analyst getAnalyst( int id )
   {
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    session.beginTransaction();
-    Analyst analyst = (Analyst) session.get( Analyst.class, id );
-    session.getTransaction().commit();
-    session.close();
-    return analyst;
+    return Analyst.class.cast( HibernateUtil.getEntity( Analyst.class, id ) );
   }
 }

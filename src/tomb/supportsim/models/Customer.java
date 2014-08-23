@@ -47,4 +47,14 @@ public class Customer implements Serializable
   {
     this.timeZone = timeZone;
   }
+
+  @Override
+  public String toString()
+  {
+    return "Customer{" +
+      "id=" + id +
+      ", name='" + name + '\'' +
+      ", timeZone=" + timeZone +
+      '}';
+  }
 }
