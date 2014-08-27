@@ -1,4 +1,3 @@
-<%@ page import="tomb.supportsim.models.Analyst" %>
 <%@ page import="tomb.supportsim.view.ViewHelper" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.lang.reflect.Field" %>
@@ -7,16 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        table, th, td {
-            border: 1px solid black;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 5px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 

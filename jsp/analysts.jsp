@@ -1,22 +1,12 @@
-<%@ page import="tomb.supportsim.controllers.AnalystReporter" %>
+<%@ page import="org.apache.commons.lang3.StringUtils" %>
 <%@ page import="tomb.supportsim.models.Analyst" %>
 <%@ page import="tomb.supportsim.view.ViewHelper" %>
-<%@ page import="java.util.List" %>
 <%@ page import="java.lang.reflect.Field" %>
-<%@ page import="org.apache.commons.lang3.StringUtils" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        table, th, td {
-            border: 1px solid black;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 5px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 
