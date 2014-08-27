@@ -24,6 +24,10 @@ public class DescriptionTemplatePK implements Serializable, Comparable
     hCode = hCodeSB.toString().hashCode();
   }
 
+  public DescriptionTemplatePK()
+  {
+  }
+
   public TicketTypeEnum getType()
   {
     return type;
@@ -84,10 +88,8 @@ public class DescriptionTemplatePK implements Serializable, Comparable
   @Override
   public String toString()
   {
-    return "DescriptionTemplatePK{" +
-      "type=" + type +
-      ", id=" + id +
-      ", hCode=" + hCode +
-      '}';
+    return
+      type +
+      ", " + id ;
   }
 }

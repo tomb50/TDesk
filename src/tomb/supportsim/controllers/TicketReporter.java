@@ -37,4 +37,9 @@ public class TicketReporter
     restrictions.add( Restrictions.eq( "state", ticketStateEnum ) );
     return HibernateUtil.getEntityList( SupportTicket.class, restrictions );
   }
+
+  public List<SupportTicket> getAllTickets()
+  {
+    return (List<SupportTicket>) HibernateUtil.getEntityList( SupportTicket.class);
+  }
 }

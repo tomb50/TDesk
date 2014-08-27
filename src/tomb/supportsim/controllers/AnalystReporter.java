@@ -16,7 +16,7 @@ import java.util.List;
 public class AnalystReporter
 {
 
-  private List<Analyst> getAllAnalysts()
+  public List<Analyst> getAllAnalysts()
   {
     return (List<Analyst>) HibernateUtil.getEntityList( Analyst.class );
   }
@@ -41,5 +41,10 @@ public class AnalystReporter
     restrictions.add( Restrictions.eq( "state", WorkingStateEnum.WORKING ) );
     restrictions.add( Restrictions.or( Restrictions.eq( "role", RoleEnum.ALL ), Restrictions.eq( "role", roleEnum ) ) );
     return (List<Analyst>) HibernateUtil.getEntityList( Analyst.class, restrictions );
+  }
+
+  public Integer getTotalNumberOfAnalysts()
+  {
+    return HibernateUtil.getEntityCount( Analyst.class );
   }
 }
