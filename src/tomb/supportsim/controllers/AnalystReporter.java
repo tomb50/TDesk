@@ -16,26 +16,26 @@ import java.util.List;
 public class AnalystReporter
 {
 
-  public List<Analyst> getAllAnalysts()
+  public static List<Analyst> getAllAnalysts()
   {
     return (List<Analyst>) HibernateUtil.getEntityList( Analyst.class );
   }
 
-  private List<Analyst> getWorkingAnalysts()
+  private static List<Analyst> getWorkingAnalysts()
   {
     final List<Criterion> restrictions = new ArrayList<Criterion>();
     restrictions.add( Restrictions.eq( "state", WorkingStateEnum.WORKING ) );
     return (List<Analyst>) HibernateUtil.getEntityList( Analyst.class, restrictions );
   }
 
-  private List<Analyst> getNotWorkingAnalysts()
+  private static List<Analyst> getNotWorkingAnalysts()
   {
     final List<Criterion> restrictions = new ArrayList<Criterion>();
     restrictions.add( Restrictions.eq( "state", WorkingStateEnum.NOTWORKING ) );
     return (List<Analyst>) HibernateUtil.getEntityList( Analyst.class, restrictions );
   }
 
-  public List<Analyst> getSuitableFreeAnalysts( final RoleEnum roleEnum )
+  public static List<Analyst> getSuitableFreeAnalysts( final RoleEnum roleEnum )
   {
     final List<Criterion> restrictions = new ArrayList<Criterion>();
     restrictions.add( Restrictions.eq( "state", WorkingStateEnum.WORKING ) );

@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class DescriptionTemplateReporter
 {
-  public List<DescriptionTemplate> getAllDescriptionTemplates()
+  public static List<DescriptionTemplate> getAllDescriptionTemplates()
   {
     return HibernateUtil.getEntityList( DescriptionTemplate.class );
   }

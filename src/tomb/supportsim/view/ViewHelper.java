@@ -1,13 +1,15 @@
 package tomb.supportsim.view;
 
-import tomb.supportsim.controllers.*;
+import tomb.supportsim.controllers.AnalystReporter;
+import tomb.supportsim.controllers.CustomerReporter;
+import tomb.supportsim.controllers.DescriptionTemplateReporter;
+import tomb.supportsim.controllers.TicketReporter;
 import tomb.supportsim.models.Analyst;
 import tomb.supportsim.models.Customer;
 import tomb.supportsim.models.DescriptionTemplate;
 import tomb.supportsim.models.SupportTicket;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,8 +25,7 @@ public class ViewHelper
 
   public static List<Analyst> getAnalysts()
   {
-    AnalystReporter analystReporter = new AnalystReporter();
-    return analystReporter.getAllAnalysts();
+    return AnalystReporter.getAllAnalysts();
   }
 
   public static int getNoAnalystAtttributes()
@@ -34,8 +35,7 @@ public class ViewHelper
 
   public static List<SupportTicket> getAllTickets()
   {
-    final TicketReporter ticketReporter = new TicketReporter();
-    return ticketReporter.getAllTickets();
+    return TicketReporter.getAllTickets();
   }
 
 
@@ -62,8 +62,7 @@ public class ViewHelper
 
   public static List<DescriptionTemplate> getAllDescriptionTemplates()
   {
-    final DescriptionTemplateReporter descriptionTemplateReporter = new DescriptionTemplateReporter();
-    return descriptionTemplateReporter.getAllDescriptionTemplates();
+    return DescriptionTemplateReporter.getAllDescriptionTemplates();
 
   }
 }

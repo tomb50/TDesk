@@ -31,7 +31,6 @@ public class UpdatePoller
 
   private List<SupportTicket> getWIPTickets()
   {
-    TicketReporter ticketReporter = new TicketReporter();
-    return ticketReporter.getTicketsByState( TicketStateEnum.WIP );
+    return TicketReporter.getTicketsByState( TicketStateEnum.WIP );
   }
 }

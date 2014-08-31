@@ -15,12 +15,6 @@ import java.util.Random;
  */
 public class TicketManager
 {
-  public static void main( String[] args )
-  {
-    TicketManager ticketManager = new TicketManager();
-    ticketManager.createNewTicket();
-  }
-
 
   /*todo remove time coupling between this and poller*/
   public void potentiallyCreateNewTicket()

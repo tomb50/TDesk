@@ -33,8 +33,7 @@ public abstract class DetailsGenerator
 
   private int getCustomerId()
   {
-    CustomerReporter customerReporter = new CustomerReporter();
-    int noCustomers = customerReporter.getNumberOfCustomers();
+    final int noCustomers = CustomerReporter.getNumberOfCustomers();
     return randomGenerator.nextInt( noCustomers ) + 1;
   }
 

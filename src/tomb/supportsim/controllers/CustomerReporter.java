@@ -16,7 +16,7 @@ public class CustomerReporter
     return customer != null ? customer.getName() : "";
   }
 
-  public int getNumberOfCustomers()
+  public static int getNumberOfCustomers()
   {
     return HibernateUtil.getEntityCount( Customer.class );
   }

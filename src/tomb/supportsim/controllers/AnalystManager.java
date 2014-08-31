@@ -12,7 +12,7 @@ import tomb.supportsim.models.enums.WorkingStateEnum;
 public class AnalystManager
 {
 
-  public void recruitAnalyst( final String name, final RoleEnum role, final WorkingStateEnum workingState )
+  public static void recruitAnalyst( final String name, final RoleEnum role, final WorkingStateEnum workingState )
   {
     final Session session = HibernateUtil.beginTransaction();
     Analyst newAnalyst = new Analyst();
@@ -23,7 +23,7 @@ public class AnalystManager
     HibernateUtil.commitAndClose( session );
   }
 
-  public void updateAnalyst( final int id, final String name, final RoleEnum role, final WorkingStateEnum workingState )
+  public static void updateAnalyst( final int id, final String name, final RoleEnum role, final WorkingStateEnum workingState )
   {
     final Session session = HibernateUtil.beginTransaction();
     Analyst analyst = (Analyst) session.get( Analyst.class, id );
@@ -34,7 +34,7 @@ public class AnalystManager
     HibernateUtil.commitAndClose( session );
   }
 
-  public void clockInAnalyst( int id )
+  public static void clockInAnalyst( int id )
   {
     if ( getAnalyst( id ) != null )
     {
@@ -46,7 +46,7 @@ public class AnalystManager
     }
   }
 
-  public void clockOutAnalyst( int id )
+  public static void clockOutAnalyst( int id )
   {
     if ( getAnalyst( id ) != null )
     {
@@ -58,7 +58,7 @@ public class AnalystManager
     }
   }
 
-  public void deleteAnalyst( final int id )
+  public static void deleteAnalyst( final int id )
   {
     if ( getAnalyst( id ) != null )
     {
@@ -66,7 +66,7 @@ public class AnalystManager
     }
   }
 
-  public Analyst getAnalyst( int id )
+  public static Analyst getAnalyst( int id )
   {
     return Analyst.class.cast( HibernateUtil.getEntity( Analyst.class, id ) );
   }

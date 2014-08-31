@@ -16,14 +16,14 @@ public class TicketReporter
 {
   public static final int UNASSIGNED = 0;
 
-  public List<SupportTicket> getAllUnassignedTickets()
+  public static List<SupportTicket> getAllUnassignedTickets()
   {
     final List<Criterion> restrictions = new ArrayList<Criterion>();
     restrictions.add( Restrictions.eq( "assigneeId", UNASSIGNED ) );
     return (List<SupportTicket>) HibernateUtil.getEntityList( SupportTicket.class, restrictions );
   }
 
-  public Integer getOpenTicketCount( final int id )
+  public static Integer getOpenTicketCount( final int id )
   {
     final List<Criterion> restrictions = new ArrayList<Criterion>();
     restrictions.add(
@@ -31,14 +31,14 @@ public class TicketReporter
     return HibernateUtil.getEntityCount( SupportTicket.class, restrictions );
   }
 
-  public List<SupportTicket> getTicketsByState( final TicketStateEnum ticketStateEnum )
+  public static List<SupportTicket> getTicketsByState( final TicketStateEnum ticketStateEnum )
   {
     final List<Criterion> restrictions = new ArrayList<Criterion>();
     restrictions.add( Restrictions.eq( "state", ticketStateEnum ) );
     return HibernateUtil.getEntityList( SupportTicket.class, restrictions );
   }
 
-  public List<SupportTicket> getAllTickets()
+  public static List<SupportTicket> getAllTickets()
   {
     return (List<SupportTicket>) HibernateUtil.getEntityList( SupportTicket.class);
   }
