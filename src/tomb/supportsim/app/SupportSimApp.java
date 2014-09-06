@@ -17,14 +17,14 @@ public class SupportSimApp
     supportSimApp.start();
   }
 
-  private void start()
+  public void start()
   {
     //Load scheduled tasks
     new ClassPathXmlApplicationContext( "Spring-TaskScheduler.xml" );
   }
 
 
-  private void deleteAllTickets()
+  public void deleteAllTickets()
   {
     Session session = HibernateUtil.getSessionFactory().openSession();
     session.getTransaction().begin();
