@@ -70,8 +70,10 @@ public class AssignmentController
         role = RoleEnum.FIRSTLINE;
         break;
       case DBA:
-        SYSTEMDOWN:
         role = RoleEnum.DBA;
+        break;
+      case SYSTEMDOWN:
+        role = RoleEnum.FIRSTLINE;
         break;
       case JAVA:
         role = RoleEnum.JAVA;
@@ -81,7 +83,6 @@ public class AssignmentController
       default:
         break;
     }
-
     return role;
   }
 
