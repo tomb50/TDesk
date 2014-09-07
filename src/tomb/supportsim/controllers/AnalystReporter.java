@@ -43,6 +43,18 @@ public class AnalystReporter
     return (List<Analyst>) HibernateUtil.getEntityList( Analyst.class, restrictions );
   }
 
+  public static List<List<Analyst>> getActiveLoL()
+  {
+    final List lol = new ArrayList();
+    for ( RoleEnum roleEnum : RoleEnum.values() )
+    {
+      lol.add( getSuitableFreeAnalysts( roleEnum ) );
+    }
+    return lol;
+  }
+
+
+
   public Integer getTotalNumberOfAnalysts()
   {
     return HibernateUtil.getEntityCount( Analyst.class );

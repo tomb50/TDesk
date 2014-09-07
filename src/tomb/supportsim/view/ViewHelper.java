@@ -65,4 +65,9 @@ public class ViewHelper
     return DescriptionTemplateReporter.getAllDescriptionTemplates();
 
   }
+
+  public static List<List<Analyst>> getActiveAnalystLol()
+  {
+    return AnalystReporter.getActiveLoL();
+  }
 }

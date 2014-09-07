@@ -1,4 +1,7 @@
 <%@ page import="tomb.supportsim.app.SupportSimApp" %>
+<%@ page import="tomb.supportsim.models.Analyst" %>
+<%@ page import="tomb.supportsim.view.ViewHelper" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,51 +16,50 @@
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->>
+    <![endif]-->
 </head>
 <body>
 
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="index.html">SupportSim</a>
-        </div>
-        <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav pull-right">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="run.jsp">Run</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">All Tables <span
-                            class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="analysts.jsp">Analysts</a></li>
-                        <li><a href="customers.jsp">Customers</a></li>
-                        <li><a href="description_templates.jsp">Descriptions</a></li>
-                        <li class="divider"></li>
-                        <li class="dropdown-header">Tickets</li>
-                        <li><a href="tickets.jsp">Tickets</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <!--/.nav-collapse -->
-    </div>
-</div>
+
+<%
+    SupportSimApp supportSimApp = SupportSimApp.getInstance();
+    supportSimApp.start(true);
+%>
+
+<div id="navbar"></div>
 <br>
 <br>
 
-<%
-    SupportSimApp supportSimApp = new SupportSimApp();
-    supportSimApp.deleteAllTickets();
-    supportSimApp.start();
+<% List<List<Analyst>> lol = ViewHelper.getActiveAnalystLol();
 %>
+
+<div class="container">
+    <h1>Who is working?</h1>
+
+    <div class="row">
+        <% for ( int i = 0; i < lol.size(); i++ )
+        {
+            List<Analyst> roleList = lol.get( i ); %>
+        <div class="col-md-4">
+            <p>BOX A</p>
+        <%}%>
+        </div>
+
+
+        <!--div class="col-md-4"><p>Box 1</p></div>
+        <div class="col-md-4"><p>Box 2</p></div>
+        <div class="col-md-4"><p>Box 3</p></div>
+        <div class="col-md-4"><p>Box 4</p></div>
+        <div class="col-md-4"><p>Box 5</p></div>
+        <div class="col-md-4"><p>Box 6</p></div>
+        <div class="col-md-4"><p>Box 7</p></div>
+        <div class="col-md-4"><p>Box 8</p></div>
+        <div class="col-md-4"><p>Box 9</p></div>
+        <div class="col-md-4"><p>Box 10</p></div>
+        <div class="col-md-4"><p>Box 11</p></div>
+        <div class="col-md-4"><p>Box 12</p></div-->
+    </div>
+</div>
 
 
 <!-- Bootstrap core JavaScript

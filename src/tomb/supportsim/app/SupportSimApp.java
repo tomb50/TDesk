@@ -10,17 +10,31 @@ import tomb.supportsim.connection.HibernateUtil;
 public class SupportSimApp
 {
 
-  public static void main( String[] args )
+  public static SupportSimApp instance;
+  public static boolean running = false;
+
+  private SupportSimApp()
   {
-    SupportSimApp supportSimApp = new SupportSimApp();
-    supportSimApp.deleteAllTickets();
-    supportSimApp.start();
   }
 
-  public void start()
+  public static SupportSimApp getInstance()
   {
-    //Load scheduled tasks
-    new ClassPathXmlApplicationContext( "Spring-TaskScheduler.xml" );
+    if ( instance == null )
+    {
+      instance = new SupportSimApp();
+    }
+    return instance;
+  }
+
+  public void start( final boolean flushTickets )
+  {
+    if ( !running )
+    {
+      //Load scheduled tasks
+      new ClassPathXmlApplicationContext( "Spring-TaskScheduler.xml" );
+      if ( flushTickets ) deleteAllTickets();
+      running = true;
+    }
   }
 
 

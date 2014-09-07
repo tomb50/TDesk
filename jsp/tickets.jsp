@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta http-equiv="refresh" content="10">
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -29,20 +30,42 @@
 
 <div class="container">
     <h1>Tickets</h1>
-    <table class="table table-striped table-bordered table-condensed">
-        <% for ( int rowNumber = 0; rowNumber < tickets.size(); rowNumber++ )
-        { %>
-        <tr>
-            <% for ( int col = 0; col < ticketFields.size(); col++ )
+
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">All Records</div>
+        <div class="panel-body">
+            <p>The following table contains all Support Ticket Records.</p>
+        </div>
+        <table class="table table-striped table-bordered table-condensed">
+            <thead>
+            <tr>
+                <% for ( int col = 0; col < ticketFields.size(); col++ )
+                { %>
+                <th><%= ticketFields.get( col ).getName() %>
+                </th>
+                <% } %>
+
+
+            </tr>
+            </thead>
+
+            <tbody>
+            <% for ( int rowNumber = 0; rowNumber < tickets.size(); rowNumber++ )
             { %>
-            <td><%= SupportTicket.class.getMethod(
-                    "get".concat( StringUtils.capitalize( ticketFields.get( col ).getName() ) ) ).invoke(
-                    tickets.get( rowNumber ) ) %>
-            </td>
+            <tr>
+                <% for ( int col = 0; col < ticketFields.size(); col++ )
+                { %>
+                <td><%= SupportTicket.class.getMethod(
+                        "get".concat( StringUtils.capitalize( ticketFields.get( col ).getName() ) ) ).invoke(
+                        tickets.get( rowNumber ) ) %>
+                </td>
+                <% } %>
+            </tr>
             <% } %>
-        </tr>
-        <% } %>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </div>
 <!-- Bootstrap core JavaScript
 ================================================== -->
