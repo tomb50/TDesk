@@ -140,7 +140,7 @@ public class HibernateUtil
 
   public static Session beginTransaction()
   {
-    final Session session = HibernateUtil.getSessionFactory().openSession();
+    final Session session = getSessionFactory().openSession();
     session.getTransaction().begin();
     return session;
   }
