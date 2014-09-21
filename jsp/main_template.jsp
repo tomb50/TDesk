@@ -66,7 +66,7 @@
                 </a>
             </li>
             <li>
-                <a href="forms.html">
+                <a href="forms.jsp">
                     <div class="icon">
                         <span class="fs1" aria-hidden="true" data-icon="&#xe0b8;"></span>
                     </div>
@@ -74,11 +74,11 @@
                 </a>
             </li>
             <li>
-                <a href="graphs.html">
+                <a href="statistics.jsp">
                     <div class="icon">
                         <span class="fs1" aria-hidden="true" data-icon="&#xe096;"></span>
                     </div>
-                    Charts
+                    Statistics
                 </a>
             </li>
             <li>
@@ -174,10 +174,10 @@
                                     <a href="index.html">Dashboard</a>
                                 </li>
                                 <li>
-                                    <a href="forms.html">Forms</a>
+                                    <a href="forms.jsp">Forms</a>
                                 </li>
                                 <li>
-                                    <a href="graphs.html">Charts</a>
+                                    <a href="statistics.jsp">Statistics</a>
                                 </li>
                                 <li>
                                     <a href="tickets.jsp">Tickets</a>

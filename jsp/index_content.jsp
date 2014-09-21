@@ -3,7 +3,7 @@
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe074;"></span> Main Page
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe074;"></span> Main Page - TO DO!
                 </div>
             </div>
             <div class="widget-body">
