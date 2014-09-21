@@ -16,7 +16,7 @@
 <head>
     <meta charset="utf-8">
     <title>
-        SupportSim
+        BlackForest
     </title>
     <meta name="author" content="">
     <meta content="width=device-width, initial-scale=1.0, user-scalable=no" name="viewport">
@@ -48,8 +48,8 @@
 <script>$( "#main_template" ).load( "main_template.jsp" );</script>
 
 <!-- Define page specific content and background jsp (if required)-->
-<script>main_content="tickets_content.jsp"</script>
-<script>bg_jsp=null</script>
+<script>main_content="index_content.jsp"</script>
+<script>bg_jsp="index_bg_jsp.jsp"</script>
 
 </body>
 </html>
