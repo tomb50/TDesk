@@ -57,7 +57,7 @@
 <div class="container-fluid">
     <div id="mainnav" class="hidden-phone hidden-tablet">
         <ul style="display: block;">
-            <li class="active">
+            <li class="nav-ele">
                 <a href="index.jsp">
                     <div class="icon">
                         <span class="fs1" aria-hidden="true" data-icon="&#xe0a0;"></span>
@@ -65,7 +65,7 @@
                     Dashboard
                 </a>
             </li>
-            <li>
+            <li class="nav-ele">
                 <a href="forms.jsp">
                     <div class="icon">
                         <span class="fs1" aria-hidden="true" data-icon="&#xe0b8;"></span>
@@ -73,7 +73,7 @@
                     Forms
                 </a>
             </li>
-            <li>
+            <li class="nav-ele">
                 <a href="statistics.jsp">
                     <div class="icon">
                         <span class="fs1" aria-hidden="true" data-icon="&#xe096;"></span>
@@ -81,7 +81,7 @@
                     Statistics
                 </a>
             </li>
-            <li>
+            <li class="nav-ele">
                 <a href="tickets.jsp">
                     <div class="icon">
                         <span class="fs1" aria-hidden="true" data-icon="&#xe14a;"></span>
@@ -89,7 +89,7 @@
                     Tickets
                 </a>
             </li>
-            <li>
+            <li class="nav-ele">
                 <a href="analysts.jsp">
                     <div class="icon">
                         <span class="fs1" aria-hidden="true" data-icon="&#xe14a;"></span>
@@ -97,7 +97,7 @@
                     Analysts
                 </a>
             </li>
-            <li>
+            <li class="nav-ele">
                 <a href="customers.jsp">
                     <div class="icon">
                         <span class="fs1" aria-hidden="true" data-icon="&#xe14a;"></span>
@@ -105,7 +105,7 @@
                     Customers
                 </a>
             </li>
-            <li>
+            <li class="nav-ele">
                 <a href="description_templates.jsp">
                     <div class="icon">
                         <span class="fs1" aria-hidden="true" data-icon="&#xe14a;"></span>
@@ -113,7 +113,7 @@
                     Descriptions
                 </a>
             </li>
-            <li>
+            <li class="nav-ele">
                 <a href="tables.html">
                     <div class="icon">
                         <span class="fs1" aria-hidden="true" data-icon="&#xe14a;"></span>
@@ -243,37 +243,23 @@
 <!-- Load page specific content and background jsp (if required)-->
 <script>$( "#background_jsp").load( bg_jsp);</script>
 <script>$( "#main_content" ).load( main_content );</script>
-
-
-
-<script src="js/wysiwyg/wysihtml5-0.3.0.js">
-</script>
-<!--script src="js/jquery.min.js">
-</script-->
-<script src="js/bootstrap.js">
-</script>
-<script src="js/jquery.scrollUp.js">
+<!-- highlights the selected page on the navbar-->
+<script>var page = window.location.href.substr(window.location.href.lastIndexOf("/")+1);
+    $('li.nav-ele a[href="'+page+'"]' ).parent().addClass("active");
 </script>
 
-<script src="js/wysiwyg/bootstrap-wysihtml5.js">
-</script>
-<script type="text/javascript" src="js/date-picker/date.js">
-</script>
-<script type="text/javascript" src="js/date-picker/daterangepicker.js">
-</script>
-
+<script src="js/wysiwyg/wysihtml5-0.3.0.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery.scrollUp.js"></script>
+<script src="js/wysiwyg/bootstrap-wysihtml5.js"></script>
+<script type="text/javascript" src="js/date-picker/date.js"></script>
+<script type="text/javascript" src="js/date-picker/daterangepicker.js"></script>
 <!-- Google Visualization JS -->
-<script type="text/javascript" src="https://www.google.com/jsapi">
-</script>
-
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <!-- Sparkline JS -->
-<script src="js/jquery.sparkline.js">
-</script>
-
+<script src="js/jquery.sparkline.js"></script>
 <!-- Tiny Scrollbar JS -->
-<script src="js/tiny-scrollbar.js">
-</script>
-
+<script src="js/tiny-scrollbar.js"></script>
 
 <script type="text/javascript">
 //ScrollUp
