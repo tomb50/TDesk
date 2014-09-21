@@ -58,7 +58,7 @@
     <div id="mainnav" class="hidden-phone hidden-tablet">
         <ul style="display: block;">
             <li class="active">
-                <a href="index.html">
+                <a href="index.jsp">
                     <div class="icon">
                         <span class="fs1" aria-hidden="true" data-icon="&#xe0a0;"></span>
                     </div>
