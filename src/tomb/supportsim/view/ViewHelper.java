@@ -89,4 +89,22 @@ public class ViewHelper
   {
     return TicketReporter.getTotalTicketCount();
   }
+
+  public static Integer getTotalClosedTicketCount()
+  {
+    return TicketReporter.getClosedTicketCount();
+  }
+
+  public static Map<Analyst,Integer> getClosedTicketCountByAnalystMap()
+  {
+    Map map = new HashMap<Analyst,Integer>();
+    List<Analyst> analystList = AnalystReporter.getAllAnalysts();
+    for(Analyst analyst : analystList)
+    {
+      List<SupportTicket> ticketList = TicketReporter.getClosedTicketsByAnalyst( analyst );
+      map.put( analyst, ticketList.size());
+    }
+
+    return map;
+  }
 }
