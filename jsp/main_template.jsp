@@ -232,7 +232,7 @@
 </div>
 <footer>
     <p>
-        &copy; BlackForest 2013
+        &copy; Tom Beadman (not really).
     </p>
 </footer>
 

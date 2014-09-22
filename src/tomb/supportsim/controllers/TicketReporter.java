@@ -5,6 +5,7 @@ import org.hibernate.criterion.Restrictions;
 import tomb.supportsim.connection.HibernateUtil;
 import tomb.supportsim.models.SupportTicket;
 import tomb.supportsim.models.enums.TicketStateEnum;
+import tomb.supportsim.models.enums.TicketTypeEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,18 @@ public class TicketReporter
     final List<Criterion> restrictions = new ArrayList<Criterion>();
     restrictions.add( Restrictions.eq( "state", ticketStateEnum ) );
     return HibernateUtil.getEntityList( SupportTicket.class, restrictions );
+  }
+
+  public static Integer getTicketCountByType(final TicketTypeEnum ticketTypeEnum)
+  {
+    final List<Criterion> restrictions = new ArrayList<Criterion>(  );
+    restrictions.add( Restrictions.eq( "type", ticketTypeEnum ));
+    return  HibernateUtil.getEntityCount( SupportTicket.class,restrictions );
+  }
+
+  public static Integer getTotalTicketCount()
+  {
+    return HibernateUtil.getEntityCount( SupportTicket.class );
   }
 
   public static List<SupportTicket> getAllTickets()

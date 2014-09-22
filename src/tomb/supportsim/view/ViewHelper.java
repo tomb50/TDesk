@@ -8,10 +8,13 @@ import tomb.supportsim.models.Analyst;
 import tomb.supportsim.models.Customer;
 import tomb.supportsim.models.DescriptionTemplate;
 import tomb.supportsim.models.SupportTicket;
+import tomb.supportsim.models.enums.TicketTypeEnum;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA. User: tombeadman Date: 25/08/2014 Time: 17:53
@@ -69,5 +72,21 @@ public class ViewHelper
   public static List<List<Analyst>> getActiveAnalystLol()
   {
     return AnalystReporter.getActiveLoL();
+  }
+
+  public static Map getTicketCountByTypeMap()
+  {
+    final Map map = new HashMap(  );
+    for(TicketTypeEnum ticketTypeEnum : TicketTypeEnum.values())
+    {
+      map.put( ticketTypeEnum,TicketReporter.getTicketCountByType( ticketTypeEnum ) );
+
+    }
+    return map;
+  }
+
+  public static Integer getTotalTicketCount()
+  {
+    return TicketReporter.getTotalTicketCount();
   }
 }
