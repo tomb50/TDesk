@@ -35,7 +35,7 @@
                             <% for ( int col = 0; col < ticketFields.size(); col++ )
                             { %>
                             <td>
-                                    <span class="badge badge-success">
+                                    <span>
                                     <%= SupportTicket.class.getMethod(
                                         "get".concat(
                                                 StringUtils.capitalize( ticketFields.get( col ).getName() ) ) ).invoke(

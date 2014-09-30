@@ -66,7 +66,6 @@ public class ViewHelper
   public static List<DescriptionTemplate> getAllDescriptionTemplates()
   {
     return DescriptionTemplateReporter.getAllDescriptionTemplates();
-
   }
 
   public static List<List<Analyst>> getActiveAnalystLol()
@@ -76,14 +75,24 @@ public class ViewHelper
 
   public static Map getTicketCountByTypeMap()
   {
-    final Map map = new HashMap(  );
-    for(TicketTypeEnum ticketTypeEnum : TicketTypeEnum.values())
+    final Map map = new HashMap();
+    for ( TicketTypeEnum ticketTypeEnum : TicketTypeEnum.values() )
     {
-      map.put( ticketTypeEnum,TicketReporter.getTicketCountByType( ticketTypeEnum ) );
-
+      map.put( ticketTypeEnum, TicketReporter.getTicketCountByType( ticketTypeEnum ) );
     }
     return map;
   }
+
+  public static Integer getTicketCountByType( final TicketTypeEnum ticketTypeEnum )
+  {
+    return TicketReporter.getTicketCountByType( ticketTypeEnum );
+  }
+
+  public static List getJoinedDetailsForAllTickets()
+  {
+    return TicketReporter.getJoinedDetailsForAllTickets();
+  }
+
 
   public static Integer getTotalTicketCount()
   {
@@ -95,14 +104,14 @@ public class ViewHelper
     return TicketReporter.getClosedTicketCount();
   }
 
-  public static Map<Analyst,Integer> getClosedTicketCountByAnalystMap()
+  public static Map<Analyst, Integer> getClosedTicketCountByAnalystMap()
   {
-    Map map = new HashMap<Analyst,Integer>();
+    Map map = new HashMap<Analyst, Integer>();
     List<Analyst> analystList = AnalystReporter.getAllAnalysts();
-    for(Analyst analyst : analystList)
+    for ( Analyst analyst : analystList )
     {
       List<SupportTicket> ticketList = TicketReporter.getClosedTicketsByAnalyst( analyst );
-      map.put( analyst, ticketList.size());
+      map.put( analyst, ticketList.size() );
     }
 
     return map;

@@ -24,7 +24,7 @@
                             String analystName = ((Analyst)pairs.getKey()).getName();
                             Integer intCount =  (Integer) pairs.getValue();
                             BigDecimal percent = BigDecimal.valueOf( intCount );
-                            percent = percent.divide( totalClosedCount, 5, BigDecimal.ROUND_CEILING).multiply(
+                            percent = percent.equals( BigDecimal.ZERO )?percent: percent.divide( totalClosedCount, 5, BigDecimal.ROUND_CEILING).multiply(
                                     BigDecimal.valueOf( 100 ) );
 
                     %>
@@ -48,20 +48,22 @@
         <div class="widget no-margin">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe101;"></span> Total tickets
+
+                    <% BigDecimal totalCount = BigDecimal.valueOf( ViewHelper.getTotalTicketCount() ) ;%>
+
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe101;"></span> Total tickets (<%=totalCount%>)
                 </div>
             </div>
             <div class="widget-body">
                 <ul class="progress-statistics">
-                    <% BigDecimal totalCount = BigDecimal.valueOf( ViewHelper.getTotalTicketCount() );
-                        HashMap typeMap = (HashMap) ViewHelper.getTicketCountByTypeMap();
+                    <%    HashMap typeMap = (HashMap) ViewHelper.getTicketCountByTypeMap();
                         for ( final Iterator it = typeMap.entrySet().iterator(); it.hasNext(); )
                         {
                             Map.Entry pairs = (Map.Entry) it.next();
                             String type = pairs.getKey().toString();
                             Integer intVal =  (Integer) pairs.getValue();
                             BigDecimal val = BigDecimal.valueOf( intVal );
-                            val = val.divide( totalCount, 3, BigDecimal.ROUND_CEILING).multiply(
+                            val = totalCount.equals( BigDecimal.ZERO )? val:  val.divide( totalCount, 3, BigDecimal.ROUND_CEILING).multiply(
                                     BigDecimal.valueOf( 100 ) );
                     %>
                     <li>
@@ -76,8 +78,26 @@
                     </li>
                     <%}%>
                  <!--ToDo - apply progress-info, progress-warning  etc stlying-->
+
+
+
                 </ul>
             </div>
         </div>
     </div>
+    <div class="span6">
+        <div class="widget no-margin">
+            <div class="widget-header">
+                <div class="title">
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe101;"></span> Spare
+                </div>
+            </div>
+            <div class="widget-body">
+                <ul>
+
+
+                </ul>
+            </div>
+        </div>
+     </div>
 </div>
