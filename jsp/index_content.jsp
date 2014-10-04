@@ -109,13 +109,87 @@
             </div>
         </div>
     </div>
+</div>
+<div class="row-fluid">
+
+    <div class="span8">
+        <div class="widget">
+            <div class="widget-header">
+                <div class="title">
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe08a;"></span> New Tickets
+                </div>
+            </div>
+            <div class="widget-body">
+                <% List newTickets = ViewHelper.getJoinedDetailsForNewTickets(); %>
+
+                <table class="table table-striped table-bordered table-condensed table-hover no-margin">
+                    <thead>
+                    <tr>
+                        <th>Ticket Number</th>
+                        <th>Description</th>
+                        <th>Customer</th>
+                        <th>Status</th>
+                        <th>Date Assigned</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <% for (int i = 0; i <newTickets.size(); i++)
+                    {
+                        SupportTicket ticket =
+                                (SupportTicket) ((Map)newTickets.get( i )).get( TicketReporter.TICKET_KEY );
+                        Customer customer =
+                                (Customer) ((Map)newTickets.get( i )).get( TicketReporter.CUSTOMER_KEY );
+
+                    %>
+                    <tr>
+                        <td>
+                                     <span>
+                                         <%= ticket.getId() %>
+                                     </span>
+                        </td>
+                        <td>
+                                     <span>
+                                         <%= ticket.getDescription() %>
+                                     </span>
+                        </td>
+                        <td>
+                                     <span>
+                                         <%= customer.getName() %>
+                                     </span>
+                        </td>
+                        <td>
+                                     <span id="state-col" class="badge" >
+                                         <%= ticket.getState() %>
+                                     </span>
+                        </td>
+                        <td>
+                                     <span>
+                                         <%= ticket.getTimeWIPStarted() %>
+                                     </span>
+                        </td>
+
+
+                    </tr>
+
+                    <% }   %>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
     </div>
-    <div class="row-fluid">
+
+</div>
+
+
+
+<div class="row-fluid">
     <div class="span">
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe08a;"></span> Ticket Overview
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe08a;"></span> Recent Ticket Overview
                 </div>
             </div>
             <div class="widget-body">
@@ -129,7 +203,7 @@
                             <th>Customer</th>
                             <th>Status</th>
                             <th>Assignee</th>
-                            <th>Date Assigned</th>
+                            <th>WIP Start Date</th>
                         </tr>
                     </thead>
 
@@ -172,7 +246,7 @@
                                  </td>
                                  <td>
                                      <span>
-                                         <%= ticket.getTimeWIPStarted() %>
+                                         <%= ticket.getTimeWIPStarted() == null ? "-" : ticket.getTimeWIPStarted()%>
                                      </span>
                                  </td>
 
@@ -193,7 +267,7 @@
 <!-- Add a bit of color to the Ticket statuses-->
 <script>
     $( '#state-col.badge:contains("CLOSED")' ).addClass( 'badge-success' );
-    $( '#state-col:contains("NEW")' ).addClass( 'badge-important' );
-    $( '#state-col:contains("QUEUED")' ).addClass( 'badge-info' );
-    //$('#tb.badge:contains("WIP")').addClass('badge-important');
+    $( '#state-col.badge:contains("NEW")' ).addClass( 'badge-important' );
+    $( '#state-col.badge:contains("QUEUED")' ).addClass( 'badge-info' );
+    $( '#state-col.badge:contains("WIP")').addClass('badge-warning');
 </script>

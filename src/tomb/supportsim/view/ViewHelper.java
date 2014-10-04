@@ -116,4 +116,9 @@ public class ViewHelper
 
     return map;
   }
+
+  public static List getJoinedDetailsForNewTickets()
+  {
+    return TicketReporter.getJoinedDetailsForNewTickets();
+  }
 }

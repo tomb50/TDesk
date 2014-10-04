@@ -135,4 +135,27 @@ public class TicketReporter
 
     return HibernateUtil.getEntityList( SupportTicket.class, restrictions );
   }
+
+  public static List getJoinedDetailsForNewTickets()
+  {
+    final String hQLQuery =
+      "FROM SupportTicket t, Customer c WHERE t.customerId = c.id and t.state = 'NEW'";
+    Session session = HibernateUtil.beginTransaction();
+    Query query = session.createQuery( hQLQuery );
+    final List rawResults = query.list();
+    HibernateUtil.commitAndClose( session );
+
+    final List results = new ArrayList();
+    for ( final Iterator it = rawResults.iterator(); it.hasNext(); )
+    {
+      Object[] objects = (Object[]) it.next();
+      final SupportTicket ticket = (SupportTicket) objects[0];
+      final Customer customer = (Customer) objects[1];
+      HashMap map = new HashMap();
+      map.put( TICKET_KEY, ticket );
+      map.put( CUSTOMER_KEY, customer );
+      results.add( map );
+    }
+    return results;
+  }
 }

@@ -8,9 +8,9 @@
 
        <bean id="runScheduler" class="tomb.supportsim.schedule.ScheduledTasks"/>
        <task:scheduled-tasks>
-         <task:scheduled ref="runScheduler" method="createTicket" cron="*/30 * * * * *"/>
-         <task:scheduled ref="runScheduler" method="assignTickets" cron="*/15 * * * * *"/>
-         <task:scheduled ref="runScheduler" method="updateTickets" cron="*/20 * * * * *"/>
+         <task:scheduled ref="runScheduler" method="createTicket" cron="*/5 * * * * *"/>
+         <task:scheduled ref="runScheduler" method="assignTickets" cron="*/20 * * * * *"/>
+         <task:scheduled ref="runScheduler" method="updateTickets" cron="*/30 * * * * *"/>
 
        </task:scheduled-tasks>
 
