@@ -279,7 +279,7 @@
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe08a;"></span> Recent Ticket Overview
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe07e;"></span> Recent Ticket Overview
                 </div>
             </div>
             <div class="widget-body">
