@@ -1,3 +1,13 @@
+<%@ page import="tomb.supportsim.controllers.TicketReporter" %>
+<%@ page import="tomb.supportsim.models.Analyst" %>
+<%@ page import="tomb.supportsim.models.Customer" %>
+<%@ page import="tomb.supportsim.models.SupportTicket" %>
+<%@ page import="tomb.supportsim.models.enums.TicketStateEnum" %>
+<%@ page import="tomb.supportsim.models.enums.TicketTypeEnum" %>
+<%@ page import="tomb.supportsim.view.ViewHelper" %>
+<%@ page import="java.math.BigDecimal" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
 <div class="row-fluid">
     <div class="span2">
         <div class="widget">
