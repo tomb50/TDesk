@@ -1,4 +1,5 @@
 <%@ page import="tomb.supportsim.models.Analyst" %>
+<%@ page import="tomb.supportsim.models.enums.TicketStateEnum" %>
 <%@ page import="tomb.supportsim.view.ViewHelper" %>
 <%@ page import="java.math.BigDecimal" %>
 <%@ page import="java.util.HashMap" %>
@@ -16,7 +17,7 @@
             <div class="widget-body">
                 <ul class="progress-statistics">
                     <%
-                        BigDecimal totalClosedCount = BigDecimal.valueOf( ViewHelper.getTotalClosedTicketCount() );
+                        BigDecimal totalClosedCount = BigDecimal.valueOf( ViewHelper.getTicketByState( TicketStateEnum.CLOSED));
                         HashMap map = (HashMap) ViewHelper.getClosedTicketCountByAnalystMap();
                         for ( final Iterator it = map.entrySet().iterator(); it.hasNext(); )
                         {

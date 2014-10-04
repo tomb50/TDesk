@@ -57,6 +57,14 @@ public class TicketReporter
     return HibernateUtil.getEntityCount( SupportTicket.class );
   }
 
+  public static Integer getTotalOpenTicketCount()
+  {
+    final List<Criterion> restrictions = new ArrayList<>();
+    restrictions.add( Restrictions.ne(  "state", TicketStateEnum.CLOSED ) ) ;
+
+    return HibernateUtil.getEntityCount(  SupportTicket.class, restrictions );
+  }
+
   public static List<SupportTicket> getAllTickets()
   {
     return (List<SupportTicket>) HibernateUtil.getEntityList( SupportTicket.class);
@@ -69,13 +77,6 @@ public class TicketReporter
                                         Restrictions.eq( "state", TicketStateEnum.CLOSED ) ) );
 
     return HibernateUtil.getEntityList( SupportTicket.class, restrictions );
-  }
-
-  public static Integer getClosedTicketCount()
-  {
-    final List<Criterion> restrictions = new ArrayList<>(  );
-    restrictions.add( Restrictions.eq( "state", TicketStateEnum.CLOSED ));
-    return  HibernateUtil.getEntityCount( SupportTicket.class, restrictions );
   }
 
 
@@ -157,5 +158,12 @@ public class TicketReporter
       results.add( map );
     }
     return results;
+  }
+
+  public static Integer getTicketCountByState( final TicketStateEnum ticketStateEnum )
+  {
+    final List<Criterion> restrictions = new ArrayList<>(  );
+    restrictions.add( Restrictions.eq( "state", ticketStateEnum ));
+    return  HibernateUtil.getEntityCount( SupportTicket.class, restrictions );
   }
 }

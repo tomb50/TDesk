@@ -8,6 +8,7 @@ import tomb.supportsim.models.Analyst;
 import tomb.supportsim.models.Customer;
 import tomb.supportsim.models.DescriptionTemplate;
 import tomb.supportsim.models.SupportTicket;
+import tomb.supportsim.models.enums.TicketStateEnum;
 import tomb.supportsim.models.enums.TicketTypeEnum;
 
 import java.lang.reflect.Field;
@@ -99,10 +100,11 @@ public class ViewHelper
     return TicketReporter.getTotalTicketCount();
   }
 
-  public static Integer getTotalClosedTicketCount()
+  public static Integer getTotalOpenTicketCount()
   {
-    return TicketReporter.getClosedTicketCount();
+    return TicketReporter.getTotalOpenTicketCount();
   }
+
 
   public static Map<Analyst, Integer> getClosedTicketCountByAnalystMap()
   {
@@ -120,5 +122,10 @@ public class ViewHelper
   public static List getJoinedDetailsForNewTickets()
   {
     return TicketReporter.getJoinedDetailsForNewTickets();
+  }
+
+  public static Integer getTicketByState(final TicketStateEnum ticketStateEnum)
+  {
+    return TicketReporter.getTicketCountByState( ticketStateEnum );
   }
 }
