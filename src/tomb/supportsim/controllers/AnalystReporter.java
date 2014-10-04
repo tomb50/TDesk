@@ -35,7 +35,7 @@ public class AnalystReporter
     return (List<Analyst>) HibernateUtil.getEntityList( Analyst.class, restrictions );
   }
 
-  public static List<Analyst> getSuitableFreeAnalysts( final RoleEnum roleEnum )
+  public static List<Analyst> getSuitableAnalysts( final RoleEnum roleEnum )
   {
     final List<Criterion> restrictions = new ArrayList<Criterion>();
     restrictions.add( Restrictions.eq( "state", WorkingStateEnum.WORKING ) );
@@ -48,7 +48,7 @@ public class AnalystReporter
     final List lol = new ArrayList();
     for ( RoleEnum roleEnum : RoleEnum.values() )
     {
-      lol.add( getSuitableFreeAnalysts( roleEnum ) );
+      lol.add( getSuitableAnalysts( roleEnum ) );
     }
     return lol;
   }
