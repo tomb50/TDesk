@@ -13,7 +13,7 @@
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe074;"></span> Total Tickets
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe0c2;"></span> Total Tickets
                 </div>
             </div>
             <div class="widget-body">
@@ -31,7 +31,7 @@
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe1cf;"></span> Locked Documents
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe088;"></span> Locked Documents
                 </div>
             </div>
             <div class="widget-body">
@@ -49,7 +49,7 @@
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe036;"></span> Java
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe094;"></span> Java
                 </div>
             </div>
             <div class="widget-body">
@@ -67,7 +67,7 @@
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe038;"></span> ABL
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe094;"></span> ABL
                 </div>
             </div>
             <div class="widget-body">
@@ -85,7 +85,7 @@
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe038;"></span> DBA
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe0b9;"></span> DBA
                 </div>
             </div>
             <div class="widget-body">
@@ -103,7 +103,7 @@
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe08a;"></span> System Down
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe0a4;"></span> System Down
                 </div>
             </div>
             <div class="widget-body">
@@ -123,7 +123,18 @@
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe08a;"></span> New Tickets
+                    <span class="fs1" aria-hidden="true" data-icon=
+                          <% if (ViewHelper.getTicketCountByState(TicketStateEnum.NEW) == 0)
+                          { %>
+                          "&#xe0fe;"></span> New Tickets  - No New Tickets!
+                            <%
+                          }
+                           else
+                          { %>
+                          "&#xe0f5;"></span> New Tickets
+                            <%
+                          }
+                          %>
                 </div>
             </div>
             <div class="widget-body">
@@ -198,18 +209,18 @@
 
             <%
                 final BigDecimal totalCount = BigDecimal.valueOf( ViewHelper.getTotalOpenTicketCount() );
-                final BigDecimal newCount = BigDecimal.valueOf( ViewHelper.getTicketByState( TicketStateEnum.NEW ) );
+                final BigDecimal newCount = BigDecimal.valueOf( ViewHelper.getTicketCountByState( TicketStateEnum.NEW ) );
                 final BigDecimal queueCount =
-                        BigDecimal.valueOf( ViewHelper.getTicketByState( TicketStateEnum.QUEUED ) );
-                final BigDecimal wipCount = BigDecimal.valueOf( ViewHelper.getTicketByState( TicketStateEnum.WIP ) );
+                        BigDecimal.valueOf( ViewHelper.getTicketCountByState( TicketStateEnum.QUEUED ) );
+                final BigDecimal wipCount = BigDecimal.valueOf( ViewHelper.getTicketCountByState( TicketStateEnum.WIP ) );
                 final BigDecimal closedCount =
-                        BigDecimal.valueOf( ViewHelper.getTicketByState( TicketStateEnum.CLOSED ) );
+                        BigDecimal.valueOf( ViewHelper.getTicketCountByState( TicketStateEnum.CLOSED ) );
             %>
 
             <div class="widget-body">
                 <ul id="stats-count">
                     <li>
-                        <span class="fs1 arrow text-error" aria-hidden="true" data-icon="&#xe120;"></span>
+                        <span class="fs1 arrow text-error" aria-hidden="true" data-icon="&#xe0f5;"></span>
                         <h5 class="stat-value"><%= newCount%>
                             <span class="stat-name">New</span>
                         </h5>
@@ -223,7 +234,7 @@
                         </div>
                     </li>
                     <li>
-                        <span class="fs1 arrow text text-info" aria-hidden="true" data-icon="&#xe124;"></span>
+                        <span class="fs1 arrow text text-info" aria-hidden="true" data-icon="&#xe077;"></span>
                         <h5 class="stat-value"><%= queueCount%>
                             <span class="stat-name">Queued</span>
                         </h5>
@@ -237,7 +248,7 @@
                         </div>
                     </li>
                     <li>
-                        <span class="fs1 arrow text-warning" aria-hidden="true" data-icon="&#xe120;"></span>
+                        <span class="fs1 arrow text-warning" aria-hidden="true" data-icon="&#xe091;"></span>
                         <h5 class="stat-value"><%= wipCount%>
                             <span class="stat-name">WIP</span>
                         </h5>
@@ -251,7 +262,7 @@
                         </div>
                     </li>
                     <li>
-                        <span class="fs1 arrow text-success" aria-hidden="true" data-icon="&#xe122;"></span>
+                        <span class="fs1 arrow text-success" aria-hidden="true" data-icon="&#xe0fe;"></span>
                         <h5 class="stat-value"><%= closedCount%>
                             <span class="stat-name">Closed</span>
                         </h5>

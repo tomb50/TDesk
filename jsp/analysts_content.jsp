@@ -8,7 +8,7 @@
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe074;"></span> Analysts
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe071;"></span> Analysts
                 </div>
             </div>
             <div class="widget-body">

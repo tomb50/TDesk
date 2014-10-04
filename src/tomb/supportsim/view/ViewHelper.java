@@ -124,7 +124,7 @@ public class ViewHelper
     return TicketReporter.getJoinedDetailsForNewTickets();
   }
 
-  public static Integer getTicketByState(final TicketStateEnum ticketStateEnum)
+  public static Integer getTicketCountByState( final TicketStateEnum ticketStateEnum )
   {
     return TicketReporter.getTicketCountByState( ticketStateEnum );
   }

@@ -86,13 +86,13 @@
                     <div class="icon">
                         <span class="fs1" aria-hidden="true" data-icon="&#xe14a;"></span>
                     </div>
-                    Tickets
+                    All Tickets
                 </a>
             </li>
             <li class="nav-ele">
                 <a href="analysts.jsp">
                     <div class="icon">
-                        <span class="fs1" aria-hidden="true" data-icon="&#xe14a;"></span>
+                        <span class="fs1" aria-hidden="true" data-icon="&#xe071;"></span>
                     </div>
                     Analysts
                 </a>
@@ -100,7 +100,7 @@
             <li class="nav-ele">
                 <a href="customers.jsp">
                     <div class="icon">
-                        <span class="fs1" aria-hidden="true" data-icon="&#xe14a;"></span>
+                        <span class="fs1" aria-hidden="true" data-icon="&#xe075;"></span>
                     </div>
                     Customers
                 </a>
@@ -108,7 +108,7 @@
             <li class="nav-ele">
                 <a href="description_templates.jsp">
                     <div class="icon">
-                        <span class="fs1" aria-hidden="true" data-icon="&#xe14a;"></span>
+                        <span class="fs1" aria-hidden="true" data-icon="&#xe01f;"></span>
                     </div>
                     Descriptions
                 </a>
@@ -180,7 +180,7 @@
                                     <a href="statistics.jsp">Statistics</a>
                                 </li>
                                 <li>
-                                    <a href="tickets.jsp">Tickets</a>
+                                    <a href="tickets.jsp">All Tickets</a>
                                 </li>
                                 <li>
                                     <a href="analysts.jsp">Analysts</a>

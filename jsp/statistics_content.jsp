@@ -17,7 +17,8 @@
             <div class="widget-body">
                 <ul class="progress-statistics">
                     <%
-                        BigDecimal totalClosedCount = BigDecimal.valueOf( ViewHelper.getTicketByState( TicketStateEnum.CLOSED));
+                        BigDecimal totalClosedCount = BigDecimal.valueOf( ViewHelper.getTicketCountByState(
+                                TicketStateEnum.CLOSED ));
                         HashMap map = (HashMap) ViewHelper.getClosedTicketCountByAnalystMap();
                         for ( final Iterator it = map.entrySet().iterator(); it.hasNext(); )
                         {
