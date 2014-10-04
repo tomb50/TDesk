@@ -22,6 +22,6 @@
     <property name="assigneeId" column="ASSIGNEEID" type="int"></property>
     <property name="estimatedCompletionTime" column="ESTCOMPTIME" type="big_decimal"></property>
     <property name="customerId" column="CUSTOMERID" type="int"></property>
-    <property name="timeAssigned" column="TIMEASSIGNED" type="timestamp"></property>
+    <property name="timeWIPStarted" column="TIMEASSIGNED" type="timestamp"></property>
   </class>
 </hibernate-mapping>

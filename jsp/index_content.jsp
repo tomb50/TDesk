@@ -172,7 +172,7 @@
                                  </td>
                                  <td>
                                      <span>
-                                         <%= ticket.getTimeAssigned() %>
+                                         <%= ticket.getTimeWIPStarted() %>
                                      </span>
                                  </td>
 

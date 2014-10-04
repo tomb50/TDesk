@@ -23,50 +23,92 @@ public class AssignmentController
     this.assignmentMethodEnum = assignmentMethodEnum;
   }
 
-  public Analyst getAnalyst( final TicketTypeEnum type )
+  public Analyst getAnalyst(final TicketTypeEnum ticketTypeEnum)
   {
+    final Analyst analyst;
 
-    final RoleEnum role = getRoleFromTicketType( type );
-    Analyst analyst = null;
-    final List<Analyst> suitableAnalysts = AnalystReporter.getSuitableFreeAnalysts( role );
-    switch ( this.assignmentMethodEnum )
+    switch ( assignmentMethodEnum )
     {
-      case REALWORLD:
+      case FULL_RANDOM:
+        analyst = fullRandom();
         break;
-      case FIRST:
-        break;
-      case FULLRANDOM:
-        analyst = getAnyAnalyst( suitableAnalysts );
-        break;
+
       case RANDOM:
-        final List<Analyst> suitableFreeAnalysts = new ArrayList<Analyst>();
-        for ( Analyst analyst1 : suitableAnalysts )
-        {
-          if ( TicketReporter.getOpenTicketCount( analyst1.getId() ) == 0 )
-          {
-            suitableFreeAnalysts.add( analyst1 );
-          }
-        }
-        analyst =
-          !suitableFreeAnalysts.isEmpty() ? getAnyAnalyst( suitableFreeAnalysts ) : getAnyAnalyst( suitableAnalysts );
+      default:
+        analyst = random( ticketTypeEnum );
         break;
-      case LONGESTWAITING:
+
+      case FREE_RANDOM:
+        analyst = freeRandom( ticketTypeEnum );
+        break;
+
+      case LOWEST_WORKLOAD:
+        analyst = lowestWorkload();
+        break;
+
+      case REAL_WORLD:
+        analyst = realWorld();
         break;
     }
     return analyst;
   }
 
-  private Analyst getAnyAnalyst( final List<Analyst> suitableAnalysts )
+  //TODO Don't use until re-assignment poller is implemented
+  private Analyst fullRandom()
   {
-    return suitableAnalysts.get( randomGenerator.nextInt( suitableAnalysts.size() ) );
+    final List<Analyst> analysts = AnalystReporter.getAllAnalysts();
+    return getRandomAnalystFromList( analysts );
   }
+
+  private Analyst random( final TicketTypeEnum ticketTypeEnum )
+  {
+    final RoleEnum role = getRoleFromTicketType( ticketTypeEnum );
+    final List<Analyst> suitableAnalysts = AnalystReporter.getSuitableAnalysts( role );
+    return getRandomAnalystFromList( suitableAnalysts );
+  }
+
+  private Analyst freeRandom( final TicketTypeEnum ticketTypeEnum )
+  {
+    final RoleEnum role = getRoleFromTicketType( ticketTypeEnum );
+    final List<Analyst> suitableFreeAnalysts = new ArrayList<>();
+    for ( Analyst analyst : AnalystReporter.getSuitableAnalysts( role ) )
+    {
+      if ( TicketReporter.getOpenTicketCount( analyst.getId() ) == 0 )
+      {
+        suitableFreeAnalysts.add( analyst );
+      }
+    }
+    return
+      suitableFreeAnalysts.isEmpty() ? random( ticketTypeEnum ) : getRandomAnalystFromList( suitableFreeAnalysts );
+  }
+
+  //TODO to be done after QUEUING has been implmented
+  private Analyst lowestWorkload()
+  {
+    return null;
+  }
+
+
+  //TODO not yet implmented
+  private Analyst realWorld()
+  {
+    return null;
+  }
+
+
+  private Analyst getRandomAnalystFromList( final List<Analyst> analysts )
+  {
+    return analysts.get( randomGenerator.nextInt( analysts.size() ) );
+  }
+
 
   private RoleEnum getRoleFromTicketType( final TicketTypeEnum type )
   {
-    RoleEnum role = null;
+    final RoleEnum role;
     switch ( type )
     {
       case LOCKEDDOCUMENT:
+      default:
         role = RoleEnum.FIRSTLINE;
         break;
       case DBA:
@@ -80,8 +122,6 @@ public class AssignmentController
         break;
       case ABL:
         role = RoleEnum.ABL;
-      default:
-        break;
     }
     return role;
   }
@@ -89,6 +129,14 @@ public class AssignmentController
   public void assignTicket( final SupportTicket ticket, final Analyst analyst )
   {
     final TicketManager ticketManager = new TicketManager();
-    ticketManager.assignTicket( ticket.getId(), analyst.getId() );
+    final boolean toQueue = TicketReporter.getOpenTicketCount( analyst.getId() ) > 0;
+    if ( toQueue )
+    {
+      ticketManager.assignTicketToQueue( ticket.getId(), analyst.getId() );
+    }
+    else
+    {
+      ticketManager.assignTicketToWIP( ticket.getId(), analyst.getId() );
+    }
   }
 }

@@ -20,7 +20,7 @@ public class SupportTicket implements Serializable
   private int assigneeId;
   private BigDecimal estimatedCompletionTime;
   private int customerId;
-  private Timestamp timeAssigned;
+  private Timestamp timeWIPStarted;
 
   public SupportTicket()
   {
@@ -98,14 +98,14 @@ public class SupportTicket implements Serializable
     this.customerId = customer;
   }
 
-  public Timestamp getTimeAssigned()
+  public Timestamp getTimeWIPStarted()
   {
-    return timeAssigned;
+    return timeWIPStarted;
   }
 
-  public void setTimeAssigned( final Timestamp timeAssigned )
+  public void setTimeWIPStarted( final Timestamp timeAssigned )
   {
-    this.timeAssigned = timeAssigned;
+    this.timeWIPStarted = timeAssigned;
   }
 
   @Override
@@ -119,7 +119,7 @@ public class SupportTicket implements Serializable
       ", assigneeId=" + assigneeId +
       ", estimatedCompletionTime=" + estimatedCompletionTime +
       ", customerId=" + customerId +
-      ", timeAssigned=" + timeAssigned +
+      ", timeAssigned=" + timeWIPStarted +
       '}';
   }
 }

@@ -25,29 +25,29 @@ public class TicketReporter
 
   public static List<SupportTicket> getAllUnassignedTickets()
   {
-    final List<Criterion> restrictions = new ArrayList<Criterion>();
+    final List<Criterion> restrictions = new ArrayList<>();
     restrictions.add( Restrictions.eq( "assigneeId", UNASSIGNED ) );
     return (List<SupportTicket>) HibernateUtil.getEntityList( SupportTicket.class, restrictions );
   }
 
-  public static Integer getOpenTicketCount( final int id )
+  public static Integer getOpenTicketCount( final int analystId )
   {
-    final List<Criterion> restrictions = new ArrayList<Criterion>();
+    final List<Criterion> restrictions = new ArrayList<>();
     restrictions.add(
-      Restrictions.and( Restrictions.eq( "assigneeId", id ), Restrictions.ne( "state", TicketStateEnum.CLOSED ) ) );
+      Restrictions.and( Restrictions.eq( "assigneeId", analystId ), Restrictions.ne( "state", TicketStateEnum.CLOSED ) ) );
     return HibernateUtil.getEntityCount( SupportTicket.class, restrictions );
   }
 
   public static List<SupportTicket> getTicketsByState( final TicketStateEnum ticketStateEnum )
   {
-    final List<Criterion> restrictions = new ArrayList<Criterion>();
+    final List<Criterion> restrictions = new ArrayList<>();
     restrictions.add( Restrictions.eq( "state", ticketStateEnum ) );
     return HibernateUtil.getEntityList( SupportTicket.class, restrictions );
   }
 
   public static Integer getTicketCountByType(final TicketTypeEnum ticketTypeEnum)
   {
-    final List<Criterion> restrictions = new ArrayList<Criterion>(  );
+    final List<Criterion> restrictions = new ArrayList<>(  );
     restrictions.add( Restrictions.eq( "type", ticketTypeEnum ));
     return  HibernateUtil.getEntityCount( SupportTicket.class, restrictions );
   }
@@ -64,7 +64,7 @@ public class TicketReporter
 
   public static List<SupportTicket> getClosedTicketsByAnalyst( final Analyst analyst )
   {
-    final List<Criterion> restrictions = new ArrayList<Criterion>();
+    final List<Criterion> restrictions = new ArrayList<>();
     restrictions.add( Restrictions.and( Restrictions.eq( "assigneeId", analyst.getId() ),
                                         Restrictions.eq( "state", TicketStateEnum.CLOSED ) ) );
 
@@ -73,7 +73,7 @@ public class TicketReporter
 
   public static Integer getClosedTicketCount()
   {
-    final List<Criterion> restrictions = new ArrayList<Criterion>(  );
+    final List<Criterion> restrictions = new ArrayList<>(  );
     restrictions.add( Restrictions.eq( "state", TicketStateEnum.CLOSED ));
     return  HibernateUtil.getEntityCount( SupportTicket.class, restrictions );
   }
@@ -125,5 +125,14 @@ public class TicketReporter
       map.put( ANALYST_KEY, analyst );
     }
     return map;
+  }
+
+  public static List getTickets( final int assigneeId, final TicketStateEnum ticketStateEnum )
+  {
+    final List<Criterion> restrictions = new ArrayList<>();
+    restrictions.add( Restrictions.and( Restrictions.eq( "assigneeId", assigneeId ),
+                                        Restrictions.eq( "state", ticketStateEnum ) ) );
+
+    return HibernateUtil.getEntityList( SupportTicket.class, restrictions );
   }
 }

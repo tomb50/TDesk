@@ -5,5 +5,5 @@ package tomb.supportsim.models.enums;
  */
 public enum AssignmentMethodEnum
 {
-  RANDOM, REALWORLD, FIRST, FULLRANDOM, LONGESTWAITING
+  FULL_RANDOM, RANDOM, FREE_RANDOM, LOWEST_WORKLOAD, REAL_WORLD
 }

@@ -55,7 +55,7 @@ public class TicketManager
     }
   }
 
-  public void assignTicket( final int ticketId, final int analystId )
+  public void assignTicketToWIP( final int ticketId, final int analystId )
   {
     if ( getTicket( ticketId ) != null && getAnalyst( analystId ) != null )
     {
@@ -63,10 +63,24 @@ public class TicketManager
       final SupportTicket ticket = (SupportTicket) session.get( SupportTicket.class, ticketId );
       ticket.setAssigneeId( analystId );
       ticket.setState( TicketStateEnum.WIP );
-      ticket.setTimeAssigned( new Timestamp( TimeModel.getTime() ) );
+      ticket.setTimeWIPStarted( new Timestamp( TimeModel.getTime() ) );
       session.save( ticket );
       HibernateUtil.commitAndClose( session );
     }
+  }
+
+  public void assignTicketToQueue(final int ticketId, final int analystId)
+  {
+    if ( getTicket( ticketId ) != null && getAnalyst( analystId ) != null )
+    {
+      final Session session = HibernateUtil.beginTransaction();
+      final SupportTicket ticket = (SupportTicket) session.get( SupportTicket.class, ticketId );
+      ticket.setAssigneeId( analystId );
+      ticket.setState( TicketStateEnum.QUEUED );
+      session.save( ticket );
+      HibernateUtil.commitAndClose( session );
+    }
+
   }
 
   //todo refactor this out of Class
