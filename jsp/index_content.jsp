@@ -161,7 +161,7 @@
                                      </span>
                                  </td>
                                  <td>
-                                     <span>
+                                     <span id="state-col" class="badge" >
                                          <%= ticket.getState() %>
                                      </span>
                                  </td>
@@ -190,3 +190,10 @@
     </div>
 
 </div>
+<!-- Add a bit of color to the Ticket statuses-->
+<script>
+    $( '#state-col.badge:contains("CLOSED")' ).addClass( 'badge-success' );
+    $( '#state-col:contains("NEW")' ).addClass( 'badge-important' );
+    $( '#state-col:contains("QUEUED")' ).addClass( 'badge-info' );
+    //$('#tb.badge:contains("WIP")').addClass('badge-important');
+</script>
