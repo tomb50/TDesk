@@ -119,7 +119,7 @@ public class HibernateUtil
     }
     final Number max = (Number) criteria.setProjection( Projections.max( id ) ).uniqueResult();
     commitAndClose( session );
-    return max.intValue();
+    return (Integer)max;
   }
 
   public static void insertEntity( final Object entity )
