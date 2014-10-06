@@ -64,11 +64,6 @@ public class AssignmentController
   {
     final RoleEnum role = getRoleFromTicketType( ticketTypeEnum );
     final List<Analyst> suitableAnalysts = AnalystReporter.getSuitableAnalysts( role );
-    if(suitableAnalysts.size() == 0)
-    {
-     boolean caught;
-      caught = true;
-    }
     return getRandomAnalystFromList( suitableAnalysts );
   }
 

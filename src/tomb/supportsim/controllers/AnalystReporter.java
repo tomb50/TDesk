@@ -22,17 +22,10 @@ public class AnalystReporter
     return (List<Analyst>) HibernateUtil.getEntityList( Analyst.class );
   }
 
-  private static List<Analyst> getWorkingAnalysts()
+  private static List<Analyst> getAnalystsByWorkingState(final WorkingStateEnum workingStateEnum)
   {
     final List<Criterion> restrictions = new ArrayList<>();
-    restrictions.add( Restrictions.eq( "state", WorkingStateEnum.WORKING ) );
-    return (List<Analyst>) HibernateUtil.getEntityList( Analyst.class, restrictions );
-  }
-
-  private static List<Analyst> getNotWorkingAnalysts()
-  {
-    final List<Criterion> restrictions = new ArrayList<>();
-    restrictions.add( Restrictions.eq( "state", WorkingStateEnum.NOT_WORKING ) );
+    restrictions.add( Restrictions.eq( "state", workingStateEnum) );
     return (List<Analyst>) HibernateUtil.getEntityList( Analyst.class, restrictions );
   }
 
@@ -44,22 +37,6 @@ public class AnalystReporter
     return (List<Analyst>) HibernateUtil.getEntityList( Analyst.class, restrictions );
   }
 
-  public static List getActiveLoL()
-  {
-    final List lol = new ArrayList();
-    for ( RoleEnum roleEnum : RoleEnum.values() )
-    {
-      lol.add( getSuitableAnalysts( roleEnum ) );
-    }
-    return lol;
-  }
-
-
-
-  public Integer getTotalNumberOfAnalysts()
-  {
-    return HibernateUtil.getEntityCount( Analyst.class );
-  }
 
   public static Integer getLargestQueue(final RoleEnum roleEnum)
   {

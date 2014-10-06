@@ -63,11 +63,6 @@ public class ViewHelper
     return DescriptionTemplateReporter.getAllDescriptionTemplates();
   }
 
-  public static List<List<Analyst>> getActiveAnalystLol()
-  {
-    return AnalystReporter.getActiveLoL();
-  }
-
   public static Map getTicketCountByTypeMap()
   {
     final Map map = new HashMap();
@@ -146,11 +141,6 @@ public class ViewHelper
   public static List getTickets( final int analystId, final TicketStateEnum ticketStateEnum )
   {
     return TicketReporter.getTickets( analystId,ticketStateEnum );
-  }
-
-  public static Integer getTicketCount(final int analystId, final TicketStateEnum ticketStateEnum)
-  {
-    return TicketReporter.getTicketCount( analystId, ticketStateEnum );
   }
 
   public static Integer getLargestQueue(final RoleEnum roleEnum)
