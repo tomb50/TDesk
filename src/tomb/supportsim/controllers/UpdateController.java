@@ -13,7 +13,7 @@ import java.util.Random;
 public class UpdateController
 {
 
-  final TicketManager ticketManager = new TicketManager();
+  private final TicketManager ticketManager = new TicketManager();
 
   public void closeTickets( final List<SupportTicket> wipTickets )
   {

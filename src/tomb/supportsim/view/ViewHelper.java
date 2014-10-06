@@ -127,7 +127,7 @@ public class ViewHelper
     return TicketReporter.getTicketCountByState( ticketStateEnum );
   }
 
-  public static List<Analyst> getAnalystByRole(final RoleEnum roleEnum)
+  private static List<Analyst> getAnalystByRole( final RoleEnum roleEnum )
   {
     return AnalystReporter.getSuitableAnalysts( roleEnum );
   }

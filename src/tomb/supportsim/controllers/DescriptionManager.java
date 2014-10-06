@@ -16,9 +16,9 @@ import java.util.Random;
  */
 public class DescriptionManager
 {
-  Random randomGenerater = new Random();
+  private final Random randomGenerater = new Random();
 
-  public int getNextSequence( final TicketTypeEnum ticketTypeEnum )
+  int getNextSequence( final TicketTypeEnum ticketTypeEnum )
   {
     final List<Criterion> restrictions = new ArrayList<Criterion>();
     restrictions.add( Restrictions.eq( "id.type", ticketTypeEnum ) );
@@ -60,14 +60,14 @@ public class DescriptionManager
   }
 
 
-  public String getText1( final DescriptionTemplatePK pk )
+  String getText1( final DescriptionTemplatePK pk )
   {
     final DescriptionTemplate descriptionTemplate =
       DescriptionTemplate.class.cast( HibernateUtil.getEntity( DescriptionTemplate.class, pk ) );
     return descriptionTemplate != null ? descriptionTemplate.getText1() : "";
   }
 
-  public String getText2( final DescriptionTemplatePK pk )
+  String getText2( final DescriptionTemplatePK pk )
   {
     final DescriptionTemplate descriptionTemplate =
       DescriptionTemplate.class.cast( HibernateUtil.getEntity( DescriptionTemplate.class, pk ) );

@@ -66,7 +66,7 @@ public class AnalystManager
     }
   }
 
-  public static Analyst getAnalyst( int id )
+  private static Analyst getAnalyst( int id )
   {
     return Analyst.class.cast( HibernateUtil.getEntity( Analyst.class, id ) );
   }

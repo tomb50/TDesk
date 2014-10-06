@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created with IntelliJ IDEA. User: tombeadman Date: 09/08/2014 Time: 20:04
  */
-public class UpdatePoller
+class UpdatePoller
 {
 
   public void run()

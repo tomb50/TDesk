@@ -19,8 +19,6 @@ public class Analyst implements Serializable
   {
   }
 
-  ;
-
   public int getId()
   {
     return id;

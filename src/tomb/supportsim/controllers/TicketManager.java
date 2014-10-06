@@ -38,7 +38,7 @@ public class TicketManager
     HibernateUtil.commitAndClose( session );
   }
 
-  public SupportTicket getTicket( int id )
+  SupportTicket getTicket( int id )
   {
     return SupportTicket.class.cast( HibernateUtil.getEntity( SupportTicket.class, id ) );
   }
@@ -84,7 +84,7 @@ public class TicketManager
   }
 
   //todo refactor this out of Class
-  public Analyst getAnalyst( int id )
+  Analyst getAnalyst( int id )
   {
     final Session session = HibernateUtil.beginTransaction();
     final Analyst analyst = (Analyst) session.get( Analyst.class, id );

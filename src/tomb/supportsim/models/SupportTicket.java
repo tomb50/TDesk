@@ -26,8 +26,6 @@ public class SupportTicket implements Serializable
   {
   }
 
-  ;
-
   public int getId()
   {
     return id;

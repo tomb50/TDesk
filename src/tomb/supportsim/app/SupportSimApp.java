@@ -10,8 +10,8 @@ import tomb.supportsim.connection.HibernateUtil;
 public class SupportSimApp
 {
 
-  public static SupportSimApp instance;
-  public static boolean running = false;
+  private static SupportSimApp instance;
+  private static boolean running = false;
 
   private SupportSimApp()
   {
@@ -38,7 +38,7 @@ public class SupportSimApp
   }
 
 
-  public void deleteAllTickets()
+  void deleteAllTickets()
   {
     Session session = HibernateUtil.getSessionFactory().openSession();
     session.getTransaction().begin();

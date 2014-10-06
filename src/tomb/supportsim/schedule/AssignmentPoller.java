@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created with IntelliJ IDEA. User: tombeadman Date: 09/08/2014 Time: 01:50
  */
-public class AssignmentPoller
+class AssignmentPoller
 {
 
   public void run()

@@ -18,10 +18,10 @@ import java.util.*;
  */
 public class TicketReporter
 {
-  public static final int UNASSIGNED = 0;
-  public static String TICKET_KEY = "TICKET_KEY";
-  public static String ANALYST_KEY = "ANALYST_KEY";
-  public static String CUSTOMER_KEY = "CUSTOMER_KEY";
+  private static final int UNASSIGNED = 0;
+  public static final String TICKET_KEY = "TICKET_KEY";
+  public static final String ANALYST_KEY = "ANALYST_KEY";
+  public static final String CUSTOMER_KEY = "CUSTOMER_KEY";
 
   public static List<SupportTicket> getAllUnassignedTickets()
   {

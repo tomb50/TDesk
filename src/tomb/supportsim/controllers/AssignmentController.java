@@ -16,7 +16,7 @@ import java.util.Random;
 public class AssignmentController
 {
   private final AssignmentMethodEnum assignmentMethodEnum;
-  Random randomGenerator = new Random();
+  private final Random randomGenerator = new Random();
 
   public AssignmentController( AssignmentMethodEnum assignmentMethodEnum )
   {

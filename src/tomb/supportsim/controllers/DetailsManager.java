@@ -8,10 +8,10 @@ import java.util.Random;
 /**
  * Created with IntelliJ IDEA. User: tombeadman Date: 02/08/2014 Time: 20:39
  */
-public class DetailsManager
+class DetailsManager
 {
 
-  private Random randomGenerator;
+  private final Random randomGenerator;
 
   public DetailsManager()
   {

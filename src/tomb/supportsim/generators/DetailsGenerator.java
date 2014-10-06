@@ -14,10 +14,10 @@ import java.util.Random;
  */
 public abstract class DetailsGenerator
 {
-  protected Random randomGenerator;
+  final Random randomGenerator;
   final String delimiter = " - ";
 
-  public DetailsGenerator()
+  DetailsGenerator()
   {
     randomGenerator = new Random();
   }
@@ -41,7 +41,7 @@ public abstract class DetailsGenerator
 
   protected abstract BigDecimal getEstimatedCompletionTime();
 
-  protected String getDescription()
+  String getDescription()
   {
     DescriptionManager descriptionManager = new DescriptionManager();
     StringBuffer stringBuffer = new StringBuffer();
