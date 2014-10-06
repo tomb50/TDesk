@@ -13,7 +13,7 @@ public class SDDetailsGenerator extends DetailsGenerator
   @Override
   protected TicketTypeEnum getType()
   {
-    return TicketTypeEnum.SYSTEMDOWN;
+    return TicketTypeEnum.SYSTEM_DOWN;
   }
 
   @Override

@@ -5,5 +5,5 @@ package tomb.supportsim.models.enums;
  */
 public enum WorkingStateEnum
 {
-  WORKING, NOTWORKING
+  WORKING, NOT_WORKING
 }

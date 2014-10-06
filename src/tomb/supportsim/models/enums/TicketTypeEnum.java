@@ -5,5 +5,5 @@ package tomb.supportsim.models.enums;
  */
 public enum TicketTypeEnum
 {
-  LOCKEDDOCUMENT, SYSTEMDOWN, JAVA, ABL, DBA
+  LOCKED_DOCUMENT, SYSTEM_DOWN, JAVA, ABL, DBA
 }

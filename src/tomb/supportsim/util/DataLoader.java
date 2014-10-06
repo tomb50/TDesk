@@ -16,7 +16,7 @@ public class DataLoader
   private void loadAnalysts()
   {
     //AnalystManager analystManager = new AnalystManager();
-    //analystManager.recruitAnalyst( "Joe Bloggs", RoleEnum.FIRSTLINE, WorkingStateEnum.WORKING );
+    //analystManager.recruitAnalyst( "Joe Bloggs", RoleEnum.FIRST_LINE, WorkingStateEnum.WORKING );
     //analystManager.recruitAnalyst( "John Smith", RoleEnum.JAVA, WorkingStateEnum.WORKING );
 
   }
@@ -24,7 +24,7 @@ public class DataLoader
   private void loadDescriptions()
   {
     //DescriptionManager descriptionManager = new DescriptionManager();
-    //descriptionManager.addNewDescription( TicketTypeEnum.LOCKEDDOCUMENT, "Contract is Locked", "Please Unlock", "" );
+    //descriptionManager.addNewDescription( TicketTypeEnum.LOCKED_DOCUMENT, "Contract is Locked", "Please Unlock", "" );
     //descriptionManager.addNewDescription( TicketTypeEnum.DBA, "Live to dev data migration request", "low priority", "" );
 
   }

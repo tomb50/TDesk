@@ -37,7 +37,7 @@
             <div class="widget-body">
                 <div class="current-statistics">
                     <div class="products">
-                        <h3><%= ViewHelper.getTicketCountByType( TicketTypeEnum.LOCKEDDOCUMENT )%>
+                        <h3><%= ViewHelper.getTicketCountByType( TicketTypeEnum.LOCKED_DOCUMENT )%>
                         </h3>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
             <div class="widget-body">
                 <div class="current-statistics">
                     <div class="signups">
-                        <h3><%= ViewHelper.getTicketCountByType( TicketTypeEnum.SYSTEMDOWN )%>
+                        <h3><%= ViewHelper.getTicketCountByType( TicketTypeEnum.SYSTEM_DOWN )%>
                         </h3>
                     </div>
                 </div>

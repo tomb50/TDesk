@@ -18,10 +18,8 @@ public class DescriptionTemplatePK implements Serializable, Comparable
   {
     this.type = type;
     this.id = id;
-    StringBuilder hCodeSB = new StringBuilder();
-    hCodeSB.append( this.type );
-    hCodeSB.append( this.id );
-    hCode = hCodeSB.toString().hashCode();
+    String hCodeS = String.valueOf( this.type ) + String.valueOf( this.id );
+    hCode = hCodeS.hashCode();
   }
 
   public DescriptionTemplatePK()
@@ -72,12 +70,8 @@ public class DescriptionTemplatePK implements Serializable, Comparable
     }
 
     DescriptionTemplatePK otherPK = (DescriptionTemplatePK) other;
-    int compare = 0;
+    int compare = this.type.compareTo( otherPK.type );
 
-    if ( compare == 0 )
-    {
-      compare = this.type.compareTo( otherPK.type );
-    }
     if ( compare == 0 )
     {
       compare = new Integer( this.id ).compareTo( otherPK.id );

@@ -16,7 +16,7 @@ import java.util.Random;
  */
 public class DescriptionManager
 {
-  private final Random randomGenerater = new Random();
+  private final Random randomGenerator = new Random();
 
   int getNextSequence( final TicketTypeEnum ticketTypeEnum )
   {
@@ -41,13 +41,13 @@ public class DescriptionManager
   public String getRandomDescriptionElement1( final TicketTypeEnum ticketTypeEnum )
   {
     int i = getByTypeCount( ticketTypeEnum );
-    return getText1( new DescriptionTemplatePK( ticketTypeEnum, randomGenerater.nextInt( i ) + 1 ) );
+    return getText1( new DescriptionTemplatePK( ticketTypeEnum, randomGenerator.nextInt( i ) + 1 ) );
   }
 
   public String getRandomDescriptionElement2( final TicketTypeEnum ticketTypeEnum )
   {
     int i = getByTypeCount( ticketTypeEnum );
-    return getText2( new DescriptionTemplatePK( ticketTypeEnum, randomGenerater.nextInt( i ) + 1 ) );
+    return getText2( new DescriptionTemplatePK( ticketTypeEnum, randomGenerator.nextInt( i ) + 1 ) );
   }
 
 

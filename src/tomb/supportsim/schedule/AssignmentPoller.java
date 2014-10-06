@@ -16,11 +16,11 @@ class AssignmentPoller
 
   public void run()
   {
-    final List<SupportTicket> unasignedTickets = TicketReporter.getAllUnassignedTickets();
-    if ( unasignedTickets != null )
+    final List<SupportTicket> unassignedTickets = TicketReporter.getAllUnassignedTickets();
+    if ( unassignedTickets != null )
     {
       AssignmentController assignmentController = new AssignmentController( AssignmentMethodEnum.RANDOM );
-      for ( SupportTicket ticket : unasignedTickets )
+      for ( SupportTicket ticket : unassignedTickets )
       {
         final Analyst analyst = assignmentController.getAnalyst( ticket.getType() );
         assignmentController.assignTicket( ticket, analyst );

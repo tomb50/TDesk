@@ -14,7 +14,7 @@ public class LockedDocDetailsGenerator extends DetailsGenerator
   @Override
   protected TicketTypeEnum getType()
   {
-    return TicketTypeEnum.LOCKEDDOCUMENT;
+    return TicketTypeEnum.LOCKED_DOCUMENT;
   }
 
   @Override
@@ -27,12 +27,7 @@ public class LockedDocDetailsGenerator extends DetailsGenerator
   protected String getDescription()
   {
     DescriptionManager descriptionManager = new DescriptionManager();
-    StringBuilder stringBuffer = new StringBuilder();
-    stringBuffer.append( descriptionManager.getRandomDescriptionElement1( getType() ) );
-    stringBuffer.append( delimiter );
-    stringBuffer.append( randomGenerator.nextInt( 99999999 ) );
-    stringBuffer.append( delimiter );
-    stringBuffer.append( descriptionManager.getRandomDescriptionElement2( getType() ) );
-    return stringBuffer.toString();
+    return descriptionManager.getRandomDescriptionElement1( getType() ) + delimiter +
+      randomGenerator.nextInt( 99999999 ) + delimiter + descriptionManager.getRandomDescriptionElement2( getType() );
   }
 }

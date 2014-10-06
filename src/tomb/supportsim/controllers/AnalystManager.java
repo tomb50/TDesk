@@ -52,7 +52,7 @@ public class AnalystManager
     {
       final Session session = HibernateUtil.beginTransaction();
       Analyst analyst = (Analyst) session.get( Analyst.class, id );
-      analyst.setState( WorkingStateEnum.NOTWORKING );
+      analyst.setState( WorkingStateEnum.NOT_WORKING );
       session.save( analyst );
       HibernateUtil.commitAndClose( session );
     }

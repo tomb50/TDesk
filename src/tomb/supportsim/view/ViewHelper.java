@@ -30,10 +30,6 @@ public class ViewHelper
     return AnalystReporter.getAllAnalysts();
   }
 
-  public static int getNoAnalystAtttributes()
-  {
-    return getAnalystAttributes().size();
-  }
 
   public static List<SupportTicket> getAllTickets()
   {
@@ -170,7 +166,7 @@ public class ViewHelper
     {
       final List<SupportTicket> wipTickets = getTickets( analyst.getId(), TicketStateEnum.WIP );
       final List<SupportTicket> queuedTickets = getTickets( analyst.getId(), TicketStateEnum.QUEUED );
-      if ( wipTickets.isEmpty() && queuedTickets.isEmpty() ) sb.append( analyst.getName() + ", " );
+      if ( wipTickets.isEmpty() && queuedTickets.isEmpty() ) sb.append( analyst.getName() ).append( ", " );
     }
 
     //Trim the last comma
@@ -199,9 +195,9 @@ public class ViewHelper
 
     switch ( roleEnum )
     {
-     case FIRSTLINE:
-       ticketTypeEnums.add( TicketTypeEnum.LOCKEDDOCUMENT );
-       ticketTypeEnums.add( TicketTypeEnum.SYSTEMDOWN );
+     case FIRST_LINE:
+       ticketTypeEnums.add( TicketTypeEnum.LOCKED_DOCUMENT );
+       ticketTypeEnums.add( TicketTypeEnum.SYSTEM_DOWN );
        break;
       case DBA:
         ticketTypeEnums.add( TicketTypeEnum.DBA );

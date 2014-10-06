@@ -82,14 +82,14 @@ public class AssignmentController
       suitableFreeAnalysts.isEmpty() ? random( ticketTypeEnum ) : getRandomAnalystFromList( suitableFreeAnalysts );
   }
 
-  //TODO to be done after QUEUING has been implmented
+  //TODO to be done after QUEUING has been implemented
   private Analyst lowestWorkload()
   {
     return null;
   }
 
 
-  //TODO not yet implmented
+  //TODO not yet implemented
   private Analyst realWorld()
   {
     return null;
@@ -107,15 +107,15 @@ public class AssignmentController
     final RoleEnum role;
     switch ( type )
     {
-      case LOCKEDDOCUMENT:
+      case LOCKED_DOCUMENT:
       default:
-        role = RoleEnum.FIRSTLINE;
+        role = RoleEnum.FIRST_LINE;
         break;
       case DBA:
         role = RoleEnum.DBA;
         break;
-      case SYSTEMDOWN:
-        role = RoleEnum.FIRSTLINE;
+      case SYSTEM_DOWN:
+        role = RoleEnum.FIRST_LINE;
         break;
       case JAVA:
         role = RoleEnum.JAVA;

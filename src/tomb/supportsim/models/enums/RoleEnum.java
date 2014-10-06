@@ -5,5 +5,5 @@ package tomb.supportsim.models.enums;
  */
 public enum RoleEnum
 {
-  FIRSTLINE, JAVA, ABL, DBA, ALL
+  FIRST_LINE, JAVA, ABL, DBA, ALL
 }

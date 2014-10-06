@@ -44,10 +44,7 @@ public abstract class DetailsGenerator
   String getDescription()
   {
     DescriptionManager descriptionManager = new DescriptionManager();
-    StringBuilder stringBuffer = new StringBuilder();
-    stringBuffer.append( descriptionManager.getRandomDescriptionElement1( getType() ) );
-    stringBuffer.append( delimiter );
-    stringBuffer.append( descriptionManager.getRandomDescriptionElement2( getType() ) );
-    return stringBuffer.toString();
+    return descriptionManager.getRandomDescriptionElement1( getType() ) + delimiter +
+      descriptionManager.getRandomDescriptionElement2( getType() );
   }
 }

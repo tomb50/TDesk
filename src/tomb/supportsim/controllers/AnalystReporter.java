@@ -32,7 +32,7 @@ public class AnalystReporter
   private static List<Analyst> getNotWorkingAnalysts()
   {
     final List<Criterion> restrictions = new ArrayList<>();
-    restrictions.add( Restrictions.eq( "state", WorkingStateEnum.NOTWORKING ) );
+    restrictions.add( Restrictions.eq( "state", WorkingStateEnum.NOT_WORKING ) );
     return (List<Analyst>) HibernateUtil.getEntityList( Analyst.class, restrictions );
   }
 
