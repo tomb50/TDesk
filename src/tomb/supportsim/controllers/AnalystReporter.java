@@ -5,6 +5,7 @@ import org.hibernate.criterion.Restrictions;
 import tomb.supportsim.connection.HibernateUtil;
 import tomb.supportsim.models.Analyst;
 import tomb.supportsim.models.enums.RoleEnum;
+import tomb.supportsim.models.enums.TicketStateEnum;
 import tomb.supportsim.models.enums.WorkingStateEnum;
 
 import java.util.ArrayList;
@@ -58,5 +59,19 @@ public class AnalystReporter
   public Integer getTotalNumberOfAnalysts()
   {
     return HibernateUtil.getEntityCount( Analyst.class );
+  }
+
+  public static Integer getLargestQueue(final RoleEnum roleEnum)
+  {
+    Integer largesQueueSize = 0;
+    for ( Analyst analyst : getAllAnalysts() )
+    {
+      if(analyst.getRole().equals( roleEnum ))
+      {
+        Integer queueSize = TicketReporter.getTicketCount( analyst.getId(), TicketStateEnum.QUEUED );
+        if ( queueSize > largesQueueSize ) largesQueueSize = queueSize;
+      }
+    }
+    return largesQueueSize;
   }
 }

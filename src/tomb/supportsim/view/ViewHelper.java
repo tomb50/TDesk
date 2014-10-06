@@ -8,14 +8,12 @@ import tomb.supportsim.models.Analyst;
 import tomb.supportsim.models.Customer;
 import tomb.supportsim.models.DescriptionTemplate;
 import tomb.supportsim.models.SupportTicket;
+import tomb.supportsim.models.enums.RoleEnum;
 import tomb.supportsim.models.enums.TicketStateEnum;
 import tomb.supportsim.models.enums.TicketTypeEnum;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA. User: tombeadman Date: 25/08/2014 Time: 17:53
@@ -128,4 +126,96 @@ public class ViewHelper
   {
     return TicketReporter.getTicketCountByState( ticketStateEnum );
   }
+
+  public static List<Analyst> getAnalystByRole(final RoleEnum roleEnum)
+  {
+    return AnalystReporter.getSuitableAnalysts( roleEnum );
+  }
+
+  public static List<Analyst> getAnalystInWIP( final RoleEnum roleEnum )
+  {
+    final List<Analyst> analysts = AnalystReporter.getSuitableAnalysts( roleEnum );
+    for ( final Iterator it = analysts.iterator(); it.hasNext(); )
+    {
+      final Analyst analyst = (Analyst) it.next();
+      if ( TicketReporter.getTicketCount( analyst.getId(), TicketStateEnum.WIP ) == 0 )
+      {
+        it.remove( );
+      }
+    }
+
+    return analysts;
+  }
+
+  public static List<SupportTicket> getTickets(final int analystId, final TicketStateEnum ticketStateEnum)
+  {
+    return TicketReporter.getTickets( analystId,ticketStateEnum );
+  }
+
+  public static Integer getTicketCount(final int analystId, final TicketStateEnum ticketStateEnum)
+  {
+    return TicketReporter.getTicketCount( analystId, ticketStateEnum );
+  }
+
+  public static Integer getLargestQueue(final RoleEnum roleEnum)
+  {
+    return AnalystReporter.getLargestQueue(roleEnum);
+  }
+
+  public static String getFreeAnalysts( final RoleEnum roleEnum )
+  {
+    final StringBuilder sb = new StringBuilder();
+    final List<Analyst> analysts = getAnalystByRole( roleEnum );
+    for ( final Iterator it = analysts.iterator(); it.hasNext(); )
+    {
+      final Analyst analyst = (Analyst) it.next();
+      final List<SupportTicket> wipTickets = getTickets( analyst.getId(), TicketStateEnum.WIP );
+      final List<SupportTicket> queuedTickets = getTickets( analyst.getId(), TicketStateEnum.QUEUED );
+      if ( wipTickets.isEmpty() && queuedTickets.isEmpty() ) sb.append( analyst.getName() + ", " );
+    }
+
+    //Trim the last comma
+    return sb.toString().isEmpty() ? sb.toString() :
+           sb.toString().substring( 0, sb.toString().length() - ", ".length() );
+  }
+
+  public static boolean roleHasActiveTickets(final RoleEnum roleEnum)
+  {
+    boolean active = false;
+    HashSet<TicketTypeEnum> ticketTypeEnums = getTicketTypes(roleEnum);
+    for (final TicketTypeEnum ticketTypeEnum : ticketTypeEnums)
+    {
+      if(TicketReporter.getTicketCountByTypeAndState( ticketTypeEnum,TicketStateEnum.WIP ) != 0)
+      {
+        active = true;
+      }
+
+    }
+   return active;
+  }
+
+  private static HashSet<TicketTypeEnum> getTicketTypes( final RoleEnum roleEnum )
+  {
+    final HashSet<TicketTypeEnum> ticketTypeEnums = new HashSet<>(  );
+
+    switch ( roleEnum )
+    {
+     case FIRSTLINE:
+       ticketTypeEnums.add( TicketTypeEnum.LOCKEDDOCUMENT );
+       ticketTypeEnums.add( TicketTypeEnum.SYSTEMDOWN );
+       break;
+      case DBA:
+        ticketTypeEnums.add( TicketTypeEnum.DBA );
+        break;
+      case JAVA:
+        ticketTypeEnums.add( TicketTypeEnum.JAVA );
+        break;
+      case ABL:
+        ticketTypeEnums.add( TicketTypeEnum.ABL );
+        break;
+
+    }
+    return ticketTypeEnums;
+  }
+
 }

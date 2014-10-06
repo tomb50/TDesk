@@ -4,8 +4,8 @@
     </a>
 
     <div class="user-profile">
-        <a data-toggle="dropdown" class="dropdown-toggle">
-            <img src="img/profile1.png" alt="profile">
+        <a data-toggle="dropdown" class="dropdown-toggle icomoon-mininav">
+            <div style="padding-top: 10px;" class="fs1" aria-hidden="true" data-icon="&#xe08e;"></div>
         </a>
         <span class="caret"></span>
         <ul class="dropdown-menu pull-right">
@@ -27,28 +27,20 @@
         </ul>
     </div>
     <ul class="mini-nav">
-        <li>
-            <a href="#">
-                <div class="fs1" aria-hidden="true" data-icon="&#xe040;"></div>
-            <span class="info-label">
-              3
-            </span>
+        <li> <!-- Github repo -->
+            <a class ="icomoon-mininav" href="https://github.com/tomb50/SupportSim">
+                <div class="fs1" aria-hidden="true" data-icon="&#xe18c;"></div>
+
             </a>
         </li>
-        <li>
-            <a href="#">
-                <div class="fs1" aria-hidden="true" data-icon="&#xe04c;"></div>
-            <span class="info-label-green">
-              5
-            </span>
+        <li> <!-- Twitter -->
+            <a class="icomoon-mininav" href="https://twitter.com/tom_beadman">
+                <div class="fs1" aria-hidden="true" data-icon="&#xe193;"></div>
             </a>
         </li>
-        <li>
-            <a href="#">
-                <div class="fs1" aria-hidden="true" data-icon="&#xe037;"></div>
-            <span class="info-label-orange">
-              9
-            </span>
+        <li> <!-- Blog -->
+            <a class="icomoon-mininav" href="http://tombeadman.com">
+                <div class="fs1" aria-hidden="true" data-icon="&#xe1d0;"></div>
             </a>
         </li>
     </ul>
@@ -114,11 +106,11 @@
                 </a>
             </li>
             <li class="nav-ele">
-                <a href="tables.html">
+                <a href="workloads.jsp">
                     <div class="icon">
-                        <span class="fs1" aria-hidden="true" data-icon="&#xe14a;"></span>
+                        <span class="fs1" aria-hidden="true" data-icon="&#xe095;"></span>
                     </div>
-                    Tables
+                    Workloads
                 </a>
             </li>
             <li class="submenu">
@@ -192,7 +184,7 @@
                                     <a href="description_templates.jsp">Descriptions</a>
                                 </li>
                                 <li>
-                                    <a href="tables.html">Tables</a>
+                                    <a href="workloads.jsp">Workloads</a>
                                 </li>
                                 <li>
                                     <a href="edit-profile.html">Edit Profile</a>

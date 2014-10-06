@@ -42,13 +42,14 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 
 <div id="main_template"></div>
 <script>$( "#main_template" ).load( "main_template.jsp" );</script>
 
 <!-- Define page specific content and background jsp (if required)-->
-<script>main_content="index_content.jsp"</script>
-<script>bg_jsp="index_bg_jsp.jsp"</script>
+<script>main_content="workload_content.jsp"</script>
+<script>bg_jsp=null</script>
 
 </body>
 </html>

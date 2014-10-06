@@ -45,6 +45,15 @@ public class TicketReporter
     return HibernateUtil.getEntityList( SupportTicket.class, restrictions );
   }
 
+  public static Integer getTicketCountByTypeAndState( final TicketTypeEnum ticketTypeEnum,
+                                                      final TicketStateEnum ticketStateEnum )
+  {
+    final List<Criterion> restrictions = new ArrayList<>();
+    restrictions.add( Restrictions.eq( "type", ticketTypeEnum ) );
+    restrictions.add( Restrictions.eq( "state", ticketStateEnum ) );
+    return HibernateUtil.getEntityCount( SupportTicket.class, restrictions );
+  }
+
   public static Integer getTicketCountByType(final TicketTypeEnum ticketTypeEnum)
   {
     final List<Criterion> restrictions = new ArrayList<>(  );
@@ -135,6 +144,15 @@ public class TicketReporter
                                         Restrictions.eq( "state", ticketStateEnum ) ) );
 
     return HibernateUtil.getEntityList( SupportTicket.class, restrictions );
+  }
+
+  public static Integer getTicketCount( final int assigneeId, final TicketStateEnum ticketStateEnum )
+  {
+    final List<Criterion> restrictions = new ArrayList<>();
+    restrictions.add( Restrictions.and( Restrictions.eq( "assigneeId", assigneeId ),
+                                        Restrictions.eq( "state", ticketStateEnum ) ) );
+
+    return HibernateUtil.getEntityCount( SupportTicket.class, restrictions );
   }
 
   public static List getJoinedDetailsForNewTickets()
