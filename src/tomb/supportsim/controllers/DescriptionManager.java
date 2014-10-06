@@ -20,7 +20,7 @@ public class DescriptionManager
 
   int getNextSequence( final TicketTypeEnum ticketTypeEnum )
   {
-    final List<Criterion> restrictions = new ArrayList<Criterion>();
+    final List<Criterion> restrictions = new ArrayList<>();
     restrictions.add( Restrictions.eq( "id.type", ticketTypeEnum ) );
     final Integer max = HibernateUtil.getEntityMax( DescriptionTemplate.class, "id.id", restrictions );
     return max != null ? max + 1 : 1;
@@ -53,10 +53,10 @@ public class DescriptionManager
 
   private int getByTypeCount( final TicketTypeEnum ticketTypeEnum )
   {
-    final List<Criterion> restrictions = new ArrayList<Criterion>();
+    final List<Criterion> restrictions = new ArrayList<>();
     restrictions.add( Restrictions.eq( "id.type", ticketTypeEnum ) );
     Integer count = HibernateUtil.getEntityCount( DescriptionTemplate.class, restrictions );
-    return count != null ? count.intValue() + 1 : 0;
+    return count != null ? count + 1 : 0;
   }
 
 

@@ -11,7 +11,10 @@ import tomb.supportsim.models.SupportTicket;
 import tomb.supportsim.models.enums.TicketStateEnum;
 import tomb.supportsim.models.enums.TicketTypeEnum;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA. User: tombeadman Date: 05/08/2014 Time: 18:52
@@ -38,7 +41,7 @@ public class TicketReporter
     return HibernateUtil.getEntityCount( SupportTicket.class, restrictions );
   }
 
-  public static List<SupportTicket> getTicketsByState( final TicketStateEnum ticketStateEnum )
+  public static List getTicketsByState( final TicketStateEnum ticketStateEnum )
   {
     final List<Criterion> restrictions = new ArrayList<>();
     restrictions.add( Restrictions.eq( "state", ticketStateEnum ) );
@@ -79,7 +82,7 @@ public class TicketReporter
     return (List<SupportTicket>) HibernateUtil.getEntityList( SupportTicket.class);
   }
 
-  public static List<SupportTicket> getClosedTicketsByAnalyst( final Analyst analyst )
+  public static List getClosedTicketsByAnalyst( final Analyst analyst )
   {
     final List<Criterion> restrictions = new ArrayList<>();
     restrictions.add( Restrictions.and( Restrictions.eq( "assigneeId", analyst.getId() ),
@@ -99,9 +102,9 @@ public class TicketReporter
     HibernateUtil.commitAndClose( session );
 
     final List results = new ArrayList();
-    for ( final Iterator it = rawResults.iterator(); it.hasNext(); )
+    for ( final Object rawResult : rawResults )
     {
-      Object[] objects = (Object[]) it.next();
+      Object[] objects = (Object[]) rawResult;
       final SupportTicket ticket = (SupportTicket) objects[0];
       final Customer customer = (Customer) objects[1];
       final Analyst analyst = (Analyst) objects[2];
@@ -165,9 +168,9 @@ public class TicketReporter
     HibernateUtil.commitAndClose( session );
 
     final List results = new ArrayList();
-    for ( final Iterator it = rawResults.iterator(); it.hasNext(); )
+    for ( final Object rawResult : rawResults )
     {
-      Object[] objects = (Object[]) it.next();
+      Object[] objects = (Object[]) rawResult;
       final SupportTicket ticket = (SupportTicket) objects[0];
       final Customer customer = (Customer) objects[1];
       HashMap map = new HashMap();

@@ -27,7 +27,7 @@ public class LockedDocDetailsGenerator extends DetailsGenerator
   protected String getDescription()
   {
     DescriptionManager descriptionManager = new DescriptionManager();
-    StringBuffer stringBuffer = new StringBuffer();
+    StringBuilder stringBuffer = new StringBuilder();
     stringBuffer.append( descriptionManager.getRandomDescriptionElement1( getType() ) );
     stringBuffer.append( delimiter );
     stringBuffer.append( randomGenerator.nextInt( 99999999 ) );

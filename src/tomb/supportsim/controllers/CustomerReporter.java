@@ -21,7 +21,7 @@ public class CustomerReporter
     return HibernateUtil.getEntityCount( Customer.class );
   }
 
-  public List<Customer> getAllCustomers()
+  public List getAllCustomers()
   {
     return HibernateUtil.getEntityList( Customer.class );
   }

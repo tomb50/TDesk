@@ -104,7 +104,7 @@ public class ViewHelper
   }
 
 
-  public static Map<Analyst, Integer> getClosedTicketCountByAnalystMap()
+  public static Map getClosedTicketCountByAnalystMap()
   {
     Map map = new HashMap<Analyst, Integer>();
     List<Analyst> analystList = AnalystReporter.getAllAnalysts();
@@ -147,7 +147,7 @@ public class ViewHelper
     return analysts;
   }
 
-  public static List<SupportTicket> getTickets(final int analystId, final TicketStateEnum ticketStateEnum)
+  public static List getTickets( final int analystId, final TicketStateEnum ticketStateEnum )
   {
     return TicketReporter.getTickets( analystId,ticketStateEnum );
   }
@@ -166,9 +166,8 @@ public class ViewHelper
   {
     final StringBuilder sb = new StringBuilder();
     final List<Analyst> analysts = getAnalystByRole( roleEnum );
-    for ( final Iterator it = analysts.iterator(); it.hasNext(); )
+    for ( final Analyst analyst : analysts )
     {
-      final Analyst analyst = (Analyst) it.next();
       final List<SupportTicket> wipTickets = getTickets( analyst.getId(), TicketStateEnum.WIP );
       final List<SupportTicket> queuedTickets = getTickets( analyst.getId(), TicketStateEnum.QUEUED );
       if ( wipTickets.isEmpty() && queuedTickets.isEmpty() ) sb.append( analyst.getName() + ", " );

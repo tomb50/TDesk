@@ -24,27 +24,27 @@ public class AnalystReporter
 
   private static List<Analyst> getWorkingAnalysts()
   {
-    final List<Criterion> restrictions = new ArrayList<Criterion>();
+    final List<Criterion> restrictions = new ArrayList<>();
     restrictions.add( Restrictions.eq( "state", WorkingStateEnum.WORKING ) );
     return (List<Analyst>) HibernateUtil.getEntityList( Analyst.class, restrictions );
   }
 
   private static List<Analyst> getNotWorkingAnalysts()
   {
-    final List<Criterion> restrictions = new ArrayList<Criterion>();
+    final List<Criterion> restrictions = new ArrayList<>();
     restrictions.add( Restrictions.eq( "state", WorkingStateEnum.NOTWORKING ) );
     return (List<Analyst>) HibernateUtil.getEntityList( Analyst.class, restrictions );
   }
 
   public static List<Analyst> getSuitableAnalysts( final RoleEnum roleEnum )
   {
-    final List<Criterion> restrictions = new ArrayList<Criterion>();
+    final List<Criterion> restrictions = new ArrayList<>();
     restrictions.add( Restrictions.eq( "state", WorkingStateEnum.WORKING ) );
     restrictions.add( Restrictions.or( Restrictions.eq( "role", RoleEnum.ALL ), Restrictions.eq( "role", roleEnum ) ) );
     return (List<Analyst>) HibernateUtil.getEntityList( Analyst.class, restrictions );
   }
 
-  public static List<List<Analyst>> getActiveLoL()
+  public static List getActiveLoL()
   {
     final List lol = new ArrayList();
     for ( RoleEnum roleEnum : RoleEnum.values() )
