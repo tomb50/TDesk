@@ -10,5 +10,8 @@
        <task:annotation-driven/>
        <util:properties id="serverProps" location="server.properties"/>
 	     <context:property-placeholder properties-ref="serverProps"/>
-       <bean id="scheduledTasks" class="tomb.supportsim.schedule.ScheduledTasks"></bean>
+       <bean id="createTicketsTask" class="tomb.supportsim.schedule.TicketCreationTask"></bean>
+       <bean id="assignTicketsTask" class="tomb.supportsim.schedule.TicketAssignmentTask"></bean>
+       <bean id="updateTicketsTask" class="tomb.supportsim.schedule.TicketUpdateTask"></bean>
+
 </beans>

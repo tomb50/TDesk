@@ -6,4 +6,7 @@ package tomb.supportsim.util;
 public interface PropertyKeys
 {
   String ASSIGNMENT_METHOD = "assignment.method";
+  String CRON_ASSIGNMENT = "${poller.assignment.cron}";
+  String CRON_UPDATE = "${poller.update.cron}";
+  String CRON_CREATION = "${poller.assignment.cron}";
 }
