@@ -17,7 +17,6 @@ public class SupportSimApp
 
   private static SupportSimApp instance;
   private static boolean running = false;
-  private static String PROPERTY_FILE = "server.properties";
   private Properties properties;
 
   private SupportSimApp() throws IOException
@@ -28,7 +27,8 @@ public class SupportSimApp
   private Properties loadProperties() throws IOException
   {
     Properties properties = new Properties(  );
-    InputStream inputStream = getClass().getClassLoader().getResourceAsStream(PROPERTY_FILE);
+    final String PROPERTY_FILE = "server.properties";
+    InputStream inputStream = getClass().getClassLoader().getResourceAsStream( PROPERTY_FILE );
     properties.load(inputStream);
     if (inputStream == null) {
       throw new FileNotFoundException("property file '" + PROPERTY_FILE + "' not found in the classpath");

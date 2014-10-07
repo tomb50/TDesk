@@ -42,7 +42,7 @@ public class ViewHelper
     return Arrays.asList( SupportTicket.class.getDeclaredFields() );
   }
 
-  public static List<Customer> getAllCustomers()
+  public static List getAllCustomers()
   {
     final CustomerReporter customerReporter = new CustomerReporter();
     return customerReporter.getAllCustomers();
@@ -58,7 +58,7 @@ public class ViewHelper
     return Arrays.asList( DescriptionTemplate.class.getDeclaredFields() );
   }
 
-  public static List<DescriptionTemplate> getAllDescriptionTemplates()
+  public static List getAllDescriptionTemplates()
   {
     return DescriptionTemplateReporter.getAllDescriptionTemplates();
   }

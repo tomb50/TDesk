@@ -29,7 +29,7 @@ class UpdatePoller
     updateController.closeTickets( wipTickets );
   }
 
-  private List<SupportTicket> getWIPTickets()
+  private List getWIPTickets()
   {
     return TicketReporter.getTicketsByState( TicketStateEnum.WIP );
   }
