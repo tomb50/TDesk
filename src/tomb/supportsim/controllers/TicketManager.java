@@ -20,7 +20,7 @@ public class TicketManager
   public void potentiallyCreateNewTicket()
   {
     Random random = new Random();
-    int i = random.nextInt( 3 );
+    int i = random.nextInt( 2 );
     if ( i == 0 )
     {
       createNewTicket(); //%33% chance of ticket creation

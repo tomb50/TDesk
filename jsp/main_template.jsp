@@ -1,6 +1,6 @@
 <header>
     <a href="index.html" class="logo">
-        <img src="img/logo.png" alt="Logo"/>
+        <img src="img/zjrVzFgtext.png" alt="Logo"/>
     </a>
 
     <div class="user-profile">
