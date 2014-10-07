@@ -11,7 +11,7 @@ import java.sql.Timestamp;
  */
 public class ScheduledTasks
 {
-  @Scheduled(cron="*/5 * * * * *")
+  @Scheduled(cron="${poller.assignment.cron}")
   public void createTicket()
   {
     System.out.println( "Scheduled Ticket Creation Poller" + new Timestamp( TimeModel.getTime() ) );
@@ -19,7 +19,7 @@ public class ScheduledTasks
     ticketManager.potentiallyCreateNewTicket();
   }
 
-  @Scheduled(cron="*/20 * * * * *")
+  @Scheduled(cron="${poller.assignment.cron}")
   public void assignTickets()
   {
     System.out.println( "Scheduled Assignment Poller" + new Timestamp( TimeModel.getTime() ) );
@@ -27,7 +27,7 @@ public class ScheduledTasks
     assignmentPoller.run();
   }
 
-  @Scheduled(cron="*/30 * * * * *")
+  @Scheduled(cron="${poller.update.cron}")
   public void updateTickets()
   {
     System.out.println( "Scheduled Updating Poller" + new Timestamp( TimeModel.getTime() ) );
