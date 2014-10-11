@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="org.zendesk.client.v2.model.Attachment" table="ATTACHMENT">
+    <id name="id" column="ID" type="long"/>
+    <property name="fileName" column="FILE_NAME" type="string"/>
+    <property name="contentUrl" column="CONTENT_URL" type="string"/>
+    <property name="contentType" column="CONTENT_TYPE" type="string"/>
+    <property name="size" column="SIZE" type="long"/>
+    <bag name="thumbnails" table="PHOTO" >
+      <key>
+        <column name="id"/>
+      </key>
+      <one-to-many class="org.zendesk.client.v2.model.Photo"/>
+      </bag>
+    <!--list name="thumbnails" table="PHOTO">
+	    <key column="ID" />
+	    <list-index column="index" />
+  	  <element/>
+    </list-->
+  </class>
+</hibernate-mapping>

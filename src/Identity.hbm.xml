@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="org.zendesk.client.v2.model.Identity" table="IDENTITY">
+    <id name="id" column="ID" type="long">
+    </id>
+    <property name="url" column="URL" type="string"/>
+    <property name="userId" column="USER_ID" type="integer"/>
+    <property name="type" column="TYPE" type="string"/>
+    <property name="value" column="VALUE" type="string"/>
+    <property name="verified" column="VERIFIED" type="boolean"/>
+    <property name="primary" column="_PRIMARY" type="boolean"/>
+    <property name="createdAt" column="CREATED_AT" type="date"/>
+    <property name="updatedAt" column="UPDATED_AT" type="date"/>
+  </class>
+</hibernate-mapping>

@@ -5,7 +5,7 @@
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
     <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-    <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/support</property>
+    <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/zd</property>
     <property name="hibernate.connection.username">postgres</property>
     <property name="hibernate.connection.password">osx</property>
     <property name="hibernate.connection.autocommit">false</property>
@@ -15,11 +15,18 @@
     <property name="hibernate.transaction.factory_class">
       org.hibernate.engine.transaction.internal.jdbc.JdbcTransactionFactory
     </property>
-    <property name="hibernate.hbm2ddl.auto">update</property>
+    <property name="hibernate.hbm2ddl.auto">create-drop</property>
     <!-- List of XML mapping files -->
-    <mapping resource="SupportTicket.hbm.xml"/>
+    <!--mapping resource="SupportTicket.hbm.xml"/>
     <mapping resource="Analyst.hbm.xml"/>
     <mapping resource="Customer.hbm.xml"/>
-    <mapping resource="DescriptionTemplate.hbm.xml"/>
+    <mapping resource="DescriptionTemplate.hbm.xml"/-->
+    <!--mapping resource="Identity.hbm.xml"/>
+    <mapping resource="Photo.hbm.xml"/>
+    <mapping resource="Attachment.hbm.xml"/-->
+    <mapping resource="ZDUser.hbm.xml"/>
+    <mapping resource="ZDTicket.hbm.xml"/>
+    <mapping resource="ZDOrganisation.hbm.xml"/>
+    <mapping resource="ZDGroupMembership.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

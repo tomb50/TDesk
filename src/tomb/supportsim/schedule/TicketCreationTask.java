@@ -1,8 +1,6 @@
 package tomb.supportsim.schedule;
 
-import org.springframework.scheduling.annotation.Scheduled;
 import tomb.supportsim.controllers.TicketManager;
-import tomb.supportsim.util.PropertyKeys;
 import tomb.supportsim.util.TimeModel;
 
 import java.sql.Timestamp;
@@ -12,7 +10,7 @@ import java.sql.Timestamp;
  */
 public class TicketCreationTask
 {
-  @Scheduled(cron= PropertyKeys.CRON_CREATION)
+ // @Scheduled(cron= PropertyKeys.CRON_CREATION)
   public void createTicket()
   {
     System.out.println( "Scheduled Ticket Creation Poller" + new Timestamp( TimeModel.getTime() ) );

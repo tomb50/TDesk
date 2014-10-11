@@ -1,13 +1,10 @@
-<%@ page import="tomb.supportsim.controllers.TicketReporter" %>
-<%@ page import="tomb.supportsim.models.Analyst" %>
-<%@ page import="tomb.supportsim.models.Customer" %>
-<%@ page import="tomb.supportsim.models.SupportTicket" %>
-<%@ page import="tomb.supportsim.models.enums.TicketStateEnum" %>
-<%@ page import="tomb.supportsim.models.enums.TicketTypeEnum" %>
+<%@ page import="org.zendesk.client.v2.model.Status" %>
+<%@ page import="tomb.supportsim.models.ZDOrganisation" %>
+<%@ page import="tomb.supportsim.models.ZDTicket" %>
+<%@ page import="tomb.supportsim.models.ZDUser" %>
 <%@ page import="tomb.supportsim.view.ViewHelper" %>
 <%@ page import="java.math.BigDecimal" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.Map" %>
 <div class="row-fluid">
     <div class="span2">
         <div class="widget">
@@ -31,13 +28,13 @@
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe088;"></span> Locked Documents
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe088;"></span> New
                 </div>
             </div>
             <div class="widget-body">
                 <div class="current-statistics">
                     <div class="products">
-                        <h3><%= ViewHelper.getTicketCountByType( TicketTypeEnum.LOCKED_DOCUMENT )%>
+                        <h3><%= ViewHelper.getTicketCountByState( Status.NEW )%>
                         </h3>
                     </div>
                 </div>
@@ -49,13 +46,13 @@
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe094;"></span> Java
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe094;"></span> Open
                 </div>
             </div>
             <div class="widget-body">
                 <div class="current-statistics">
                     <div class="sales">
-                        <h3><%= ViewHelper.getTicketCountByType( TicketTypeEnum.JAVA )%>
+                        <h3><%= ViewHelper.getTicketCountByState( Status.OPEN )%>
                         </h3>
                     </div>
                 </div>
@@ -67,13 +64,13 @@
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe094;"></span> ABL
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe094;"></span> Pending
                 </div>
             </div>
             <div class="widget-body">
                 <div class="current-statistics">
                     <div class="income">
-                        <h3><%= ViewHelper.getTicketCountByType( TicketTypeEnum.ABL )%>
+                        <h3><%= ViewHelper.getTicketCountByState( Status.PENDING )%>
                         </h3>
                     </div>
                 </div>
@@ -85,13 +82,13 @@
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe0b9;"></span> DBA
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe0b9;"></span> Hold
                 </div>
             </div>
             <div class="widget-body">
                 <div class="current-statistics">
                     <div class="expenses">
-                        <h3><%= ViewHelper.getTicketCountByType( TicketTypeEnum.DBA )%>
+                        <h3><%= ViewHelper.getTicketCountByState( Status.HOLD)%>
                         </h3>
                     </div>
                 </div>
@@ -103,13 +100,13 @@
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe0a4;"></span> System Down
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe0a4;"></span> Solved
                 </div>
             </div>
             <div class="widget-body">
                 <div class="current-statistics">
                     <div class="signups">
-                        <h3><%= ViewHelper.getTicketCountByType( TicketTypeEnum.SYSTEM_DOWN )%>
+                        <h3><%= ViewHelper.getTicketCountByState( Status.SOLVED)%>
                         </h3>
                     </div>
                 </div>
@@ -124,7 +121,7 @@
             <div class="widget-header">
                 <div class="title">
                     <span class="fs1" aria-hidden="true" data-icon=
-                          <% if (ViewHelper.getTicketCountByState(TicketStateEnum.NEW) == 0)
+                          <% if (ViewHelper.getTicketCountByState(Status.NEW) == 0)
                           { %>
                           "&#xe0fe;"></span> New Tickets  - No New Tickets!
                             <%
@@ -138,7 +135,7 @@
                 </div>
             </div>
             <div class="widget-body">
-                <% List newTickets = ViewHelper.getJoinedDetailsForNewTickets(); %>
+                <% List<ZDTicket> newTickets = ViewHelper.getTicketByState( Status.NEW ); %>
 
                 <table class="table table-striped table-bordered table-condensed table-hover no-margin">
                     <thead>
@@ -154,10 +151,9 @@
                     <tbody>
                     <% for ( int i = 0; i < newTickets.size(); i++ )
                     {
-                        SupportTicket ticket =
-                                (SupportTicket) ( (Map) newTickets.get( i ) ).get( TicketReporter.TICKET_KEY );
-                        Customer customer =
-                                (Customer) ( (Map) newTickets.get( i ) ).get( TicketReporter.CUSTOMER_KEY );
+                        ZDTicket ticket =  newTickets.get( i );
+                        ZDUser assignee = ViewHelper.getUser( ticket.getAssigneeId() );
+                        ZDOrganisation organisation = ViewHelper.getOrganisation( ticket.getOrganizationId() );
 
                     %>
                     <tr>
@@ -168,22 +164,22 @@
                         </td>
                         <td>
                                      <span>
-                                         <%= ticket.getDescription() %>
+                                         <%= ticket.getSubject() %>
                                      </span>
                         </td>
                         <td>
                                      <span>
-                                         <%= customer.getName() %>
+                                         <%= organisation.getName() %>
                                      </span>
                         </td>
                         <td>
                                      <span id="state-col" class="badge">
-                                         <%= ticket.getState() %>
+                                         <%= ticket.getStatus() %>
                                      </span>
                         </td>
                         <td>
                                      <span>
-                                         <%= ticket.getTimeWIPStarted() %>
+                                         <%= ticket.getCreatedAt() %>
                                      </span>
                         </td>
 
@@ -209,12 +205,12 @@
 
             <%
                 final BigDecimal totalCount = BigDecimal.valueOf( ViewHelper.getTotalOpenTicketCount() );
-                final BigDecimal newCount = BigDecimal.valueOf( ViewHelper.getTicketCountByState( TicketStateEnum.NEW ) );
-                final BigDecimal queueCount =
-                        BigDecimal.valueOf( ViewHelper.getTicketCountByState( TicketStateEnum.QUEUED ) );
-                final BigDecimal wipCount = BigDecimal.valueOf( ViewHelper.getTicketCountByState( TicketStateEnum.WIP ) );
-                final BigDecimal closedCount =
-                        BigDecimal.valueOf( ViewHelper.getTicketCountByState( TicketStateEnum.CLOSED ) );
+                final BigDecimal openCount = BigDecimal.valueOf( ViewHelper.getTicketCountByState( Status.OPEN ) );
+                final BigDecimal newCount = BigDecimal.valueOf( ViewHelper.getTicketCountByState( Status.NEW ) );
+                final BigDecimal pendingCount = BigDecimal.valueOf( ViewHelper.getTicketCountByState( Status.PENDING ) );
+                final BigDecimal holdCount = BigDecimal.valueOf( ViewHelper.getTicketCountByState( Status.HOLD ) );
+                final BigDecimal solvedCount =  BigDecimal.valueOf( ViewHelper.getTicketCountByState( Status.SOLVED) );
+
             %>
 
             <div class="widget-body">
@@ -235,36 +231,51 @@
                     </li>
                     <li>
                         <span class="fs1 arrow text text-info" aria-hidden="true" data-icon="&#xe077;"></span>
-                        <h5 class="stat-value"><%= queueCount%>
-                            <span class="stat-name">Queued</span>
+                        <h5 class="stat-value"><%= openCount%>
+                            <span class="stat-name">Open</span>
                         </h5>
 
                         <div class="progress progress-striped active no-margin">
                             <div class="bar" style="width:
-                                <%= queueCount.equals( BigDecimal.ZERO ) ? queueCount :
-                                    queueCount.divide( totalCount, 5, BigDecimal.ROUND_CEILING).multiply(
+                                <%= openCount.equals( BigDecimal.ZERO ) ? openCount :
+                                    openCount.divide( totalCount, 5, BigDecimal.ROUND_CEILING).multiply(
                                     BigDecimal.valueOf( 100 ) )%>%;">
                             </div>
                         </div>
                     </li>
                     <li>
                         <span class="fs1 arrow text-warning" aria-hidden="true" data-icon="&#xe091;"></span>
-                        <h5 class="stat-value"><%= wipCount%>
-                            <span class="stat-name">WIP</span>
+                        <h5 class="stat-value"><%= pendingCount%>
+                            <span class="stat-name">pending</span>
                         </h5>
 
                         <div class="progress progress-striped progress-info active no-margin">
                             <div class="bar" style="width:
-                                <%= wipCount.equals( BigDecimal.ZERO ) ? wipCount :
-                                    wipCount.divide( totalCount, 5, BigDecimal.ROUND_CEILING).multiply(
+                                <%= pendingCount.equals( BigDecimal.ZERO ) ? pendingCount :
+                                    pendingCount.divide( totalCount, 5, BigDecimal.ROUND_CEILING).multiply(
                                     BigDecimal.valueOf( 100 ) )%>%;">
                             </div>
                         </div>
                     </li>
                     <li>
+                        <span class="fs1 arrow text-warning" aria-hidden="true" data-icon="&#xe091;"></span>
+                        <h5 class="stat-value"><%= holdCount%>
+                            <span class="stat-name">Hold</span>
+                        </h5>
+
+                        <div class="progress progress-striped progress-info active no-margin">
+                            <div class="bar" style="width:
+                                <%= holdCount.equals( BigDecimal.ZERO ) ? holdCount :
+                                    holdCount.divide( totalCount, 5, BigDecimal.ROUND_CEILING).multiply(
+                                    BigDecimal.valueOf( 100 ) )%>%;">
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
                         <span class="fs1 arrow text-success" aria-hidden="true" data-icon="&#xe0fe;"></span>
-                        <h5 class="stat-value"><%= closedCount%>
-                            <span class="stat-name">Closed</span>
+                        <h5 class="stat-value"><%= solvedCount%>
+                            <span class="stat-name">Solved</span>
                         </h5>
                     </li>
                 </ul>
@@ -279,11 +290,11 @@
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe07e;"></span> Recent Ticket Overview
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe07e;"></span> Open Ticket Overview
                 </div>
             </div>
             <div class="widget-body">
-                <% List tickets = ViewHelper.getJoinedDetailsForAllTickets(); %>
+                <% List<ZDTicket> tickets = ViewHelper.getOpenTickets(); %>
 
                 <table class="table table-striped table-bordered table-condensed table-hover no-margin">
                     <thead>
@@ -300,15 +311,11 @@
                     <tbody>
                     <% for ( int i = 0; i < tickets.size(); i++ )
                     {
-                        SupportTicket ticket =
-                                (SupportTicket) ( (Map) tickets.get( i ) ).get( TicketReporter.TICKET_KEY );
-                        Analyst analyst =
-                                (Analyst) ( (Map) tickets.get( i ) ).get( TicketReporter.ANALYST_KEY );
-                        Customer customer =
-                                (Customer) ( (Map) tickets.get( i ) ).get( TicketReporter.CUSTOMER_KEY );
-
+                        ZDTicket ticket = tickets.get( i ) ;
+                        ZDUser analyst = ViewHelper.getUser( ticket.getAssigneeId() );
+                        ZDOrganisation customer = ViewHelper.getOrganisation( ticket.getOrganizationId() );
                     %>
-                    <tr>
+                    <tr class="clickableRow" href=<%=ViewHelper.getTicketLink(ticket.getId())%>>
                         <td>
                                      <span>
                                          <%= ticket.getId() %>
@@ -316,27 +323,27 @@
                         </td>
                         <td>
                                      <span>
-                                         <%= ticket.getDescription() %>
+                                         <%= ticket.getSubject() %>
                                      </span>
                         </td>
                         <td>
                                      <span>
-                                         <%= customer.getName() %>
+                                         <%= customer != null ? customer.getName() : "" %>
                                      </span>
                         </td>
                         <td>
                                      <span id="state-col" class="badge">
-                                         <%= ticket.getState() %>
+                                         <%= ticket.getStatus() %>
                                      </span>
                         </td>
                         <td>
                                      <span>
-                                         <%= analyst.getName() %>
+                                         <%=  analyst != null ? analyst.getName() : "" %>
                                      </span>
                         </td>
                         <td>
                                      <span>
-                                         <%= ticket.getTimeWIPStarted() == null ? "-" : ticket.getTimeWIPStarted()%>
+                                         <%= ticket.getCreatedAt()%>
                                      </span>
                         </td>
 
@@ -353,11 +360,21 @@
     </div>
 </div>
 
-</div>
+
 <!-- Add a bit of color to the Ticket statuses-->
 <script>
-    $( '#state-col.badge:contains("CLOSED")' ).addClass( 'badge-success' );
+    $( '#state-col.badge:contains("PENDING")' ).addClass( 'badge-success' );
     $( '#state-col.badge:contains("NEW")' ).addClass( 'badge-important' );
-    $( '#state-col.badge:contains("QUEUED")' ).addClass( 'badge-info' );
-    $( '#state-col.badge:contains("WIP")' ).addClass( 'badge-warning' );
+    $( '#state-col.badge:contains("HOLD")' ).addClass( 'badge-info' );
+    $( '#state-col.badge:contains("OPEN")' ).addClass( 'badge-warning' );
+</script>
+
+<script>
+
+    jQuery(document).ready(function($) {
+        $(".clickableRow").click(function() {
+           // window.document.location = $(this).attr("href");
+            window.open($(this).attr("href"));
+        });
+    });
 </script>

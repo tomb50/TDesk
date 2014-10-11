@@ -58,11 +58,11 @@
                 </a>
             </li>
             <li class="nav-ele">
-                <a href="forms.jsp">
+                <a href="customer_phone_list.jsp">
                     <div class="icon">
                         <span class="fs1" aria-hidden="true" data-icon="&#xe0b8;"></span>
                     </div>
-                    Forms
+                    Phone List
                 </a>
             </li>
             <li class="nav-ele">
@@ -166,7 +166,7 @@
                                     <a href="index.html">Dashboard</a>
                                 </li>
                                 <li>
-                                    <a href="forms.jsp">Forms</a>
+                                    <a href="customer_phone_list.jsp">Phone List</a>
                                 </li>
                                 <li>
                                     <a href="statistics.jsp">Statistics</a>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="tomb.supportsim.models.ZDUser" table="ZDUSER">
+    <id name="id" column="ID" type="long"/>
+    <property name="url" column="URL" type="string"/>
+    <property name="name" column="NAME" type="string"/>
+    <property name="externalId" column="EXTERNAL_ID" type="string"/>
+    <property name="alias" column="ALIAS" type="string"/>
+    <property name="createdAt" column="CREATED_AT" type="date"/>
+    <property name="updatedAt" column="UPDATED_AT" type="date"/>
+    <property name="active" column="ACTIVE" type="boolean"/>
+    <property name="verified" column="VERIFIED" type="boolean"/>
+    <property name="shared" column="SHARED" type="boolean"/>
+    <property name="localeId" column="LOCALE_ID" type="long"/>
+    <property name="lastLoginAt" column="LAST_LOGIN_AT" type="date"/>
+    <property name="email" column="EMAIL" type="string"/>
+    <property name="phone" column="PHONE" type="string"/>
+    <property name="signature" column="SIGNATURE" type="string"/>
+    <property name="details" column="DETAILS" type="string"/>
+    <property name="notes" column="NOTES" type="string"/>
+    <property name="organizationId" column="ORGANIZATION_ID" type="long"/>
+    <property name="role" column="ROLE" not-null="false">
+      <type name="org.hibernate.type.EnumType">
+         <param name="enumClass">org.zendesk.client.v2.model.Role</param>
+         <param name="type">12</param>
+      </type>
+    </property>
+    <property name="customRoleId" column="CUSTOM_ROLE_ID" type="long"/>
+    <property name="moderator" column="MODERATOR" type="boolean"/>
+    <property name="ticketRestriction" column="TICKET_RESTRICTION" not-null="false">
+      <type name="org.hibernate.type.EnumType">
+         <param name="enumClass">org.zendesk.client.v2.model.TicketRestriction</param>
+         <param name="type">12</param>
+      </type>
+    </property>
+    <property name="onlyPrivateComments" column="ONLY_PRIVATE_COMMENTS" type="boolean"/>
+    <property name="suspended" column="SUSPENDED" type="boolean"/>
+    <property name="remotePhotoUrl" column="REMOTE_PHOTO_URL" type="string"/>
+  </class>
+</hibernate-mapping>

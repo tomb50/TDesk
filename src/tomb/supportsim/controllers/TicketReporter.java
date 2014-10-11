@@ -4,10 +4,12 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
+import org.zendesk.client.v2.model.Status;
 import tomb.supportsim.connection.HibernateUtil;
 import tomb.supportsim.models.Analyst;
 import tomb.supportsim.models.Customer;
 import tomb.supportsim.models.SupportTicket;
+import tomb.supportsim.models.ZDTicket;
 import tomb.supportsim.models.enums.TicketStateEnum;
 import tomb.supportsim.models.enums.TicketTypeEnum;
 
@@ -41,11 +43,11 @@ public class TicketReporter
     return HibernateUtil.getEntityCount( SupportTicket.class, restrictions );
   }
 
-  public static List getTicketsByState( final TicketStateEnum ticketStateEnum )
+  public static List<ZDTicket> getTicketsByState( final Status ticketStateEnum )
   {
     final List<Criterion> restrictions = new ArrayList<>();
-    restrictions.add( Restrictions.eq( "state", ticketStateEnum ) );
-    return HibernateUtil.getEntityList( SupportTicket.class, restrictions );
+    restrictions.add( Restrictions.eq( "status", ticketStateEnum ) );
+    return (List<ZDTicket>) HibernateUtil.getEntityList( ZDTicket.class, restrictions );
   }
 
   public static Integer getTicketCountByTypeAndState( final TicketTypeEnum ticketTypeEnum,
@@ -66,15 +68,15 @@ public class TicketReporter
 
   public static Integer getTotalTicketCount()
   {
-    return HibernateUtil.getEntityCount( SupportTicket.class );
+    return HibernateUtil.getEntityCount( ZDTicket.class );
   }
 
   public static Integer getTotalOpenTicketCount()
   {
     final List<Criterion> restrictions = new ArrayList<>();
-    restrictions.add( Restrictions.ne(  "state", TicketStateEnum.CLOSED ) ) ;
+    restrictions.add( Restrictions.ne("status", Status.CLOSED ) ) ;
 
-    return HibernateUtil.getEntityCount(  SupportTicket.class, restrictions );
+    return HibernateUtil.getEntityCount(  ZDTicket.class, restrictions );
   }
 
   public static List<SupportTicket> getAllTickets()
@@ -181,10 +183,10 @@ public class TicketReporter
     return results;
   }
 
-  public static Integer getTicketCountByState( final TicketStateEnum ticketStateEnum )
+  public static Integer getTicketCountByState( final Status ticketStateEnum )
   {
     final List<Criterion> restrictions = new ArrayList<>(  );
-    restrictions.add( Restrictions.eq( "state", ticketStateEnum ));
-    return  HibernateUtil.getEntityCount( SupportTicket.class, restrictions );
+    restrictions.add( Restrictions.eq( "status", ticketStateEnum ));
+    return  HibernateUtil.getEntityCount( ZDTicket.class, restrictions );
   }
 }

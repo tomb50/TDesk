@@ -1,7 +1,5 @@
 package tomb.supportsim.schedule;
 
-import org.springframework.scheduling.annotation.Scheduled;
-import tomb.supportsim.util.PropertyKeys;
 import tomb.supportsim.util.TimeModel;
 
 import java.sql.Timestamp;
@@ -11,7 +9,7 @@ import java.sql.Timestamp;
  */
 public class TicketAssignmentTask
 {
-  @Scheduled(cron = PropertyKeys.CRON_ASSIGNMENT)
+ // @Scheduled(cron = PropertyKeys.CRON_ASSIGNMENT)
   public void assignTickets()
   {
     System.out.println( "Scheduled Assignment Poller" + new Timestamp( TimeModel.getTime() ) );

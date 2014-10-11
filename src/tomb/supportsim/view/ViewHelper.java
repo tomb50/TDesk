@@ -1,16 +1,15 @@
 package tomb.supportsim.view;
 
+import org.zendesk.client.v2.model.Status;
 import tomb.supportsim.controllers.AnalystReporter;
 import tomb.supportsim.controllers.CustomerReporter;
 import tomb.supportsim.controllers.DescriptionTemplateReporter;
 import tomb.supportsim.controllers.TicketReporter;
-import tomb.supportsim.models.Analyst;
-import tomb.supportsim.models.Customer;
-import tomb.supportsim.models.DescriptionTemplate;
-import tomb.supportsim.models.SupportTicket;
+import tomb.supportsim.models.*;
 import tomb.supportsim.models.enums.RoleEnum;
 import tomb.supportsim.models.enums.TicketStateEnum;
 import tomb.supportsim.models.enums.TicketTypeEnum;
+import tomb.supportsim.util.UserOrganisationComparator;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -20,6 +19,47 @@ import java.util.*;
  */
 public class ViewHelper
 {
+
+  /*
+   *
+   * Cache for speed //todo improve cache mechanism
+   *
+   */
+ private static Cache cache = new Cache();
+
+
+
+  public static ZDOrganisation getOrganisation(final Long organisationId)
+  {
+    return cache.getOrganisationMap().get( organisationId );
+  }
+
+  public static ZDUser getUser(final Long userId)
+  {
+    return cache.getUserMap().get( userId );
+  }
+
+  public static ZDTicket getTicket(final Long ticketId)
+  {
+    return cache.getTicketMap().get( ticketId );
+  }
+
+  public static Map<Long,ZDOrganisation> getOrganisationMap()
+  {
+    return cache.getOrganisationMap();
+  }
+
+  public static Map<Long,ZDUser> getUserMap()
+  {
+    return cache.getUserMap();
+  }
+
+  public static Map<Long,ZDTicket> getTicketMap()
+  {
+    return cache.getTicketMap();
+  }
+
+
   public static List getAnalystAttributes()
   {
     return Arrays.asList( Analyst.class.getDeclaredFields() );
@@ -113,7 +153,7 @@ public class ViewHelper
     return TicketReporter.getJoinedDetailsForNewTickets();
   }
 
-  public static Integer getTicketCountByState( final TicketStateEnum ticketStateEnum )
+  public static Integer getTicketCountByState( final Status ticketStateEnum )
   {
     return TicketReporter.getTicketCountByState( ticketStateEnum );
   }
@@ -202,5 +242,71 @@ public class ViewHelper
     }
     return ticketTypeEnums;
   }
+
+  public static List<ZDTicket> getTicketByState(final Status status)
+  {
+    return TicketReporter.getTicketsByState( status );
+
+  }
+
+  public static List<ZDTicket> getOpenTickets()
+  {
+    return cache.getTickets( Status.OPEN );
+  }
+
+  //todo get rid of the literals here
+  public static String getTicketLink( final Long id )
+  {
+    return "http://resultgroup.zendesk.com/tickets/".concat( String.valueOf( id ) );
+  }
+
+  public static String getUserLink(final Long id)
+  {
+    return "http://resultgroup.zendesk.com/users/".concat( String.valueOf( id ) );
+  }
+
+
+  public static List<ZDUser> getCustomers()
+  {
+    return cache.getUsers();
+  }
+
+  public static List<ZDUser> getOrderedCustomers()
+  {
+    List<ZDUser> users = getCustomers();
+    for ( Iterator it = users.iterator(); it.hasNext(); )
+    {
+      ZDUser user = (ZDUser) it.next();
+      if(user.getOrganizationId() == null) it.remove();
+    }
+    Collections.sort( users, new UserOrganisationComparator() );
+    return users;
+  }
+
+  public static List<ZDUser> getOrderedCustomersWithPhone()
+  {
+    List<ZDUser> users = getCustomers();
+    for ( Iterator it = users.iterator(); it.hasNext(); )
+    {
+      ZDUser user = (ZDUser) it.next();
+      if(user.getPhone() == null) it.remove();
+    }
+
+    Collections.sort( users, new UserOrganisationComparator() );
+    return users;
+  }
+
+  public static List<ZDUser> getOrderedCustomersWithoutPhone()
+  {
+    List<ZDUser> users = getCustomers();
+    for ( Iterator it = users.iterator(); it.hasNext(); )
+    {
+      ZDUser user = (ZDUser) it.next();
+      if(user.getPhone() != null) it.remove();
+    }
+    Collections.sort( users, new UserOrganisationComparator() );
+    return users;
+  }
+
 
 }
