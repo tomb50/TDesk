@@ -1,34 +1,13 @@
 package tomb.supportsim.schedule;
 
-import tomb.supportsim.controllers.UpdateController;
-import tomb.supportsim.models.SupportTicket;
-
-import java.util.List;
-
 /**
  * Created with IntelliJ IDEA. User: tombeadman Date: 09/08/2014 Time: 20:04
  */
 class UpdatePoller
 {
-
+  //todo Implement pull poller
   public void run()
   {
-
-    List<SupportTicket> wipTickets = getWIPTickets();
-    if ( wipTickets != null )
-    {
-      closeTickets( wipTickets );
-    }
   }
 
-  private void closeTickets( final List<SupportTicket> wipTickets )
-  {
-    UpdateController updateController = new UpdateController();
-    updateController.closeTickets( wipTickets );
-  }
-
-  private List getWIPTickets()
-  {
-    return null;
-  }
 }

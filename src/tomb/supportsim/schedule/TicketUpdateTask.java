@@ -1,7 +1,5 @@
 package tomb.supportsim.schedule;
 
-import tomb.supportsim.util.TimeModel;
-
 import java.sql.Timestamp;
 
 /**
@@ -14,7 +12,7 @@ public class TicketUpdateTask
   //@Scheduled(cron=PropertyKeys.CRON_UPDATE)
   public void updateTickets()
   {
-    System.out.println( "Scheduled Updating Poller" + new Timestamp( TimeModel.getTime() ) );
+    System.out.println( "Scheduled Updating Poller" + new Timestamp( System.currentTimeMillis() ) );
     UpdatePoller updatePoller = new UpdatePoller();
     updatePoller.run();
   }
