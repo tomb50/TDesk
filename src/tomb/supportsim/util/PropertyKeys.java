@@ -11,6 +11,6 @@ public interface PropertyKeys
   String CRON_CREATION = "${poller.assignment.cron}";
   String ZENDESK_SUBDOMAIN = "zendesk.subdomain";
   String ZENDESK_USER = "zendesk.user";
-  String ZENDESK_PASSWORD = "zendesk.pass";
+  String ZENDESK_PASSWORD = "zendesk.password";
   String ZENDESK_TOKEN = "zendesk.token";
 }

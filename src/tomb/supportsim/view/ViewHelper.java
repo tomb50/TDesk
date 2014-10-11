@@ -309,4 +309,30 @@ public class ViewHelper
   }
 
 
+  public static List<ZDTopic> getOrderedTopics()
+  {
+    List<ZDTopic> topics =  cache.getTopics();
+    Collections.sort( topics, new TopicForumComparator() );
+    return topics;
+  }
+
+  public static String getTopicLink( final Long id )
+  {
+    return "http://resultgroup.zendesk.com/entries/".concat( String.valueOf( id ));
+  }
+
+  public static ZDForum getForum(final Long forumId)
+  {
+    return cache.getForumMap().get( forumId );
+  }
+
+  public static String getForumName( final Long forumId )
+  {
+    return getForum( forumId ) != null ? getForum(forumId  ).getName() : "";
+  }
+
+  public static String getUserName(final long id)
+  {
+    return getUser( id ) != null ? getUser( id ).getName() : "";
+  }
 }

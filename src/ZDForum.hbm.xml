@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="tomb.supportsim.models.ZDForum" table="ZDFORUM">
+    <id name="id" column="ID" type="long"/>
+    <property name="url" column="URL" type="string"/>
+    <property name="name" column="NAME" type="string"/>
+    <property name="description" column="DESCRIPTION" type="text"/>
+    <property name="categoryId" column="CATEGORY_ID" type="long"/>
+    <property name="organizationId" column="ORGANIZATION_ID" type="long"/>
+    <property name="localeId" column="LOCALE_ID" type="long"/>
+    <property name="locked" column="LOCKED" type="boolean"/>
+    <property name="unansweredTopics" column="UNANSWERED_TOPICS" type="long"/>
+    <property name="position" column="POSITION" type="long"/>
+    <property name="forumType" column="FORUM_TYPE" type="string"/>
+    <property name="access" column="ACCESS" type="string"/>
+    <property name="createdAt" column="CREATED_AT" type="date"/>
+    <property name="updatedAt" column="UPDATED_AT" type="date"/>
+  </class>
+</hibernate-mapping>

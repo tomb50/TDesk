@@ -66,6 +66,14 @@
                 </a>
             </li>
             <li class="nav-ele">
+                <a href="forum_articles.jsp">
+                    <div class="icon">
+                        <span class="fs1" aria-hidden="true" data-icon="&#xe0b8;"></span>
+                    </div>
+                    Forum Articles
+                </a>
+            </li>
+            <li class="nav-ele">
                 <a href="statistics.jsp">
                     <div class="icon">
                         <span class="fs1" aria-hidden="true" data-icon="&#xe096;"></span>
@@ -167,6 +175,9 @@
                                 </li>
                                 <li>
                                     <a href="customer_phone_list.jsp">Phone List</a>
+                                </li>
+                                <li>
+                                    <a href="forum_articles.jsp">Forum Articles</a>
                                 </li>
                                 <li>
                                     <a href="statistics.jsp">Statistics</a>

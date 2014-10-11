@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="tomb.supportsim.models.ZDTopic" table="ZDTOPIC">
+    <id name="id" column="ID" type="long"/>
+    <property name="url" column="URL" type="string"/>
+    <property name="title" column="TITLE" type="string"/>
+    <property name="body" column="BODY" type="text"/>
+    <property name="topicType" column="TOPIC_TYPE" type="string"/>
+    <property name="submitterId" column="SUBMITTER_ID" type="long"/>
+    <property name="updaterId" column="UPDATER_ID" type="long"/>
+    <property name="forumId" column="FORUM_ID" type="long"/>
+    <property name="locked" column="LOCKED" type="boolean"/>
+    <property name="pinned" column="PINNED" type="boolean"/>
+    <property name="highlighted" column="HIGHLIGHTED" type="boolean"/>
+    <property name="answered" column="ANSWERED" type="boolean"/>
+    <property name="commentCount" column="COMMENT_COUNT" type="long"/>
+    <property name="position" column="POSITION" type="long"/>
+    <property name="createdAt" column="CREATED_AT" type="date"/>
+    <property name="updatedAt" column="UPDATED_AT" type="date"/>
+  </class>
+</hibernate-mapping>

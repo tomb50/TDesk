@@ -1,10 +1,7 @@
 package tomb.supportsim.app;
 
 import org.zendesk.client.v2.Zendesk;
-import org.zendesk.client.v2.model.GroupMembership;
-import org.zendesk.client.v2.model.Organization;
-import org.zendesk.client.v2.model.Ticket;
-import org.zendesk.client.v2.model.User;
+import org.zendesk.client.v2.model.*;
 import tomb.supportsim.connection.HibernateUtil;
 import tomb.supportsim.models.ConvertUtil;
 
@@ -26,30 +23,47 @@ public class DataImporter
 
 
 
-    final long startTime = System.currentTimeMillis();
+    long time = System.currentTimeMillis();
     //persist Users
     System.out.println("Persisting Users from ZenDesk to Database");
     saveUsers();
     System.out.println("Users saved");
-    System.out.println( ( System.currentTimeMillis() - startTime ) / 1000 );
+    System.out.println( ( System.currentTimeMillis() - time ) / 1000 );
+    time = System.currentTimeMillis();
 
     //persist tickets
     System.out.println("Persisting Tickets from ZenDesk to Database");
     saveTickets();
     System.out.println("Tickets saved");
-    System.out.println( (System.currentTimeMillis() - startTime)/1000 );
+    System.out.println( (System.currentTimeMillis() - time)/1000 );
+    time = System.currentTimeMillis();
 
     //persist Organisations
     System.out.println("Persisting Organisations from ZenDesk to Database");
     saveOrganisations();
     System.out.println("Organisations saved");
-    System.out.println( (System.currentTimeMillis() - startTime)/1000 );
+    System.out.println( (System.currentTimeMillis() - time)/1000 );
+    time = System.currentTimeMillis();
 
     //persist GroupMemberships
     System.out.println("Persisting Group Memberships from ZenDesk to Database");
     saveGroupMemberships();
     System.out.println("Memberships saved");
-    System.out.println( (System.currentTimeMillis() - startTime)/1000 );
+    System.out.println( (System.currentTimeMillis() - time)/1000 );
+    time = System.currentTimeMillis();
+
+    //persist Forums
+    System.out.println("Persisting Forums from ZenDesk to Database");
+    saveForums();
+    System.out.println("Forums saved");
+    System.out.println( (System.currentTimeMillis() - time)/1000 );
+    time = System.currentTimeMillis();
+
+    //persist Topics
+    System.out.println("Persisting Topics from ZenDesk to Database");
+    saveTopics();
+    System.out.println("Topics saved");
+    System.out.println( (System.currentTimeMillis() - time)/1000 );
   }
 
   private void saveTickets()
@@ -82,6 +96,22 @@ public class DataImporter
     for ( GroupMembership groupMembership : zendesk.getGroupMemberships())
     {
       HibernateUtil.insertEntity( groupMembership );
+    }
+  }
+
+  private void saveForums()
+  {
+    for( Forum forum : zendesk.getForums())
+    {
+      HibernateUtil.insertEntity( ConvertUtil.toForum( forum ) );
+    }
+  }
+
+  private void saveTopics()
+  {
+    for( Topic topic : zendesk.getTopics())
+    {
+      HibernateUtil.insertEntity( ConvertUtil.toTopic( topic ) );
     }
   }
 
