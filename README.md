@@ -16,6 +16,3 @@ The ZD branch is quite different, leveraging the existing framework of SupportSi
 This is made possible by the Zendesk Java Client written by stephenc/cloudbees
 
 https://github.com/cloudbees/zendesk-java-client
-
-
-I'll be aming to write a few entries regarding this on tombeadman.com
