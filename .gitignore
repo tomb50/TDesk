@@ -1,5 +1,3 @@
-src/tomb/local
 .idea
 SupportSim.iml
-assets
 src/server.properties
