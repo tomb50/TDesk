@@ -48,7 +48,7 @@
 <script>$( "#main_template" ).load( "main_template.jsp" );</script>
 
 <!-- Define page specific content and background jsp (if required)-->
-<script>main_content="description_templates_content.jsp"</script>
+<script>main_content="project_managers_content.jsp"</script>
 <script>bg_jsp=null</script>
 
 </body>

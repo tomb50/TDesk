@@ -2,6 +2,8 @@ package tomb.supportsim.view;
 
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
+import org.zendesk.client.v2.model.Group;
+import org.zendesk.client.v2.model.GroupMembership;
 import org.zendesk.client.v2.model.Status;
 import tomb.supportsim.connection.HibernateUtil;
 import tomb.supportsim.models.*;
@@ -26,6 +28,43 @@ public class Cache
   private Map<Long, ZDTicket> ticketMap;
   private Map<Long, ZDTopic> topicMap;
   private Map<Long, ZDForum> forumMap;
+  private Map<Long, Group> groupMap;
+  private Map<Long, GroupMembership> groupMembershipMap;
+
+
+  public Map<Long, Group> getGroupMap()
+  {
+    if ( groupMap == null || groupMap.isEmpty())
+    {
+      groupMap = new HashMap<>();
+      final List<Group> groupList = HibernateUtil.getEntityList( Group.class );
+      for ( Group group : groupList )
+      {
+        groupMap.put( group.getId(), group );
+      }
+    }
+    return groupMap;
+  }
+
+
+  public Map<Long, GroupMembership> getGroupMembershipMap()
+  {
+    if ( groupMembershipMap == null || groupMembershipMap.isEmpty())
+    {
+      groupMembershipMap = new HashMap<>();
+      final List<GroupMembership> groupMembershipList = HibernateUtil.getEntityList( GroupMembership.class );
+      for ( GroupMembership groupMembership : groupMembershipList )
+      {
+        groupMembershipMap.put( groupMembership.getId(), groupMembership );
+      }
+    }
+    return groupMembershipMap;
+  }
+
+  public List<GroupMembership> getGroupMemberships()
+  {
+    return new ArrayList<>( getGroupMembershipMap().values() );
+  }
 
   public Map<Long, ZDOrganisation> getOrganisationMap()
   {
@@ -48,7 +87,7 @@ public class Cache
 
   public Map<Long, ZDUser> getUserMap()
   {
-    if ( userMap == null )
+    if ( userMap == null || userMap.isEmpty() )
     {
       userMap = new HashMap<>();
       final List<Criterion> restrictions = new ArrayList<>();
@@ -69,7 +108,7 @@ public class Cache
 
   public Map<Long, ZDTicket> getTicketMap()
   {
-    if ( ticketMap == null )
+    if ( ticketMap == null || ticketMap.isEmpty())
     {
       ticketMap = new HashMap<>();
       final List<ZDTicket> ticketList = HibernateUtil.getEntityList( ZDTicket.class );
@@ -93,9 +132,40 @@ public class Cache
     return ticketList;
   }
 
+  public List<ZDTicket> getUnassignedTickets( final Status status )
+  {
+    final List<ZDTicket> ticketList = new ArrayList<>();
+    for ( Map.Entry<Long, ZDTicket> entry : getTicketMap().entrySet() )
+    {
+      ZDTicket ticket = entry.getValue();
+      if (  ticket.getStatus() != null && ticket.getStatus().equals( status ) && ticket.getAssigneeId() == null)
+      {
+        ticketList.add( ticket );
+      }
+    }
+    return ticketList;
+  }
+
+
+  public List<ZDTicket> getTickets( final Status status, long userId )
+  {
+    final List<ZDTicket> ticketList = new ArrayList<>();
+    for ( Map.Entry<Long, ZDTicket> entry : getTicketMap().entrySet() )
+    {
+      ZDTicket ticket = entry.getValue();
+      if ( ticket.getStatus() != null &&
+        ticket.getStatus().equals( status ) &&
+        ticket.getAssigneeId() != null && ticket.getAssigneeId() == userId )
+      {
+        ticketList.add( ticket );
+      }
+    }
+    return ticketList;
+  }
+
   public Map<Long, ZDTopic> getTopicMap()
   {
-    if ( topicMap == null )
+    if ( topicMap == null || userMap.isEmpty() )
     {
       topicMap = new HashMap<>();
       final List<ZDTopic> topicList = HibernateUtil.getEntityList( ZDTopic.class );
@@ -112,10 +182,15 @@ public class Cache
     return new ArrayList<>( getTopicMap().values() );
   }
 
+  public List<Group> getGroups()
+  {
+    return new ArrayList<>( getGroupMap().values() );
+  }
+
 
   public Map<Long, ZDForum> getForumMap()
   {
-    if ( forumMap == null )
+    if ( forumMap == null || forumMap.isEmpty() )
     {
       forumMap = new HashMap<>();
       final List<ZDForum> forumList = HibernateUtil.getEntityList( ZDForum.class );

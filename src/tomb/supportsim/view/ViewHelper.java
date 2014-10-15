@@ -1,14 +1,16 @@
 package tomb.supportsim.view;
 
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
+import org.zendesk.client.v2.model.Group;
+import org.zendesk.client.v2.model.GroupMembership;
 import org.zendesk.client.v2.model.Status;
+import tomb.supportsim.connection.HibernateUtil;
 import tomb.supportsim.controllers.TicketReporter;
 import tomb.supportsim.models.*;
 import tomb.supportsim.util.UserOrganisationComparator;
 
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA. User: tombeadman Date: 25/08/2014 Time: 17:53
@@ -84,6 +86,17 @@ public class ViewHelper
     return cache.getTickets( Status.OPEN );
   }
 
+  public static List<ZDTicket> getOpenUnassignedTickets()
+  {
+    return cache.getUnassignedTickets(Status.OPEN);
+
+  }
+
+  public static List<ZDTicket> getOpenTicketsForAnalystFromCache( long analystid )
+  {
+   return cache.getTickets( Status.OPEN, analystid );
+  }
+
   //todo get rid of the literals here
   public static String getTicketLink( final Long id )
   {
@@ -137,5 +150,188 @@ public class ViewHelper
   public static String getUserName(final long id)
   {
     return getUser( id ) != null ? getUser( id ).getName() : "";
+  }
+
+  public static List<ZDUser> getJavaAnalysts()
+  {
+    Group javaGroup = getGroup( "Java" );
+
+    final List<Criterion> restrictions = new ArrayList<>();
+    restrictions.add( Restrictions.eq( "groupId", javaGroup.getId() ) );
+    List<GroupMembership> groupMemberships = HibernateUtil.getEntityList( GroupMembership.class, restrictions );
+
+    List<ZDUser> javaAgents = new ArrayList<>();
+    for ( GroupMembership groupMembership : groupMemberships )
+    {
+      ZDUser javaAnalyst = cache.getUserMap().get( groupMembership.getUserId() );
+      if (javaAnalyst != null && !javaAnalyst.getName().equals( "Helen sowerby"))
+      javaAgents.add( cache.getUserMap().get( groupMembership.getUserId() ) );
+    }
+
+    return javaAgents;
+  }
+
+
+  public static List<ZDUser> getNonJavaAnalysts()
+  {
+
+    Group charGroup = getGroup( "Character" );
+    Group firstLine = getGroup( "Support" );
+
+    final List<Criterion> restrictions = new ArrayList<>();
+    restrictions.add( Restrictions.or( Restrictions.eq( "groupId", charGroup.getId() ),
+                                       Restrictions.eq( "groupId", firstLine.getId() ) ) );
+    List<GroupMembership> groupMemberships = HibernateUtil.getEntityList( GroupMembership.class, restrictions );
+
+    List<ZDUser> agents = new ArrayList<>();
+    for ( GroupMembership groupMembership : groupMemberships )
+    {
+      ZDUser agent = cache.getUserMap().get( groupMembership.getUserId() );
+      if ( agent != null && !agent.getName().equals( "Helen sowerby" ) )
+      {
+        agents.add( cache.getUserMap().get( groupMembership.getUserId() ) );
+      }
+    }
+
+    return agents;
+  }
+
+  public static List<ZDUser> getSupportAnalysts()
+  {
+
+    Group charGroup = getGroup( "Character" );
+    Group firstLine = getGroup( "Support" );
+    Group javaGroup = getGroup( "Java" );
+
+    final List<Criterion> restrictions = new ArrayList<>();
+    restrictions.add( Restrictions.or(
+      Restrictions.or( Restrictions.eq( "groupId", charGroup.getId() ),
+                       Restrictions.eq( "groupId", firstLine.getId() ) ),
+      Restrictions.eq( "groupId", javaGroup.getId() ) ) );
+    List<GroupMembership> groupMemberships = HibernateUtil.getEntityList( GroupMembership.class, restrictions );
+
+    List<ZDUser> agents = new ArrayList<>();
+    for ( GroupMembership groupMembership : groupMemberships )
+    {
+      ZDUser agent = cache.getUserMap().get( groupMembership.getUserId() );
+      if ( agent != null && !agent.getName().equals( "Helen sowerby" ) )
+      {
+        agents.add( cache.getUserMap().get( groupMembership.getUserId() ) );
+      }
+    }
+
+    List<ZDUser> cleanlist = new ArrayList<ZDUser>();
+    for ( ZDUser user : agents )
+    {
+      if ( !cleanlist.contains( user ) )
+      {
+        cleanlist.add( user );
+      }
+    }
+
+    return cleanlist;
+  }
+
+
+  public static Integer getOpenTicketCount(String groupName)
+  {
+    Group group = getGroup( groupName );
+    final List<Criterion> restrictions = new ArrayList<>();
+    restrictions.add( Restrictions.and( Restrictions.eq( "groupId", group.getId()),
+                                        Restrictions.eq( "status", Status.OPEN)));
+    return HibernateUtil.getEntityCount( ZDTicket.class,restrictions );
+
+
+  }
+
+
+  public static List<ZDUser> getJavaAnalystsFromCache()
+  {
+    Group javaGroup = getGroupfromCache( "Java" );
+    List<GroupMembership> groupMemberships = getGroupMembershipsFromCache(javaGroup.getId());
+    List<ZDUser> javaAgents = new ArrayList<>();
+    for ( GroupMembership groupMembership : groupMemberships )
+    {
+      ZDUser javaAnalyst = cache.getUserMap().get( groupMembership.getUserId() );
+      if (javaAnalyst != null && !javaAnalyst.getName().equals( "Helen sowerby"))
+        javaAgents.add( cache.getUserMap().get( groupMembership.getUserId() ) );
+    }
+    return javaAgents;
+
+  }
+
+  private static List<GroupMembership> getGroupMembershipsFromCache( final Long id )
+  {
+    List<GroupMembership> allGroupMemberships = cache.getGroupMemberships();
+    List<GroupMembership> requiredGroupMemberships = new ArrayList<>(  );
+
+    for(GroupMembership groupMembership : allGroupMemberships)
+    {
+      if (groupMembership.getGroupId().equals(id))
+      {
+        requiredGroupMemberships.add( groupMembership );
+      }
+    }
+    return requiredGroupMemberships;
+  }
+
+  private static Group getGroupfromCache( final String java )
+  {
+    Group group = null;
+    List<Group> groups = cache.getGroups();
+    for (Group group1 : groups)
+    {
+      if (group1.getName().equals( java ))
+      {
+        group = group1;
+      }
+    }
+    return group;
+  }
+
+
+  private static Group getGroup( final String name )
+  {
+    final List<Criterion> restrictions = new ArrayList<>();
+    restrictions.add( Restrictions.eq( "name", name) );
+    List<Group> groups = HibernateUtil.getEntityList( Group.class, restrictions );
+    return groups==null || groups.isEmpty() ? null : groups.get( 0 ); // there shoudl be only one.
+  }
+
+
+  public static Integer getLargestJavaWorkload()
+  {
+    Integer largesQueueSize = 0;
+    for ( ZDUser user : getJavaAnalysts() )
+    {
+      if ( user != null )
+      {
+        Integer queueSize = TicketReporter.getTicketCount( user.getId(), Status.OPEN );
+        if ( queueSize > largesQueueSize ) largesQueueSize = queueSize;
+      }
+    }
+    return largesQueueSize;
+  }
+
+  public static Integer getLargestNonJavaWorkload()
+  {
+    Integer largesQueueSize = 0;
+    for ( ZDUser user : getNonJavaAnalysts() )
+    {
+      if ( user != null )
+      {
+        Integer queueSize = TicketReporter.getTicketCount( user.getId(), Status.OPEN );
+        if ( queueSize > largesQueueSize ) largesQueueSize = queueSize;
+      }
+    }
+    return largesQueueSize;
+
+  }
+
+
+  //toto fix NPE here
+  public static String getGroupName( final Long groupId )
+  {
+    return cache.getGroupMap().get( groupId ).getName();
   }
 }

@@ -3,12 +3,12 @@
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe075;"></span> Customers
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe074;"></span> Statistics Page
                 </div>
             </div>
             <div class="widget-body">
-                TO DO <br>
-                Customer related info
+                To Do <br>
+                A page of useful stats, some are already done, just need to determine what information is useful.
             </div>
         </div>
     </div>

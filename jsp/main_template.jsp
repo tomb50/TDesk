@@ -62,7 +62,7 @@
                     <div class="icon">
                         <span class="fs1" aria-hidden="true" data-icon="&#xe0b8;"></span>
                     </div>
-                    Phone List
+                    Contact List
                 </a>
             </li>
             <li class="nav-ele">
@@ -74,6 +74,14 @@
                 </a>
             </li>
             <li class="nav-ele">
+                <a href="workloads.jsp">
+                    <div class="icon">
+                        <span class="fs1" aria-hidden="true" data-icon="&#xe095;"></span>
+                    </div>
+                    Workloads
+                </a>
+            </li>
+            <li class="nav-ele">
                 <a href="statistics.jsp">
                     <div class="icon">
                         <span class="fs1" aria-hidden="true" data-icon="&#xe096;"></span>
@@ -82,19 +90,11 @@
                 </a>
             </li>
             <li class="nav-ele">
-                <a href="tickets.jsp">
+                <a href="project_managers.jsp">
                     <div class="icon">
                         <span class="fs1" aria-hidden="true" data-icon="&#xe14a;"></span>
                     </div>
-                    All Tickets
-                </a>
-            </li>
-            <li class="nav-ele">
-                <a href="analysts.jsp">
-                    <div class="icon">
-                        <span class="fs1" aria-hidden="true" data-icon="&#xe071;"></span>
-                    </div>
-                    Analysts
+                    P.M. List
                 </a>
             </li>
             <li class="nav-ele">
@@ -103,22 +103,6 @@
                         <span class="fs1" aria-hidden="true" data-icon="&#xe075;"></span>
                     </div>
                     Customers
-                </a>
-            </li>
-            <li class="nav-ele">
-                <a href="description_templates.jsp">
-                    <div class="icon">
-                        <span class="fs1" aria-hidden="true" data-icon="&#xe01f;"></span>
-                    </div>
-                    Descriptions
-                </a>
-            </li>
-            <li class="nav-ele">
-                <a href="workloads.jsp">
-                    <div class="icon">
-                        <span class="fs1" aria-hidden="true" data-icon="&#xe095;"></span>
-                    </div>
-                    Workloads
                 </a>
             </li>
             <li class="submenu">
@@ -171,7 +155,7 @@
                         <div class="nav-collapse collapse navbar-responsive-collapse">
                             <ul class="nav">
                                 <li>
-                                    <a href="index.html">Dashboard</a>
+                                    <a href="index.jsp">Dashboard</a>
                                 </li>
                                 <li>
                                     <a href="customer_phone_list.jsp">Phone List</a>
@@ -183,19 +167,13 @@
                                     <a href="statistics.jsp">Statistics</a>
                                 </li>
                                 <li>
-                                    <a href="tickets.jsp">All Tickets</a>
+                                    <a href="workloads.jsp">Workloads</a>
                                 </li>
                                 <li>
-                                    <a href="analysts.jsp">Analysts</a>
+                                    <a href="project_managers.jsp">P.M. List</a>
                                 </li>
                                 <li>
                                     <a href="customers.jsp">Customers</a>
-                                </li>
-                                <li>
-                                    <a href="description_templates.jsp">Descriptions</a>
-                                </li>
-                                <li>
-                                    <a href="workloads.jsp">Workloads</a>
                                 </li>
                                 <li>
                                     <a href="edit-profile.html">Edit Profile</a>

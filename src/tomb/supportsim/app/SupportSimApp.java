@@ -22,6 +22,7 @@ public class SupportSimApp
   {
     SupportSimApp supportSimApp = SupportSimApp.getInstance();
     supportSimApp.start();
+    System.exit( 0 );
   }
 
   private static SupportSimApp instance;
@@ -86,9 +87,13 @@ public class SupportSimApp
   {
     if ( !running )
     {
+      running = true;
       //new ClassPathXmlApplicationContext( "Spring-TaskScheduler.xml" );
      dataImporter.fullImport();
-      running = true;
+
+
     }
   }
+
+
 }

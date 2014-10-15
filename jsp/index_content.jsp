@@ -1,7 +1,6 @@
 <%@ page import="org.zendesk.client.v2.model.Status" %>
 <%@ page import="tomb.supportsim.models.ZDOrganisation" %>
 <%@ page import="tomb.supportsim.models.ZDTicket" %>
-<%@ page import="tomb.supportsim.models.ZDUser" %>
 <%@ page import="tomb.supportsim.view.ViewHelper" %>
 <%@ page import="java.math.BigDecimal" %>
 <%@ page import="java.util.List" %>
@@ -28,13 +27,13 @@
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe088;"></span> New
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe088;"></span> First Line
                 </div>
             </div>
             <div class="widget-body">
                 <div class="current-statistics">
                     <div class="products">
-                        <h3><%= ViewHelper.getTicketCountByState( Status.NEW )%>
+                        <h3><%= ViewHelper.getOpenTicketCount("Support")%>
                         </h3>
                     </div>
                 </div>
@@ -46,13 +45,13 @@
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe094;"></span> Open
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe094;"></span> Java
                 </div>
             </div>
             <div class="widget-body">
                 <div class="current-statistics">
                     <div class="sales">
-                        <h3><%= ViewHelper.getTicketCountByState( Status.OPEN )%>
+                        <h3><%= ViewHelper.getOpenTicketCount("Java")%>
                         </h3>
                     </div>
                 </div>
@@ -64,13 +63,13 @@
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe094;"></span> Pending
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe094;"></span> Character
                 </div>
             </div>
             <div class="widget-body">
                 <div class="current-statistics">
                     <div class="income">
-                        <h3><%= ViewHelper.getTicketCountByState( Status.PENDING )%>
+                        <h3><%= ViewHelper.getOpenTicketCount( "Character" )%>
                         </h3>
                     </div>
                 </div>
@@ -82,13 +81,13 @@
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe0b9;"></span> Hold
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe0b9;"></span> Projects
                 </div>
             </div>
             <div class="widget-body">
                 <div class="current-statistics">
                     <div class="expenses">
-                        <h3><%= ViewHelper.getTicketCountByState( Status.HOLD)%>
+                        <h3><%= ViewHelper.getOpenTicketCount("Projects")%>
                         </h3>
                     </div>
                 </div>
@@ -144,7 +143,7 @@
                         <th>Description</th>
                         <th>Customer</th>
                         <th>Status</th>
-                        <th>Date Assigned</th>
+                        <th>Date Created</th>
                     </tr>
                     </thead>
 
@@ -152,7 +151,6 @@
                     <% for ( int i = 0; i < newTickets.size(); i++ )
                     {
                         ZDTicket ticket =  newTickets.get( i );
-                        ZDUser assignee = ViewHelper.getUser( ticket.getAssigneeId() );
                         ZDOrganisation organisation = ViewHelper.getOrganisation( ticket.getOrganizationId() );
 
                     %>
@@ -294,7 +292,7 @@
                 </div>
             </div>
             <div class="widget-body">
-                <% List<ZDTicket> tickets = ViewHelper.getOpenTickets(); %>
+                <% List<ZDTicket> tickets = ViewHelper.getOpenUnassignedTickets(); %>
 
                 <table class="table table-striped table-bordered table-condensed table-hover no-margin">
                     <thead>
@@ -302,9 +300,8 @@
                         <th>Ticket Number</th>
                         <th>Description</th>
                         <th>Customer</th>
-                        <th>Status</th>
-                        <th>Assignee</th>
-                        <th>WIP Start Date</th>
+                        <th>Group</th>
+                        <th>Last Updated</th>
                     </tr>
                     </thead>
 
@@ -312,8 +309,9 @@
                     <% for ( int i = 0; i < tickets.size(); i++ )
                     {
                         ZDTicket ticket = tickets.get( i ) ;
-                        ZDUser analyst = ViewHelper.getUser( ticket.getAssigneeId() );
                         ZDOrganisation customer = ViewHelper.getOrganisation( ticket.getOrganizationId() );
+                        String groupName = ticket.getGroupId() !=null
+                                           ? ViewHelper.getGroupName(ticket.getGroupId()) : "";
                     %>
                     <tr class="clickableRow" href=<%=ViewHelper.getTicketLink(ticket.getId())%>>
                         <td>
@@ -332,18 +330,14 @@
                                      </span>
                         </td>
                         <td>
-                                     <span id="state-col" class="badge">
-                                         <%= ticket.getStatus() %>
+                                     <span id="group-col" class="badge">
+                                         <%= groupName%>
                                      </span>
                         </td>
+
                         <td>
                                      <span>
-                                         <%=  analyst != null ? analyst.getName() : "" %>
-                                     </span>
-                        </td>
-                        <td>
-                                     <span>
-                                         <%= ticket.getCreatedAt()%>
+                                         <%= ticket.getUpdatedAt()%>
                                      </span>
                         </td>
 
@@ -364,16 +358,18 @@
 <!-- Add a bit of color to the Ticket statuses-->
 <script>
     $( '#state-col.badge:contains("PENDING")' ).addClass( 'badge-success' );
-    $( '#state-col.badge:contains("NEW")' ).addClass( 'badge-important' );
+    $( '#state-col.badge:contains("new")' ).addClass( 'badge-important' );
     $( '#state-col.badge:contains("HOLD")' ).addClass( 'badge-info' );
     $( '#state-col.badge:contains("OPEN")' ).addClass( 'badge-warning' );
+    $( '#group-col.badge:contains("Support")' ).addClass( 'badge-success' );
+    $( '#group-col.badge:contains("Java")' ).addClass( 'badge-important' );
+    $( '#group-col.badge:contains("Development")' ).addClass( 'badge-info' );
+    $( '#group-col.badge:contains("Character")' ).addClass( 'badge-warning' );
 </script>
 
 <script>
-
     jQuery(document).ready(function($) {
         $(".clickableRow").click(function() {
-           // window.document.location = $(this).attr("href");
             window.open($(this).attr("href"));
         });
     });

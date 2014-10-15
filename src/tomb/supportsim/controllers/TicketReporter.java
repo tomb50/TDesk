@@ -44,7 +44,7 @@ public class TicketReporter
     return HibernateUtil.getEntityList( ZDTicket.class, restrictions );
   }
 
-  public static Integer getTicketCount( final int assigneeId, final Status ticketStateEnum )
+  public static Integer getTicketCount( final long assigneeId, final Status ticketStateEnum )
   {
     final List<Criterion> restrictions = new ArrayList<>();
     restrictions.add( Restrictions.and( Restrictions.eq( "assigneeId", assigneeId ),

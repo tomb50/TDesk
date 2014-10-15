@@ -52,6 +52,14 @@ public class DataImporter
     System.out.println( (System.currentTimeMillis() - time)/1000 );
     time = System.currentTimeMillis();
 
+
+    //persist GroupMemberships
+    System.out.println("Persisting Groups from ZenDesk to Database");
+    saveGroups();
+    System.out.println("Memberships saved");
+    System.out.println( (System.currentTimeMillis() - time)/1000 );
+    time = System.currentTimeMillis();
+
     //persist Forums
     System.out.println("Persisting Forums from ZenDesk to Database");
     saveForums();
@@ -64,6 +72,15 @@ public class DataImporter
     saveTopics();
     System.out.println("Topics saved");
     System.out.println( (System.currentTimeMillis() - time)/1000 );
+  }
+
+  private void saveGroups()
+  {
+    for (Group group : zendesk.getGroups() )
+    {
+      HibernateUtil.insertEntity( group );
+    }
+
   }
 
   private void saveTickets()

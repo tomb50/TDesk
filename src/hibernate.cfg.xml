@@ -7,7 +7,7 @@
     <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
     <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/zd</property>
     <property name="hibernate.connection.username">postgres</property>
-    <property name="hibernate.connection.password">osx</property>
+    <property name="hibernate.connection.password">nope</property>
     <property name="hibernate.connection.autocommit">false</property>
     <property name="show_sql">false</property>
     <property name="format_sql">false</property>
@@ -23,6 +23,7 @@
     <mapping resource="ZDGroupMembership.hbm.xml"/>
     <mapping resource="ZDTopic.hbm.xml"/>
     <mapping resource="ZDForum.hbm.xml"/>
+    <mapping resource="ZDGroup.hbm.xml"/>
     <!-- Will never bother with these
     <mapping resource="Identity.hbm.xml"/>
     <mapping resource="Photo.hbm.xml"/>

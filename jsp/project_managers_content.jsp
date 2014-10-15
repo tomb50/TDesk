@@ -3,12 +3,12 @@
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe075;"></span> Customers
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe074;"></span> Project Managers
                 </div>
             </div>
             <div class="widget-body">
-                TO DO <br>
-                Customer related info
+                <p>TO DO</p>
+                Add a list of Projects Managers & Project Analysts for each customer.
             </div>
         </div>
     </div>

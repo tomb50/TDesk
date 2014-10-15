@@ -1,5 +1,3 @@
-<%@ page import="tomb.supportsim.models.Analyst" %>
-<%@ page import="tomb.supportsim.models.enums.TicketStateEnum" %>
 <%@ page import="tomb.supportsim.view.ViewHelper" %>
 <%@ page import="java.math.BigDecimal" %>
 <%@ page import="java.util.HashMap" %>
