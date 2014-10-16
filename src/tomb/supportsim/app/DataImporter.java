@@ -2,8 +2,8 @@ package tomb.supportsim.app;
 
 import org.zendesk.client.v2.Zendesk;
 import org.zendesk.client.v2.model.*;
-import tomb.supportsim.connection.HibernateUtil;
 import tomb.supportsim.models.ConvertUtil;
+import tomb.supportsim.view.ViewHelper;
 
 /**
  * Created with IntelliJ IDEA. User: tombeadman Date: 10/10/2014 Time: 13:30
@@ -21,32 +21,30 @@ public class DataImporter
   protected void fullImport()
   {
 
-
-
     long time = System.currentTimeMillis();
     //persist Users
-    System.out.println("Persisting Users from ZenDesk to Database");
+    System.out.println("Importing Users from Zendesk");
     saveUsers();
     System.out.println("Users saved");
     System.out.println( ( System.currentTimeMillis() - time ) / 1000 );
     time = System.currentTimeMillis();
 
     //persist tickets
-    System.out.println("Persisting Tickets from ZenDesk to Database");
+    System.out.println("Importing Tickets from Zendesk");
     saveTickets();
     System.out.println("Tickets saved");
     System.out.println( (System.currentTimeMillis() - time)/1000 );
     time = System.currentTimeMillis();
 
     //persist Organisations
-    System.out.println("Persisting Organisations from ZenDesk to Database");
+    System.out.println("Importing Organisations from ZenDesk");
     saveOrganisations();
     System.out.println("Organisations saved");
     System.out.println( (System.currentTimeMillis() - time)/1000 );
     time = System.currentTimeMillis();
 
     //persist GroupMemberships
-    System.out.println("Persisting Group Memberships from ZenDesk to Database");
+    System.out.println("Importing Group Memberships from ZenDesk");
     saveGroupMemberships();
     System.out.println("Memberships saved");
     System.out.println( (System.currentTimeMillis() - time)/1000 );
@@ -54,21 +52,21 @@ public class DataImporter
 
 
     //persist GroupMemberships
-    System.out.println("Persisting Groups from ZenDesk to Database");
+    System.out.println("Importing Groups from ZenDesk");
     saveGroups();
     System.out.println("Memberships saved");
     System.out.println( (System.currentTimeMillis() - time)/1000 );
     time = System.currentTimeMillis();
 
     //persist Forums
-    System.out.println("Persisting Forums from ZenDesk to Database");
+    System.out.println("Importing Forums from ZenDesk");
     saveForums();
     System.out.println("Forums saved");
     System.out.println( (System.currentTimeMillis() - time)/1000 );
     time = System.currentTimeMillis();
 
     //persist Topics
-    System.out.println("Persisting Topics from ZenDesk to Database");
+    System.out.println("Importing Topics from ZenDesk");
     saveTopics();
     System.out.println("Topics saved");
     System.out.println( (System.currentTimeMillis() - time)/1000 );
@@ -78,7 +76,7 @@ public class DataImporter
   {
     for (Group group : zendesk.getGroups() )
     {
-      HibernateUtil.insertEntity( group );
+      ViewHelper.getCache().insertGroup( group );
     }
 
   }
@@ -88,7 +86,7 @@ public class DataImporter
 
     for ( Ticket ticket :  zendesk.getTickets() )
     {
-      HibernateUtil.insertEntity( ConvertUtil.toTicket( ticket ) );
+      ViewHelper.getCache().insertTicket( ConvertUtil.toTicket( ticket ) );
     }
   }
 
@@ -96,7 +94,8 @@ public class DataImporter
   {
    for(final User user : zendesk.getUsers())
    {
-     HibernateUtil.insertEntity( ConvertUtil.toUser( user ) );
+     if(user.getActive())
+     ViewHelper.getCache().insertUser(  ConvertUtil.toUser( user ) );
    }
   }
 
@@ -104,7 +103,7 @@ public class DataImporter
   {
     for(final Organization organization : zendesk.getOrganizations())
     {
-      HibernateUtil.insertEntity( ConvertUtil.toOrganisation( organization ) );
+      ViewHelper.getCache().insertOrganisation( ConvertUtil.toOrganisation( organization ) );
     }
   }
 
@@ -112,7 +111,7 @@ public class DataImporter
   {
     for ( GroupMembership groupMembership : zendesk.getGroupMemberships())
     {
-      HibernateUtil.insertEntity( groupMembership );
+      ViewHelper.getCache().insertGroupMembership( groupMembership );
     }
   }
 
@@ -120,7 +119,7 @@ public class DataImporter
   {
     for( Forum forum : zendesk.getForums())
     {
-      HibernateUtil.insertEntity( ConvertUtil.toForum( forum ) );
+      ViewHelper.getCache().insertForum( ConvertUtil.toForum( forum ) );
     }
   }
 
@@ -128,7 +127,8 @@ public class DataImporter
   {
     for( Topic topic : zendesk.getTopics())
     {
-      HibernateUtil.insertEntity( ConvertUtil.toTopic( topic ) );
+
+      ViewHelper.getCache().insertTopic( ConvertUtil.toTopic( topic ) );
     }
   }
 

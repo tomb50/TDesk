@@ -65,25 +65,14 @@ public class ViewHelper
     return TicketReporter.getTotalOpenTicketCount();
   }
 
-
-
-
   public static Integer getTicketCountByState( final Status ticketStateEnum )
   {
     return TicketReporter.getTicketCountByState( ticketStateEnum );
   }
 
-
-
-
   public static List<ZDTicket> getTicketByState(final Status status)
   {
     return TicketReporter.getTicketsByState( status );
-  }
-
-  public static List<ZDTicket> getOpenTickets()
-  {
-    return cache.getTickets( Status.OPEN );
   }
 
   public static List<ZDTicket> getOpenUnassignedTickets()
@@ -198,7 +187,6 @@ public class ViewHelper
 
   public static List<ZDUser> getSupportAnalysts()
   {
-
     Group charGroup = getGroup( "Character" );
     Group firstLine = getGroup( "Support" );
     Group javaGroup = getGroup( "Java" );
@@ -244,58 +232,18 @@ public class ViewHelper
 
   }
 
-
-  public static List<ZDUser> getJavaAnalystsFromCache()
-  {
-    Group javaGroup = getGroupfromCache( "Java" );
-    List<GroupMembership> groupMemberships = getGroupMembershipsFromCache(javaGroup.getId());
-    List<ZDUser> javaAgents = new ArrayList<>();
-    for ( GroupMembership groupMembership : groupMemberships )
-    {
-      ZDUser javaAnalyst = cache.getUserMap().get( groupMembership.getUserId() );
-      if (javaAnalyst != null && !javaAnalyst.getName().equals( "Helen sowerby"))
-        javaAgents.add( cache.getUserMap().get( groupMembership.getUserId() ) );
-    }
-    return javaAgents;
-
-  }
-
-  private static List<GroupMembership> getGroupMembershipsFromCache( final Long id )
-  {
-    List<GroupMembership> allGroupMemberships = cache.getGroupMemberships();
-    List<GroupMembership> requiredGroupMemberships = new ArrayList<>(  );
-
-    for(GroupMembership groupMembership : allGroupMemberships)
-    {
-      if (groupMembership.getGroupId().equals(id))
-      {
-        requiredGroupMemberships.add( groupMembership );
-      }
-    }
-    return requiredGroupMemberships;
-  }
-
-  private static Group getGroupfromCache( final String java )
-  {
-    Group group = null;
-    List<Group> groups = cache.getGroups();
-    for (Group group1 : groups)
-    {
-      if (group1.getName().equals( java ))
-      {
-        group = group1;
-      }
-    }
-    return group;
-  }
-
-
   private static Group getGroup( final String name )
   {
-    final List<Criterion> restrictions = new ArrayList<>();
-    restrictions.add( Restrictions.eq( "name", name) );
-    List<Group> groups = HibernateUtil.getEntityList( Group.class, restrictions );
-    return groups==null || groups.isEmpty() ? null : groups.get( 0 ); // there shoudl be only one.
+    Group thisGroup = null;
+    List<Group> groups = cache.getGroups();
+    for ( Group group : groups )
+    {
+      if ( group.getName().equals( name ) )
+      {
+        thisGroup = group;
+      }
+    }
+    return thisGroup;
   }
 
 
@@ -326,6 +274,11 @@ public class ViewHelper
     }
     return largesQueueSize;
 
+  }
+
+  public static Cache getCache()
+  {
+    return cache;
   }
 
 

@@ -1,11 +1,8 @@
 package tomb.supportsim.view;
 
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Restrictions;
 import org.zendesk.client.v2.model.Group;
 import org.zendesk.client.v2.model.GroupMembership;
 import org.zendesk.client.v2.model.Status;
-import tomb.supportsim.connection.HibernateUtil;
 import tomb.supportsim.models.*;
 
 import java.util.ArrayList;
@@ -34,30 +31,16 @@ public class Cache
 
   public Map<Long, Group> getGroupMap()
   {
-    if ( groupMap == null || groupMap.isEmpty())
-    {
+    if ( groupMap == null )
       groupMap = new HashMap<>();
-      final List<Group> groupList = HibernateUtil.getEntityList( Group.class );
-      for ( Group group : groupList )
-      {
-        groupMap.put( group.getId(), group );
-      }
-    }
     return groupMap;
   }
 
 
   public Map<Long, GroupMembership> getGroupMembershipMap()
   {
-    if ( groupMembershipMap == null || groupMembershipMap.isEmpty())
-    {
+    if ( groupMembershipMap == null )
       groupMembershipMap = new HashMap<>();
-      final List<GroupMembership> groupMembershipList = HibernateUtil.getEntityList( GroupMembership.class );
-      for ( GroupMembership groupMembership : groupMembershipList )
-      {
-        groupMembershipMap.put( groupMembership.getId(), groupMembership );
-      }
-    }
     return groupMembershipMap;
   }
 
@@ -69,35 +52,15 @@ public class Cache
   public Map<Long, ZDOrganisation> getOrganisationMap()
   {
     if ( organisationMap == null )
-    {
       organisationMap = new HashMap<>();
-      populateCustomerMap();
-    }
     return organisationMap;
   }
 
-  private void populateCustomerMap()
-  {
-    List<ZDOrganisation> organisationList = HibernateUtil.getEntityList( ZDOrganisation.class );
-    for ( ZDOrganisation organisation : organisationList )
-    {
-      organisationMap.put( organisation.getId(), organisation );
-    }
-  }
 
   public Map<Long, ZDUser> getUserMap()
   {
-    if ( userMap == null || userMap.isEmpty() )
-    {
+    if ( userMap == null )
       userMap = new HashMap<>();
-      final List<Criterion> restrictions = new ArrayList<>();
-      restrictions.add( Restrictions.eq( "active", true ) );
-      List<ZDUser> userList = HibernateUtil.getEntityList( ZDUser.class, restrictions );
-      for ( ZDUser user : userList )
-      {
-        userMap.put( user.getId(), user );
-      }
-    }
     return userMap;
   }
 
@@ -108,15 +71,8 @@ public class Cache
 
   public Map<Long, ZDTicket> getTicketMap()
   {
-    if ( ticketMap == null || ticketMap.isEmpty())
-    {
+    if ( ticketMap == null )
       ticketMap = new HashMap<>();
-      final List<ZDTicket> ticketList = HibernateUtil.getEntityList( ZDTicket.class );
-      for ( ZDTicket ticket : ticketList )
-      {
-        ticketMap.put( ticket.getId(), ticket );
-      }
-    }
     return ticketMap;
   }
 
@@ -138,7 +94,7 @@ public class Cache
     for ( Map.Entry<Long, ZDTicket> entry : getTicketMap().entrySet() )
     {
       ZDTicket ticket = entry.getValue();
-      if (  ticket.getStatus() != null && ticket.getStatus().equals( status ) && ticket.getAssigneeId() == null)
+      if ( ticket.getStatus() != null && ticket.getStatus().equals( status ) && ticket.getAssigneeId() == null )
       {
         ticketList.add( ticket );
       }
@@ -165,15 +121,8 @@ public class Cache
 
   public Map<Long, ZDTopic> getTopicMap()
   {
-    if ( topicMap == null || userMap.isEmpty() )
-    {
+    if ( topicMap == null )
       topicMap = new HashMap<>();
-      final List<ZDTopic> topicList = HibernateUtil.getEntityList( ZDTopic.class );
-      for ( ZDTopic topic : topicList )
-      {
-        topicMap.put( topic.getId(), topic );
-      }
-    }
     return topicMap;
   }
 
@@ -190,14 +139,9 @@ public class Cache
 
   public Map<Long, ZDForum> getForumMap()
   {
-    if ( forumMap == null || forumMap.isEmpty() )
+    if ( forumMap == null )
     {
       forumMap = new HashMap<>();
-      final List<ZDForum> forumList = HibernateUtil.getEntityList( ZDForum.class );
-      for ( ZDForum forum : forumList )
-      {
-        forumMap.put( forum.getId(), forum );
-      }
     }
     return forumMap;
   }
@@ -205,5 +149,40 @@ public class Cache
   public List<ZDForum> getForums()
   {
     return new ArrayList<>( getForumMap().values() );
+  }
+
+  public void insertGroup( Group group )
+  {
+    getGroupMap().put( group.getId(), group );
+  }
+
+  public void insertTicket( ZDTicket ticket )
+  {
+    getTicketMap().put( ticket.getId(), ticket );
+  }
+
+  public void insertUser( ZDUser user )
+  {
+    getUserMap().put( user.getId(), user );
+  }
+
+  public void insertGroupMembership( GroupMembership groupMembership )
+  {
+    getGroupMembershipMap().put( groupMembership.getId(), groupMembership );
+  }
+
+  public void insertForum( ZDForum forum )
+  {
+    getForumMap().put( forum.getId(), forum );
+  }
+
+  public void insertTopic( ZDTopic topic )
+  {
+    getTopicMap().put( topic.getId(), topic );
+  }
+
+  public void insertOrganisation( final ZDOrganisation zdOrganisation )
+  {
+    getOrganisationMap().put( zdOrganisation.getId(), zdOrganisation );
   }
 }
