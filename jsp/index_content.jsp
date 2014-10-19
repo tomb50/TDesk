@@ -202,13 +202,14 @@
             </div>
 
             <%
-                final BigDecimal totalCount = BigDecimal.valueOf( ViewHelper.getTotalOpenTicketCount() );
                 final BigDecimal openCount = BigDecimal.valueOf( ViewHelper.getTicketCountByState( Status.OPEN ) );
                 final BigDecimal newCount = BigDecimal.valueOf( ViewHelper.getTicketCountByState( Status.NEW ) );
-                final BigDecimal pendingCount = BigDecimal.valueOf( ViewHelper.getTicketCountByState( Status.PENDING ) );
+                final BigDecimal pendingCount =
+                        BigDecimal.valueOf( ViewHelper.getTicketCountByState( Status.PENDING ) );
                 final BigDecimal holdCount = BigDecimal.valueOf( ViewHelper.getTicketCountByState( Status.HOLD ) );
-                final BigDecimal solvedCount =  BigDecimal.valueOf( ViewHelper.getTicketCountByState( Status.SOLVED) );
-
+                final BigDecimal solvedCount = BigDecimal.valueOf( ViewHelper.getTicketCountByState( Status.SOLVED ) );
+                final BigDecimal totalCount =
+                        openCount.add( newCount ).add( pendingCount ).add( holdCount ).add( solvedCount );
             %>
 
             <div class="widget-body">
@@ -358,7 +359,7 @@
 <!-- Add a bit of color to the Ticket statuses-->
 <script>
     $( '#state-col.badge:contains("PENDING")' ).addClass( 'badge-success' );
-    $( '#state-col.badge:contains("new")' ).addClass( 'badge-important' );
+    $( '#state-col.badge:contains("NEW")' ).addClass( 'badge-important' );
     $( '#state-col.badge:contains("HOLD")' ).addClass( 'badge-info' );
     $( '#state-col.badge:contains("OPEN")' ).addClass( 'badge-warning' );
     $( '#group-col.badge:contains("Support")' ).addClass( 'badge-success' );

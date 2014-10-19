@@ -57,7 +57,7 @@ public class ViewHelper
 
   public static Integer getTotalTicketCount()
   {
-    return TicketReporter.getTotalTicketCount();
+    return cache.getTicketMap().size();
   }
 
   public static Integer getTotalOpenTicketCount()
@@ -67,17 +67,18 @@ public class ViewHelper
 
   public static Integer getTicketCountByState( final Status ticketStateEnum )
   {
-    return TicketReporter.getTicketCountByState( ticketStateEnum );
+    List<ZDTicket> allTickets = getTicketByState( ticketStateEnum );
+    return allTickets != null ? allTickets.size() : 0;
   }
 
   public static List<ZDTicket> getTicketByState(final Status status)
   {
-    return TicketReporter.getTicketsByState( status );
+    return cache.getTickets( status );
   }
 
   public static List<ZDTicket> getOpenUnassignedTickets()
   {
-    return cache.getUnassignedTickets(Status.OPEN);
+    return cache.getUnassignedTickets( Status.OPEN );
 
   }
 
@@ -221,15 +222,26 @@ public class ViewHelper
   }
 
 
-  public static Integer getOpenTicketCount(String groupName)
+  public static Integer getOpenTicketCount(final String groupName)
+  {
+   final Map<Long, ZDTicket> suitableTickets = getOpenTicketMap( groupName );
+   return suitableTickets != null ? suitableTickets.size() : 0;
+  }
+
+  public static Map<Long,ZDTicket> getOpenTicketMap(final String groupName)
   {
     Group group = getGroup( groupName );
-    final List<Criterion> restrictions = new ArrayList<>();
-    restrictions.add( Restrictions.and( Restrictions.eq( "groupId", group.getId()),
-                                        Restrictions.eq( "status", Status.OPEN)));
-    return HibernateUtil.getEntityCount( ZDTicket.class,restrictions );
+    Map<Long, ZDTicket> suitableTickets = new HashMap<>();
+    List<ZDTicket> allTickets = cache.getTickets( Status.OPEN );
 
-
+    for ( ZDTicket ticket : allTickets )
+    {
+      if ( ticket.getGroupId().equals( group.getId() ) )
+      {
+        suitableTickets.put( ticket.getId(), ticket );
+      }
+    }
+    return suitableTickets;
   }
 
   private static Group getGroup( final String name )
