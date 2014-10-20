@@ -35,7 +35,7 @@
                     </thead>
                     <tbody>
                     <%
-                        int max2 = ViewHelper.getLargestNonJavaWorkload();
+                        int max2 = ViewHelper.getLargestWorkload();
                         for ( int i = 0; i < max2 ;i++ )
                         {
                     %>

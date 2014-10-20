@@ -1,12 +1,8 @@
 package tomb.supportsim.view;
 
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Restrictions;
 import org.zendesk.client.v2.model.Group;
 import org.zendesk.client.v2.model.GroupMembership;
 import org.zendesk.client.v2.model.Status;
-import tomb.supportsim.connection.HibernateUtil;
-import tomb.supportsim.controllers.TicketReporter;
 import tomb.supportsim.models.*;
 import tomb.supportsim.util.UserOrganisationComparator;
 
@@ -35,35 +31,12 @@ public class ViewHelper
     return cache.getUserMap().get( userId );
   }
 
-  public static ZDTicket getTicket(final Long ticketId)
-  {
-    return cache.getTicketMap().get( ticketId );
-  }
-
-  public static Map<Long,ZDOrganisation> getOrganisationMap()
-  {
-    return cache.getOrganisationMap();
-  }
-
-  public static Map<Long,ZDUser> getUserMap()
-  {
-    return cache.getUserMap();
-  }
-
-  public static Map<Long,ZDTicket> getTicketMap()
-  {
-    return cache.getTicketMap();
-  }
 
   public static Integer getTotalTicketCount()
   {
     return cache.getTicketMap().size();
   }
 
-  public static Integer getTotalOpenTicketCount()
-  {
-    return TicketReporter.getTotalOpenTicketCount();
-  }
 
   public static Integer getTicketCountByState( final Status ticketStateEnum )
   {
@@ -142,49 +115,6 @@ public class ViewHelper
     return getUser( id ) != null ? getUser( id ).getName() : "";
   }
 
-  public static List<ZDUser> getJavaAnalysts()
-  {
-    Group javaGroup = getGroup( "Java" );
-
-    final List<Criterion> restrictions = new ArrayList<>();
-    restrictions.add( Restrictions.eq( "groupId", javaGroup.getId() ) );
-    List<GroupMembership> groupMemberships = HibernateUtil.getEntityList( GroupMembership.class, restrictions );
-
-    List<ZDUser> javaAgents = new ArrayList<>();
-    for ( GroupMembership groupMembership : groupMemberships )
-    {
-      ZDUser javaAnalyst = cache.getUserMap().get( groupMembership.getUserId() );
-      if (javaAnalyst != null && !javaAnalyst.getName().equals( "Helen sowerby"))
-      javaAgents.add( cache.getUserMap().get( groupMembership.getUserId() ) );
-    }
-
-    return javaAgents;
-  }
-
-
-  public static List<ZDUser> getNonJavaAnalysts()
-  {
-
-    Group charGroup = getGroup( "Character" );
-    Group firstLine = getGroup( "Support" );
-
-    final List<Criterion> restrictions = new ArrayList<>();
-    restrictions.add( Restrictions.or( Restrictions.eq( "groupId", charGroup.getId() ),
-                                       Restrictions.eq( "groupId", firstLine.getId() ) ) );
-    List<GroupMembership> groupMemberships = HibernateUtil.getEntityList( GroupMembership.class, restrictions );
-
-    List<ZDUser> agents = new ArrayList<>();
-    for ( GroupMembership groupMembership : groupMemberships )
-    {
-      ZDUser agent = cache.getUserMap().get( groupMembership.getUserId() );
-      if ( agent != null && !agent.getName().equals( "Helen sowerby" ) )
-      {
-        agents.add( cache.getUserMap().get( groupMembership.getUserId() ) );
-      }
-    }
-
-    return agents;
-  }
 
   public static List<ZDUser> getSupportAnalysts()
   {
@@ -192,12 +122,9 @@ public class ViewHelper
     Group firstLine = getGroup( "Support" );
     Group javaGroup = getGroup( "Java" );
 
-    final List<Criterion> restrictions = new ArrayList<>();
-    restrictions.add( Restrictions.or(
-      Restrictions.or( Restrictions.eq( "groupId", charGroup.getId() ),
-                       Restrictions.eq( "groupId", firstLine.getId() ) ),
-      Restrictions.eq( "groupId", javaGroup.getId() ) ) );
-    List<GroupMembership> groupMemberships = HibernateUtil.getEntityList( GroupMembership.class, restrictions );
+    List<GroupMembership> groupMemberships = getGroupMemberships(charGroup.getId());
+    groupMemberships.addAll( getGroupMemberships( firstLine.getId() ) );
+    groupMemberships.addAll( getGroupMemberships( javaGroup.getId() ) );
 
     List<ZDUser> agents = new ArrayList<>();
     for ( GroupMembership groupMembership : groupMemberships )
@@ -209,16 +136,20 @@ public class ViewHelper
       }
     }
 
-    List<ZDUser> cleanlist = new ArrayList<ZDUser>();
+    List<ZDUser> cleanList = new ArrayList<ZDUser>();
     for ( ZDUser user : agents )
     {
-      if ( !cleanlist.contains( user ) )
+      if ( !cleanList.contains( user ) )
       {
-        cleanlist.add( user );
+        cleanList.add( user );
       }
     }
+    return cleanList;
+  }
 
-    return cleanlist;
+  private static List<GroupMembership> getGroupMemberships( final Long id )
+  {
+    return cache.getGroupMemberships(id);
   }
 
 
@@ -259,32 +190,35 @@ public class ViewHelper
   }
 
 
-  public static Integer getLargestJavaWorkload()
+  public static Integer getLargestWorkload()
   {
     Integer largesQueueSize = 0;
-    for ( ZDUser user : getJavaAnalysts() )
+    for ( ZDUser user : getSupportAnalysts() )
     {
       if ( user != null )
       {
-        Integer queueSize = TicketReporter.getTicketCount( user.getId(), Status.OPEN );
+        Integer queueSize = getTicketCount( user.getId(), Status.OPEN );
         if ( queueSize > largesQueueSize ) largesQueueSize = queueSize;
       }
     }
     return largesQueueSize;
+
   }
 
-  public static Integer getLargestNonJavaWorkload()
+
+  public static Integer getTicketCount(final Long userId, final Status status)
   {
-    Integer largesQueueSize = 0;
-    for ( ZDUser user : getNonJavaAnalysts() )
+    List<ZDTicket> tickets = getTicketByState( status );
+    List<ZDTicket> ticketsForUser = new ArrayList<>(  );
+    for (ZDTicket ticket : tickets)
     {
-      if ( user != null )
+      if(ticket.getAssigneeId() !=null && ticket.getAssigneeId().equals( userId ))
       {
-        Integer queueSize = TicketReporter.getTicketCount( user.getId(), Status.OPEN );
-        if ( queueSize > largesQueueSize ) largesQueueSize = queueSize;
+        ticketsForUser.add( ticket );
       }
+
     }
-    return largesQueueSize;
+    return ticketsForUser.size();
 
   }
 
@@ -292,7 +226,6 @@ public class ViewHelper
   {
     return cache;
   }
-
 
   //toto fix NPE here
   public static String getGroupName( final Long groupId )

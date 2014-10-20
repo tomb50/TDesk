@@ -49,6 +49,20 @@ public class Cache
     return new ArrayList<>( getGroupMembershipMap().values() );
   }
 
+  public List<GroupMembership> getGroupMemberships(final Long groupId)
+  {
+    final List<GroupMembership> allGroupMemberships = getGroupMemberships();
+    final List<GroupMembership> groupMemberships = new ArrayList<>(  );
+    for(GroupMembership groupMembership : allGroupMemberships)
+    {
+      if(groupMembership.getGroupId().equals( groupId ))
+      {
+        groupMemberships.add( groupMembership );
+      }
+    }
+    return groupMemberships;
+  }
+
   public Map<Long, ZDOrganisation> getOrganisationMap()
   {
     if ( organisationMap == null )
