@@ -3,6 +3,7 @@ package tomb.supportsim.models;
 import org.zendesk.client.v2.model.Priority;
 import org.zendesk.client.v2.model.Status;
 import org.zendesk.client.v2.model.Type;
+import tomb.supportsim.util.EqualsUtil;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -247,5 +248,47 @@ public class ZDTicket implements Serializable
   public void setDueAt( final Date dueAt )
   {
     this.dueAt = dueAt;
+  }
+
+  @Override public boolean equals(Object aThat) {
+    //check for self-comparison
+    if ( this == aThat ) return true;
+
+    //use instanceof instead of getClass here for two reasons
+    //1. if need be, it can match any supertype, and not just one class;
+    //2. it renders an explict check for "that == null" redundant, since
+    //it does the check for null already - "null instanceof [type]" always
+    //returns false. (See Effective Java by Joshua Bloch.)
+    if ( !(aThat instanceof ZDTicket) ) return false;
+    //Alternative to the above line :
+    //if ( aThat == null || aThat.getClass() != this.getClass() ) return false;
+
+    //cast to native object is now safe
+    ZDTicket that = (ZDTicket)aThat;
+
+    //now a proper field-by-field evaluation can be made
+    return
+      EqualsUtil.areEqual( this.id, that.id ) &&
+        EqualsUtil.areEqual(this.url, that.url) &&
+        EqualsUtil.areEqual(this.subject, that.subject) &&
+        EqualsUtil.areEqual(this.description, that.description) &&
+        EqualsUtil.areEqual(this.status, that.status) &&
+        EqualsUtil.areEqual(this.requesterId, that.requesterId) &&
+        EqualsUtil.areEqual(this.organizationId, that.organizationId) &&
+        EqualsUtil.areEqual(this.createdAt, that.createdAt) &&
+        EqualsUtil.areEqual(this.updatedAt, that.updatedAt) &&
+        EqualsUtil.areEqual(this.externalId, that.externalId) &&
+        EqualsUtil.areEqual(this.type, that.type) &&
+        EqualsUtil.areEqual(this.priority, that.priority) &&
+        EqualsUtil.areEqual(this.recipient, that.recipient) &&
+        EqualsUtil.areEqual(this.submitterId, that.submitterId) &&
+        EqualsUtil.areEqual(this.assigneeId, that.assigneeId) &&
+        EqualsUtil.areEqual(this.groupId, that.groupId) &&
+        EqualsUtil.areEqual(this.forumTopicId, that.forumTopicId) &&
+        EqualsUtil.areEqual(this.problemId, that.problemId) &&
+        EqualsUtil.areEqual(this.hasIncidents, that.hasIncidents) &&
+        EqualsUtil.areEqual( this.dueAt, that.dueAt );
+        // For reference
+        // Arrays.equals( this.fMaintenanceChecks, that.fMaintenanceChecks );
   }
 }
