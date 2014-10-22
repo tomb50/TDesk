@@ -1,6 +1,7 @@
 package tomb.supportsim.schedule;
 
-import java.sql.Timestamp;
+import org.springframework.scheduling.annotation.Scheduled;
+import tomb.supportsim.util.PropertyKeys;
 
 /**
  * Created with IntelliJ IDEA. User: tombeadman Date: 07/10/2014 Time: 13:44
@@ -8,11 +9,9 @@ import java.sql.Timestamp;
 public class TicketUpdateTask
 {
 
-
-  //@Scheduled(cron=PropertyKeys.CRON_UPDATE)
+  @Scheduled(cron= PropertyKeys.CRON_UPDATE_TICKETS)
   public void updateTickets()
   {
-    System.out.println( "Scheduled Updating Poller" + new Timestamp( System.currentTimeMillis() ) );
     UpdatePoller updatePoller = new UpdatePoller();
     updatePoller.run();
   }

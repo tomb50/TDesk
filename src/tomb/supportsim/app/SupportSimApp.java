@@ -1,5 +1,6 @@
 package tomb.supportsim.app;
 
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.zendesk.client.v2.Zendesk;
 
 import java.io.FileNotFoundException;
@@ -28,7 +29,13 @@ public class SupportSimApp
   private static SupportSimApp instance;
   private static boolean running = false;
   private Properties properties;
-  Zendesk zd;
+
+  public Zendesk getZd()
+  {
+    return zd;
+  }
+
+  private Zendesk zd;
   DataImporter dataImporter;
 
   private SupportSimApp() throws IOException
@@ -83,15 +90,16 @@ public class SupportSimApp
     return instance;
   }
 
-  public void start( )
+  public void start()
   {
     if ( !running )
     {
       running = true;
-      //new ClassPathXmlApplicationContext( "Spring-TaskScheduler.xml" );
-     dataImporter.fullImport();
 
+      dataImporter.fullImport();
 
+      System.out.println( "Setting up scheudling" );
+      new ClassPathXmlApplicationContext( "Spring-TaskScheduler.xml" );
     }
   }
 
