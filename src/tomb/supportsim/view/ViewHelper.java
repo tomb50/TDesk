@@ -1,18 +1,11 @@
 package tomb.supportsim.view;
 
-import tomb.supportsim.controllers.AnalystReporter;
-import tomb.supportsim.controllers.CustomerReporter;
-import tomb.supportsim.controllers.DescriptionTemplateReporter;
-import tomb.supportsim.controllers.TicketReporter;
-import tomb.supportsim.models.Analyst;
-import tomb.supportsim.models.Customer;
-import tomb.supportsim.models.DescriptionTemplate;
-import tomb.supportsim.models.SupportTicket;
-import tomb.supportsim.models.enums.RoleEnum;
-import tomb.supportsim.models.enums.TicketStateEnum;
-import tomb.supportsim.models.enums.TicketTypeEnum;
+import org.zendesk.client.v2.model.Group;
+import org.zendesk.client.v2.model.GroupMembership;
+import org.zendesk.client.v2.model.Status;
+import tomb.supportsim.models.*;
+import tomb.supportsim.util.UserOrganisationComparator;
 
-import java.lang.reflect.Field;
 import java.util.*;
 
 /**
@@ -20,187 +13,223 @@ import java.util.*;
  */
 public class ViewHelper
 {
-  public static List getAnalystAttributes()
+  /*
+   *
+   * Cache for speed //todo improve cache mechanism
+   *
+   */
+ private static Cache cache = new Cache();
+
+
+
+  public static ZDOrganisation getOrganisation(final Long organisationId)
   {
-    return Arrays.asList( Analyst.class.getDeclaredFields() );
+    return cache.getOrganisationMap().get( organisationId );
   }
-
-  public static List<Analyst> getAnalysts()
+  public static ZDUser getUser(final Long userId)
   {
-    return AnalystReporter.getAllAnalysts();
-  }
-
-
-  public static List<SupportTicket> getAllTickets()
-  {
-    return TicketReporter.getAllTickets();
-  }
-
-
-  public static List<Field> getTicketAttributes()
-  {
-    return Arrays.asList( SupportTicket.class.getDeclaredFields() );
-  }
-
-  public static List getAllCustomers()
-  {
-    final CustomerReporter customerReporter = new CustomerReporter();
-    return customerReporter.getAllCustomers();
-  }
-
-  public static List<Field> getCustomerAttributes()
-  {
-    return Arrays.asList( Customer.class.getDeclaredFields() );
-  }
-
-  public static List<Field> getDescriptionTemplateAttributes()
-  {
-    return Arrays.asList( DescriptionTemplate.class.getDeclaredFields() );
-  }
-
-  public static List getAllDescriptionTemplates()
-  {
-    return DescriptionTemplateReporter.getAllDescriptionTemplates();
-  }
-
-  public static Map getTicketCountByTypeMap()
-  {
-    final Map map = new HashMap();
-    for ( TicketTypeEnum ticketTypeEnum : TicketTypeEnum.values() )
-    {
-      map.put( ticketTypeEnum, TicketReporter.getTicketCountByType( ticketTypeEnum ) );
-    }
-    return map;
-  }
-
-  public static Integer getTicketCountByType( final TicketTypeEnum ticketTypeEnum )
-  {
-    return TicketReporter.getTicketCountByType( ticketTypeEnum );
-  }
-
-  public static List getJoinedDetailsForAllTickets()
-  {
-    return TicketReporter.getJoinedDetailsForAllTickets();
+    return cache.getUserMap().get( userId );
   }
 
 
   public static Integer getTotalTicketCount()
   {
-    return TicketReporter.getTotalTicketCount();
-  }
-
-  public static Integer getTotalOpenTicketCount()
-  {
-    return TicketReporter.getTotalOpenTicketCount();
+    return cache.getTicketMap().size();
   }
 
 
-  public static Map getClosedTicketCountByAnalystMap()
+  public static Integer getTicketCountByState( final Status ticketStateEnum )
   {
-    Map map = new HashMap<Analyst, Integer>();
-    List<Analyst> analystList = AnalystReporter.getAllAnalysts();
-    for ( Analyst analyst : analystList )
+    List<ZDTicket> allTickets = getTicketByState( ticketStateEnum );
+    return allTickets != null ? allTickets.size() : 0;
+  }
+
+  public static List<ZDTicket> getTicketByState(final Status status)
+  {
+    return cache.getTickets( status );
+  }
+
+  public static List<ZDTicket> getOpenUnassignedTickets()
+  {
+    return cache.getUnassignedTickets( Status.OPEN );
+
+  }
+
+  public static List<ZDTicket> getOpenTicketsForAnalystFromCache( long analystid )
+  {
+   return cache.getTickets( Status.OPEN, analystid );
+  }
+
+  //todo get rid of the literals here
+  public static String getTicketLink( final Long id )
+  {
+    return "http://resultgroup.zendesk.com/tickets/".concat( String.valueOf( id ) );
+  }
+
+  public static String getUserLink(final Long id)
+  {
+    return "http://resultgroup.zendesk.com/users/".concat( String.valueOf( id ) );
+  }
+
+  public static String getTopicLink( final Long id )
+  {
+    return "http://resultgroup.zendesk.com/entries/".concat( String.valueOf( id ));
+  }
+
+  public static List<ZDUser> getCustomers()
+  {
+    return cache.getUsers();
+  }
+
+  public static List<ZDUser> getOrderedCustomers()
+  {
+    List<ZDUser> users = getCustomers();
+    for ( Iterator it = users.iterator(); it.hasNext(); )
     {
-      List<SupportTicket> ticketList = TicketReporter.getClosedTicketsByAnalyst( analyst );
-      map.put( analyst, ticketList.size() );
+      ZDUser user = (ZDUser) it.next();
+      if(user.getOrganizationId() == null) it.remove();
     }
-
-    return map;
+    Collections.sort( users, new UserOrganisationComparator() );
+    return users;
   }
 
-  public static List getJoinedDetailsForNewTickets()
+  public static List<ZDTopic> getOrderedTopics()
   {
-    return TicketReporter.getJoinedDetailsForNewTickets();
+    List<ZDTopic> topics =  cache.getTopics();
+    Collections.sort( topics, new TopicForumComparator() );
+    return topics;
   }
 
-  public static Integer getTicketCountByState( final TicketStateEnum ticketStateEnum )
+  public static ZDForum getForum(final Long forumId)
   {
-    return TicketReporter.getTicketCountByState( ticketStateEnum );
+    return cache.getForumMap().get( forumId );
   }
 
-  private static List<Analyst> getAnalystByRole( final RoleEnum roleEnum )
+  public static String getForumName( final Long forumId )
   {
-    return AnalystReporter.getSuitableAnalysts( roleEnum );
+    return getForum( forumId ) != null ? getForum(forumId  ).getName() : "";
   }
 
-  public static List<Analyst> getAnalystInWIP( final RoleEnum roleEnum )
+  public static String getUserName(final long id)
   {
-    final List<Analyst> analysts = AnalystReporter.getSuitableAnalysts( roleEnum );
-    for ( final Iterator it = analysts.iterator(); it.hasNext(); )
+    return getUser( id ) != null ? getUser( id ).getName() : "";
+  }
+
+
+  public static List<ZDUser> getSupportAnalysts()
+  {
+    Group charGroup = getGroup( "Character" );
+    Group firstLine = getGroup( "Support" );
+    Group javaGroup = getGroup( "Java" );
+
+    List<GroupMembership> groupMemberships = getGroupMemberships(charGroup.getId());
+    groupMemberships.addAll( getGroupMemberships( firstLine.getId() ) );
+    groupMemberships.addAll( getGroupMemberships( javaGroup.getId() ) );
+
+    List<ZDUser> agents = new ArrayList<>();
+    for ( GroupMembership groupMembership : groupMemberships )
     {
-      final Analyst analyst = (Analyst) it.next();
-      if ( TicketReporter.getTicketCount( analyst.getId(), TicketStateEnum.WIP ) == 0 )
+      ZDUser agent = cache.getUserMap().get( groupMembership.getUserId() );
+      if ( agent != null && !agent.getName().equals( "Helen sowerby" ) )
       {
-        it.remove( );
+        agents.add( cache.getUserMap().get( groupMembership.getUserId() ) );
       }
     }
 
-    return analysts;
-  }
-
-  public static List getTickets( final int analystId, final TicketStateEnum ticketStateEnum )
-  {
-    return TicketReporter.getTickets( analystId,ticketStateEnum );
-  }
-
-  public static Integer getLargestQueue(final RoleEnum roleEnum)
-  {
-    return AnalystReporter.getLargestQueue(roleEnum);
-  }
-
-  public static String getFreeAnalysts( final RoleEnum roleEnum )
-  {
-    final StringBuilder sb = new StringBuilder();
-    final List<Analyst> analysts = getAnalystByRole( roleEnum );
-    for ( final Analyst analyst : analysts )
+    List<ZDUser> cleanList = new ArrayList<ZDUser>();
+    for ( ZDUser user : agents )
     {
-      final List<SupportTicket> wipTickets = getTickets( analyst.getId(), TicketStateEnum.WIP );
-      final List<SupportTicket> queuedTickets = getTickets( analyst.getId(), TicketStateEnum.QUEUED );
-      if ( wipTickets.isEmpty() && queuedTickets.isEmpty() ) sb.append( analyst.getName() ).append( ", " );
-    }
-
-    //Trim the last comma
-    return sb.toString().isEmpty() ? sb.toString() :
-           sb.toString().substring( 0, sb.toString().length() - ", ".length() );
-  }
-
-  public static boolean roleHasActiveTickets(final RoleEnum roleEnum)
-  {
-    boolean active = false;
-    HashSet<TicketTypeEnum> ticketTypeEnums = getTicketTypes(roleEnum);
-    for (final TicketTypeEnum ticketTypeEnum : ticketTypeEnums)
-    {
-      if(TicketReporter.getTicketCountByTypeAndState( ticketTypeEnum,TicketStateEnum.WIP ) != 0)
+      if ( !cleanList.contains( user ) )
       {
-        active = true;
+        cleanList.add( user );
+      }
+    }
+    return cleanList;
+  }
+
+  private static List<GroupMembership> getGroupMemberships( final Long id )
+  {
+    return cache.getGroupMemberships(id);
+  }
+
+
+  public static Integer getOpenTicketCount(final String groupName)
+  {
+   final Map<Long, ZDTicket> suitableTickets = getOpenTicketMap( groupName );
+   return suitableTickets != null ? suitableTickets.size() : 0;
+  }
+
+  public static Map<Long,ZDTicket> getOpenTicketMap(final String groupName)
+  {
+    Group group = getGroup( groupName );
+    Map<Long, ZDTicket> suitableTickets = new HashMap<>();
+    List<ZDTicket> allTickets = cache.getTickets( Status.OPEN );
+
+    for ( ZDTicket ticket : allTickets )
+    {
+      if ( ticket.getGroupId().equals( group.getId() ) )
+      {
+        suitableTickets.put( ticket.getId(), ticket );
+      }
+    }
+    return suitableTickets;
+  }
+
+  private static Group getGroup( final String name )
+  {
+    Group thisGroup = null;
+    List<Group> groups = cache.getGroups();
+    for ( Group group : groups )
+    {
+      if ( group.getName().equals( name ) )
+      {
+        thisGroup = group;
+      }
+    }
+    return thisGroup;
+  }
+
+
+  public static Integer getLargestWorkload()
+  {
+    Integer largesQueueSize = 0;
+    for ( ZDUser user : getSupportAnalysts() )
+    {
+      if ( user != null )
+      {
+        Integer queueSize = getTicketCount( user.getId(), Status.OPEN );
+        if ( queueSize > largesQueueSize ) largesQueueSize = queueSize;
+      }
+    }
+    return largesQueueSize;
+
+  }
+
+
+  public static Integer getTicketCount(final Long userId, final Status status)
+  {
+    List<ZDTicket> tickets = getTicketByState( status );
+    List<ZDTicket> ticketsForUser = new ArrayList<>(  );
+    for (ZDTicket ticket : tickets)
+    {
+      if(ticket.getAssigneeId() !=null && ticket.getAssigneeId().equals( userId ))
+      {
+        ticketsForUser.add( ticket );
       }
 
     }
-   return active;
+    return ticketsForUser.size();
+
   }
 
-  private static HashSet<TicketTypeEnum> getTicketTypes( final RoleEnum roleEnum )
+  public static Cache getCache()
   {
-    final HashSet<TicketTypeEnum> ticketTypeEnums = new HashSet<>(  );
-
-    switch ( roleEnum )
-    {
-     case FIRST_LINE:
-       ticketTypeEnums.add( TicketTypeEnum.LOCKED_DOCUMENT );
-       ticketTypeEnums.add( TicketTypeEnum.SYSTEM_DOWN );
-       break;
-      case DBA:
-        ticketTypeEnums.add( TicketTypeEnum.DBA );
-        break;
-      case JAVA:
-        ticketTypeEnums.add( TicketTypeEnum.JAVA );
-        break;
-      case ABL:
-        ticketTypeEnums.add( TicketTypeEnum.ABL );
-        break;
-
-    }
-    return ticketTypeEnums;
+    return cache;
   }
 
+  //toto fix NPE here
+  public static String getGroupName( final Long groupId )
+  {
+    return cache.getGroupMap().get( groupId ).getName();
+  }
 }

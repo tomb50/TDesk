@@ -1,103 +1,85 @@
-<%@ page import="tomb.supportsim.models.Analyst" %>
-<%@ page import="tomb.supportsim.models.SupportTicket" %>
-<%@ page import="tomb.supportsim.models.enums.RoleEnum" %>
-<%@ page import="tomb.supportsim.models.enums.TicketStateEnum" %>
+<%@ page import="tomb.supportsim.models.ZDTicket" %>
+<%@ page import="tomb.supportsim.models.ZDUser" %>
 <%@ page import="tomb.supportsim.view.ViewHelper" %>
 <%@ page import="java.util.List" %>
 
-<%
-    for ( final RoleEnum roleEnum : RoleEnum.values() )
-    {
-        // Don't care about including ALL Enum.
-        if ( roleEnum != RoleEnum.ALL )
-        {
-%>
-
 <div class="row-fluid">
     <%
-        List<Analyst> analysts = ViewHelper.getAnalystInWIP( roleEnum );
+        List<ZDUser> otherAnalysts = ViewHelper.getSupportAnalysts();
     %>
     <div class="span">
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe074;"></span> <%=roleEnum%> Workloads
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe074;"></span> Support Workloads - Open Tickets
                 </div>
             </div>
             <div class="widget-body">
-                <%
-                    if ( ViewHelper.roleHasActiveTickets( roleEnum ) )
-                    {
-                %>
-                <table class="table table-bordered no-margin">
+                <table class="table table-striped table-bordered table-condensed table-hover no-margin">
                     <thead>
                     <tr>
-                        <th>
-                            Ticket Status
-                        </th>
-
                         <%
-                            for ( final Analyst analyst : analysts )
+                            for ( final ZDUser user : otherAnalysts )
                             {
+                                if ( user != null )
+                                {
                         %>
                         <th>
-                            <%= analyst.getName() %>'s Tickets
+                            <%= user.getName() %>
                         </th>
                         <%
+                                }
                             }
                         %>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="warning">
-                        <td>
-                            <%=TicketStateEnum.WIP%>
+                    <%
+                        int max2 = ViewHelper.getLargestWorkload();
+                        for ( int i = 0; i < max2 ;i++ )
+                        {
+                    %>
+                    <tr>
+                        <%
+                            for ( final ZDUser user : otherAnalysts )
+                            {
+                                if ( user != null )
+                                {
+
+                                    final List<ZDTicket> tickets =
+                                            ViewHelper.getOpenTicketsForAnalystFromCache( user.getId() );
+                                    ZDTicket ticket;
+                                    if ( tickets != null && tickets.size() > i )
+                                    {
+                                        ticket = tickets.get( i );
+                                    }
+                                    else
+                                    {
+                                        ticket = null;
+                                    }
+
+                        %>
+                        <%
+                            if ( ticket != null )
+                            {
+                        %>
+                        <td class="clickableCell" href=<%=ViewHelper.getTicketLink( ticket.getId() )%>>
+                            <%=ticket.getId()%>
                         </td>
                         <%
-                            for ( final Analyst analyst : analysts )
-                            {
-                                final List<SupportTicket> wipTickets =
-                                        ViewHelper.getTickets( analyst.getId(), TicketStateEnum.WIP );
-                                final SupportTicket wipTicket =
-                                        wipTickets.get( 0 ); //Like highlander, there should be only one
+                        }
+                        else
+                        {
                         %>
                         <td>
-                            <%=wipTicket.getId()%>
+                            -
                         </td>
                         <%
                             }
                         %>
-                    </tr>
+                        <%
 
-                    <%
-                        for ( int i = 0; i < ViewHelper.getLargestQueue( roleEnum ); i++ )
-                        {
-                    %>
-                    <tr class="info">
-                        <td>
-                            <%=TicketStateEnum.QUEUED%>
-                        </td>
-                        <%
-                            for ( final Analyst analyst : analysts )
-                            {
-                                final List<SupportTicket> queuedTickets =
-                                        ViewHelper.getTickets( analyst.getId(), TicketStateEnum.QUEUED );
-                                final SupportTicket queuedTicket;
-                                if ( queuedTickets.size() > i )
-                                {
-                                    queuedTicket =
-                                            queuedTickets.get( i );
                                 }
-                                else
-                                {
-                                    queuedTicket =
-                                            null;
-                                }
-                        %>
-                        <td>
-                            <%= queuedTicket != null ? queuedTicket.getId() : "-"%>
-                        </td>
-                        <%
                             }
                         %>
                     </tr>
@@ -107,35 +89,17 @@
                     </tbody>
                 </table>
                 <br>
-                <%
-                    }
-                %>
-
-                <% final String freeAnalysts = ViewHelper.getFreeAnalysts( roleEnum );
-                    {
-                        if ( !freeAnalysts.isEmpty() )
-                        {
-                %>
-                <div class="stylish-lists">
-                    <dl class="no-margin">
-                        <dt class="text-success">
-                            Analysts with no work:
-                        </dt>
-                        <dd>
-                            <%= freeAnalysts %>
-                        </dd>
-
-                    </dl>
-                </div>
-                <%
-                        }
-                    }
-                %>
             </div>
         </div>
     </div>
 </div>
-<%
-        }
-    }
-%>
+
+
+<script>
+jQuery( document ).ready( function ( $ ){
+$( ".clickableCell" ).click( function (){
+window.open( $( this ).attr( "href" ) );
+} );
+} );
+</script>
+

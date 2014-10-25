@@ -7,6 +7,10 @@ public interface PropertyKeys
 {
   String ASSIGNMENT_METHOD = "assignment.method";
   String CRON_ASSIGNMENT = "${poller.assignment.cron}";
-  String CRON_UPDATE = "${poller.update.cron}";
+  String CRON_UPDATE_TICKETS = "${poller.update.tickets.cron}";
   String CRON_CREATION = "${poller.assignment.cron}";
+  String ZENDESK_SUBDOMAIN = "zendesk.subdomain";
+  String ZENDESK_USER = "zendesk.user";
+  String ZENDESK_PASSWORD = "zendesk.password";
+  String ZENDESK_TOKEN = "zendesk.token";
 }
