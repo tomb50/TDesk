@@ -1,18 +1,10 @@
-SupportSim
+TDesk
 ==========
 
-This project has now split into two different branches.
-
-The master branch is still SupportSim, a Java app that simulates a helpdesk environemnt (Ticket generation, assignment, and completion etc).
+A Java application which connects to a Zendesk domain via their REST services API and populates webpages with any required info. The aim is to provide a platform for both quantitative and qualititative data analysis on Zendesk ticket activity.  
 
 It uses:
-Hibernate ORM for persistence.
-Spring for scheduling/polling mechanisms.
-JSP (scriplets currently, but due to be re-worked) for a frontend.
-Boostrap for the webpage layout/styling.
-
-The ZD branch is quite different, leveraging the existing framework of SupportSim it is intended to become a functional frontend that provides 'at a glance' information for Zendesk via the RESTful API.
-
-This is made possible by the Zendesk Java Client written by stephenc/cloudbees
-
-https://github.com/cloudbees/zendesk-java-client
+Spring for scheduling pollers
+A forked dev-branch of a Zendesk Java Client written by stephenc/cloudbees - https://github.com/cloudbees/zendesk-java-client 
+JSP to pull data onto to web frontend.
+CSS and assets pulled from the SupportSim repo
