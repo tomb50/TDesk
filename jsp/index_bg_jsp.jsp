@@ -1,4 +1,5 @@
-<%@ page import="tomb.supportsim.app.SupportSimApp" %><%
-    SupportSimApp supportSimApp = SupportSimApp.getInstance();
-    supportSimApp.start();
+<%@ page import="tomb.supportsim.app.TDeskApp" %>
+<%
+    TDeskApp tDeskApp = TDeskApp.getInstance();
+    tDeskApp.start();
 %>

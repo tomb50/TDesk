@@ -1,7 +1,7 @@
 package tomb.supportsim.schedule;
 
 import org.zendesk.client.v2.model.IncrementalTicket;
-import tomb.supportsim.app.SupportSimApp;
+import tomb.supportsim.app.TDeskApp;
 import tomb.supportsim.models.ConvertUtil;
 import tomb.supportsim.models.ZDTicket;
 import tomb.supportsim.view.ViewHelper;
@@ -23,10 +23,10 @@ class UpdatePoller
     Long cutoffTime = System.currentTimeMillis()/1000L;
     cutoffTime -= (60*5);
 
-    List<IncrementalTicket> recentIncTickets =SupportSimApp.getInstance().getZd().getRecentTickets( cutoffTime );
+    List<IncrementalTicket> recentIncTickets = TDeskApp.getInstance().getZd().getRecentTickets( cutoffTime );
     for(IncrementalTicket incTicket : recentIncTickets)
     {
-      ZDTicket ticket = ConvertUtil.toTicket( SupportSimApp.getInstance().getZd().getTicket( incTicket.getId() ));
+      ZDTicket ticket = ConvertUtil.toTicket( TDeskApp.getInstance().getZd().getTicket( incTicket.getId() ));
       System.out.println("Inserting/Updating ticket: " + ticket.getId());
       ViewHelper.getCache().getTicketMap().put( ticket.getId(),ticket );
     }

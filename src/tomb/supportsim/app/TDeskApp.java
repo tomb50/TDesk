@@ -13,7 +13,7 @@ import static tomb.supportsim.util.PropertyKeys.*;
 /**
  * Created with IntelliJ IDEA. User: tombeadman Date: 06/08/2014 Time: 18:22
  */
-public class SupportSimApp
+public class TDeskApp
 {
 
   /*
@@ -21,12 +21,12 @@ public class SupportSimApp
    */
   public static void main( String[] args )
   {
-    SupportSimApp supportSimApp = SupportSimApp.getInstance();
-    supportSimApp.start();
+    TDeskApp tDeskApp = TDeskApp.getInstance();
+    tDeskApp.start();
     System.exit( 0 );
   }
 
-  private static SupportSimApp instance;
+  private static TDeskApp instance;
   private static boolean running = false;
   private Properties properties;
 
@@ -38,7 +38,7 @@ public class SupportSimApp
   private Zendesk zd;
   DataImporter dataImporter;
 
-  private SupportSimApp() throws IOException
+  private TDeskApp() throws IOException
   {
     properties = loadProperties();
     configureZendesk();
@@ -74,13 +74,13 @@ public class SupportSimApp
     return properties;
   }
 
-  public static SupportSimApp getInstance()
+  public static TDeskApp getInstance()
   {
     if ( instance == null )
     {
       try
       {
-        instance = new SupportSimApp();
+        instance = new TDeskApp();
       }
       catch(IOException io)
       {
