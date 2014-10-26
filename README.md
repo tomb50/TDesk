@@ -5,6 +5,9 @@ A Java application which connects to a Zendesk domain via their REST services AP
 
 It uses:
 Spring for scheduling pollers
-A forked dev-branch of a Zendesk Java Client written by stephenc/cloudbees - https://github.com/cloudbees/zendesk-java-client 
+
+A forked dev-branch of a Zendesk Java Client written by stephenc/cloudbees - https://github.com/cloudbees/zendesk-java-client
+
 JSP to pull data onto to web frontend.
+
 CSS and assets pulled from the SupportSim repo
