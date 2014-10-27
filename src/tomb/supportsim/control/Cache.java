@@ -1,4 +1,4 @@
-package tomb.supportsim.view;
+package tomb.supportsim.control;
 
 import org.zendesk.client.v2.model.Group;
 import org.zendesk.client.v2.model.GroupMembership;
@@ -27,6 +27,22 @@ public class Cache
   private Map<Long, ZDForum> forumMap;
   private Map<Long, Group> groupMap;
   private Map<Long, GroupMembership> groupMembershipMap;
+
+  private static Cache instance;
+
+  public static Cache getInstance()
+  {
+    if ( instance == null )
+    {
+        instance = new Cache();
+    }
+    return instance;
+  }
+
+  private Cache()
+  {
+
+  }
 
 
   public Map<Long, Group> getGroupMap()

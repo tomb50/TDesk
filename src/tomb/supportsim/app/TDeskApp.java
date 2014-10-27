@@ -30,6 +30,7 @@ public class TDeskApp
   private static boolean running = false;
   private Properties properties;
 
+
   public Zendesk getZd()
   {
     return zd;

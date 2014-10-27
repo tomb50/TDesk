@@ -3,7 +3,9 @@ package tomb.supportsim.view;
 import org.zendesk.client.v2.model.Group;
 import org.zendesk.client.v2.model.GroupMembership;
 import org.zendesk.client.v2.model.Status;
+import tomb.supportsim.control.*;
 import tomb.supportsim.models.*;
+import tomb.supportsim.util.LinkUtil;
 import tomb.supportsim.util.UserOrganisationComparator;
 
 import java.util.*;
@@ -18,23 +20,28 @@ public class ViewHelper
    * Cache for speed //todo improve cache mechanism
    *
    */
- private static Cache cache = new Cache();
+  private static UserManager userManager = new UserManager();
+  private static TicketManager ticketManager = new TicketManager();
+  private static OrganisationManager organisationManager = new OrganisationManager();
+  private static TopicManager topicManager = new TopicManager();
+  private static ForumManager forumManager = new ForumManager();
+  private static GroupManager groupManager = new GroupManager();
+  private static GroupMembershipManager groupMembershipManager = new GroupMembershipManager();
 
 
-
-  public static ZDOrganisation getOrganisation(final Long organisationId)
+  public static ZDOrganisation getOrganisation( final Long organisationId )
   {
-    return cache.getOrganisationMap().get( organisationId );
-  }
-  public static ZDUser getUser(final Long userId)
-  {
-    return cache.getUserMap().get( userId );
+    return organisationManager.getOrganisation( organisationId );
   }
 
+  public static ZDUser getUser( final Long userId )
+  {
+    return userManager.getUser( userId );
+  }
 
   public static Integer getTotalTicketCount()
   {
-    return cache.getTicketMap().size();
+    return ticketManager.getTotalTicketCount();
   }
 
 
@@ -44,73 +51,58 @@ public class ViewHelper
     return allTickets != null ? allTickets.size() : 0;
   }
 
-  public static List<ZDTicket> getTicketByState(final Status status)
+  public static List<ZDTicket> getTicketByState( final Status status )
   {
-    return cache.getTickets( status );
+    return ticketManager.getTicketByState( status );
   }
 
   public static List<ZDTicket> getOpenUnassignedTickets()
   {
-    return cache.getUnassignedTickets( Status.OPEN );
-
+    return ticketManager.getOpenUnassignedTickets();
   }
 
   public static List<ZDTicket> getOpenTicketsForAnalystFromCache( long analystid )
   {
-   return cache.getTickets( Status.OPEN, analystid );
+    return ticketManager.getOpenTicketsForAnalystFromCache( analystid );
   }
 
-  //todo get rid of the literals here
   public static String getTicketLink( final Long id )
   {
-    return "http://resultgroup.zendesk.com/tickets/".concat( String.valueOf( id ) );
+    return LinkUtil.getTicketLink( id );
   }
 
-  public static String getUserLink(final Long id)
+  public static String getUserLink( final Long id )
   {
-    return "http://resultgroup.zendesk.com/users/".concat( String.valueOf( id ) );
+    return LinkUtil.getUserLink( id );
   }
 
   public static String getTopicLink( final Long id )
   {
-    return "http://resultgroup.zendesk.com/entries/".concat( String.valueOf( id ));
+    return LinkUtil.getTopicLink( id );
   }
 
-  public static List<ZDUser> getCustomers()
-  {
-    return cache.getUsers();
-  }
 
   public static List<ZDUser> getOrderedCustomers()
   {
-    List<ZDUser> users = getCustomers();
-    for ( Iterator it = users.iterator(); it.hasNext(); )
-    {
-      ZDUser user = (ZDUser) it.next();
-      if(user.getOrganizationId() == null) it.remove();
-    }
-    Collections.sort( users, new UserOrganisationComparator() );
-    return users;
+    return userManager.getOrderedCustomers();
   }
 
   public static List<ZDTopic> getOrderedTopics()
   {
-    List<ZDTopic> topics =  cache.getTopics();
-    Collections.sort( topics, new TopicForumComparator() );
-    return topics;
+    return topicManager.getOrderedTopics();
   }
 
-  public static ZDForum getForum(final Long forumId)
+  public static ZDForum getForum( final Long forumId )
   {
-    return cache.getForumMap().get( forumId );
+    return forumManager.getForum( forumId );
   }
 
   public static String getForumName( final Long forumId )
   {
-    return getForum( forumId ) != null ? getForum(forumId  ).getName() : "";
+    return getForum( forumId ) != null ? getForum( forumId ).getName() : "";
   }
 
-  public static String getUserName(final long id)
+  public static String getUserName( final long id )
   {
     return getUser( id ) != null ? getUser( id ).getName() : "";
   }
@@ -122,17 +114,18 @@ public class ViewHelper
     Group firstLine = getGroup( "Support" );
     Group javaGroup = getGroup( "Java" );
 
-    List<GroupMembership> groupMemberships = getGroupMemberships(charGroup.getId());
+    List<GroupMembership> groupMemberships = getGroupMemberships( charGroup.getId() );
     groupMemberships.addAll( getGroupMemberships( firstLine.getId() ) );
     groupMemberships.addAll( getGroupMemberships( javaGroup.getId() ) );
 
     List<ZDUser> agents = new ArrayList<>();
     for ( GroupMembership groupMembership : groupMemberships )
     {
-      ZDUser agent = cache.getUserMap().get( groupMembership.getUserId() );
+      ZDUser agent = userManager.getUser( groupMembership.getUserId() );
+
       if ( agent != null && !agent.getName().equals( "Helen sowerby" ) )
       {
-        agents.add( cache.getUserMap().get( groupMembership.getUserId() ) );
+        agents.add( agent );
       }
     }
 
@@ -149,21 +142,21 @@ public class ViewHelper
 
   private static List<GroupMembership> getGroupMemberships( final Long id )
   {
-    return cache.getGroupMemberships(id);
+    return groupMembershipManager.getGroupMemberships( id );
   }
 
 
-  public static Integer getOpenTicketCount(final String groupName)
+  public static Integer getOpenTicketCount( final String groupName )
   {
-   final Map<Long, ZDTicket> suitableTickets = getOpenTicketMap( groupName );
-   return suitableTickets != null ? suitableTickets.size() : 0;
+    final Map<Long, ZDTicket> suitableTickets = getOpenTicketMap( groupName );
+    return suitableTickets != null ? suitableTickets.size() : 0;
   }
 
-  public static Map<Long,ZDTicket> getOpenTicketMap(final String groupName)
+  public static Map<Long, ZDTicket> getOpenTicketMap( final String groupName )
   {
     Group group = getGroup( groupName );
     Map<Long, ZDTicket> suitableTickets = new HashMap<>();
-    List<ZDTicket> allTickets = cache.getTickets( Status.OPEN );
+    List<ZDTicket> allTickets = ticketManager.getTicketByState( Status.OPEN );
 
     for ( ZDTicket ticket : allTickets )
     {
@@ -177,16 +170,7 @@ public class ViewHelper
 
   private static Group getGroup( final String name )
   {
-    Group thisGroup = null;
-    List<Group> groups = cache.getGroups();
-    for ( Group group : groups )
-    {
-      if ( group.getName().equals( name ) )
-      {
-        thisGroup = group;
-      }
-    }
-    return thisGroup;
+    return groupManager.getGroup( name );
   }
 
 
@@ -202,34 +186,28 @@ public class ViewHelper
       }
     }
     return largesQueueSize;
-
   }
 
 
-  public static Integer getTicketCount(final Long userId, final Status status)
+  public static Integer getTicketCount( final Long userId, final Status status )
   {
     List<ZDTicket> tickets = getTicketByState( status );
-    List<ZDTicket> ticketsForUser = new ArrayList<>(  );
-    for (ZDTicket ticket : tickets)
+    List<ZDTicket> ticketsForUser = new ArrayList<>();
+    for ( ZDTicket ticket : tickets )
     {
-      if(ticket.getAssigneeId() !=null && ticket.getAssigneeId().equals( userId ))
+      if ( ticket.getAssigneeId() != null && ticket.getAssigneeId().equals( userId ) )
       {
         ticketsForUser.add( ticket );
       }
-
     }
     return ticketsForUser.size();
-
   }
 
-  public static Cache getCache()
-  {
-    return cache;
-  }
 
-  //toto fix NPE here
   public static String getGroupName( final Long groupId )
   {
-    return cache.getGroupMap().get( groupId ).getName();
+    final Group group = groupManager.getGroup( groupId );
+
+    return group != null ? group.getName() : "";
   }
 }

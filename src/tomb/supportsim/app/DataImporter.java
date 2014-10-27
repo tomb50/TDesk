@@ -2,6 +2,7 @@ package tomb.supportsim.app;
 
 import org.zendesk.client.v2.Zendesk;
 import org.zendesk.client.v2.model.*;
+import tomb.supportsim.control.Cache;
 import tomb.supportsim.models.ConvertUtil;
 import tomb.supportsim.view.ViewHelper;
 
@@ -76,7 +77,7 @@ public class DataImporter
   {
     for (Group group : zendesk.getGroups() )
     {
-      ViewHelper.getCache().insertGroup( group );
+      Cache.getInstance().insertGroup( group );
     }
 
   }
@@ -86,7 +87,7 @@ public class DataImporter
 
     for ( Ticket ticket :  zendesk.getTickets() )
     {
-      ViewHelper.getCache().insertTicket( ConvertUtil.toTicket( ticket ) );
+      Cache.getInstance().insertTicket( ConvertUtil.toTicket( ticket ) );
     }
   }
 
@@ -95,7 +96,7 @@ public class DataImporter
    for(final User user : zendesk.getUsers())
    {
      if(user.getActive())
-     ViewHelper.getCache().insertUser(  ConvertUtil.toUser( user ) );
+       Cache.getInstance().insertUser(  ConvertUtil.toUser( user ) );
    }
   }
 
@@ -103,7 +104,7 @@ public class DataImporter
   {
     for(final Organization organization : zendesk.getOrganizations())
     {
-      ViewHelper.getCache().insertOrganisation( ConvertUtil.toOrganisation( organization ) );
+      Cache.getInstance().insertOrganisation( ConvertUtil.toOrganisation( organization ) );
     }
   }
 
@@ -111,7 +112,7 @@ public class DataImporter
   {
     for ( GroupMembership groupMembership : zendesk.getGroupMemberships())
     {
-      ViewHelper.getCache().insertGroupMembership( groupMembership );
+      Cache.getInstance().insertGroupMembership( groupMembership );
     }
   }
 
@@ -119,7 +120,7 @@ public class DataImporter
   {
     for( Forum forum : zendesk.getForums())
     {
-      ViewHelper.getCache().insertForum( ConvertUtil.toForum( forum ) );
+      Cache.getInstance().insertForum( ConvertUtil.toForum( forum ) );
     }
   }
 
@@ -128,7 +129,7 @@ public class DataImporter
     for( Topic topic : zendesk.getTopics())
     {
 
-      ViewHelper.getCache().insertTopic( ConvertUtil.toTopic( topic ) );
+      Cache.getInstance().insertTopic( ConvertUtil.toTopic( topic ) );
     }
   }
 

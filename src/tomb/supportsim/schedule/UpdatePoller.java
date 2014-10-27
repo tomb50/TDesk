@@ -2,6 +2,7 @@ package tomb.supportsim.schedule;
 
 import org.zendesk.client.v2.model.IncrementalTicket;
 import tomb.supportsim.app.TDeskApp;
+import tomb.supportsim.control.Cache;
 import tomb.supportsim.models.ConvertUtil;
 import tomb.supportsim.models.ZDTicket;
 import tomb.supportsim.view.ViewHelper;
@@ -28,7 +29,7 @@ class UpdatePoller
     {
       ZDTicket ticket = ConvertUtil.toTicket( TDeskApp.getInstance().getZd().getTicket( incTicket.getId() ));
       System.out.println("Inserting/Updating ticket: " + ticket.getId());
-      ViewHelper.getCache().getTicketMap().put( ticket.getId(),ticket );
+      Cache.getInstance().getTicketMap().put( ticket.getId(),ticket );
     }
 
   }
