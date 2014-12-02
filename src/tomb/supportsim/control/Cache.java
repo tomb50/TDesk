@@ -1,9 +1,11 @@
 package tomb.supportsim.control;
 
+import com.tombeadman.screensteps.model.*;
 import org.zendesk.client.v2.model.Group;
 import org.zendesk.client.v2.model.GroupMembership;
 import org.zendesk.client.v2.model.Status;
 import tomb.supportsim.models.*;
+import tomb.supportsim.util.ScreenStepsKeyUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +21,7 @@ import java.util.Map;
  */
 public class Cache
 {
-
+  //Zendesk store
   private Map<Long, ZDOrganisation> organisationMap;
   private Map<Long, ZDUser> userMap;
   private Map<Long, ZDTicket> ticketMap;
@@ -27,6 +29,13 @@ public class Cache
   private Map<Long, ZDForum> forumMap;
   private Map<Long, Group> groupMap;
   private Map<Long, GroupMembership> groupMembershipMap;
+
+  //ScreenSteps store
+  private Map<String, Space> spaceMap;
+  private Map<String, Manual> manualMap;
+  private Map<String, Lesson> lessonMap;
+
+
 
   private static Cache instance;
 
@@ -161,6 +170,16 @@ public class Cache
     return new ArrayList<>( getTopicMap().values() );
   }
 
+  public List<Manual> getManuals()
+  {
+    return new ArrayList<>( getManualMap().values() );
+  }
+
+  public List<Lesson> getLessons()
+  {
+    return new ArrayList<>( getLessonMap().values() );
+  }
+
   public List<Group> getGroups()
   {
     return new ArrayList<>( getGroupMap().values() );
@@ -214,5 +233,47 @@ public class Cache
   public void insertOrganisation( final ZDOrganisation zdOrganisation )
   {
     getOrganisationMap().put( zdOrganisation.getId(), zdOrganisation );
+  }
+
+  public void insertSpace(final Space space)
+  {
+    getSpaceMap().put(space.getId(),space);
+  }
+
+  public void insertLesson(final Lesson lesson)
+  {
+    getLessonMap().put(lesson.getId(),lesson);
+  }
+
+  public void insertManual(final Manual manual)
+  {
+    getManualMap().put( ScreenStepsKeyUtil.getManualPK( manual ),manual);
+  }
+
+  public Map<String, Space> getSpaceMap()
+  {
+    if (spaceMap == null)
+    {
+      spaceMap = new HashMap<>(  );
+    }
+    return spaceMap;
+  }
+
+  public Map<String, Manual> getManualMap()
+  {
+    if (manualMap == null)
+    {
+      manualMap = new HashMap<>(  );
+    }
+    return manualMap;
+  }
+
+  public Map<String, Lesson> getLessonMap()
+  {
+    if (lessonMap == null)
+    {
+      lessonMap = new HashMap<>(  );
+    }
+    return lessonMap;
   }
 }

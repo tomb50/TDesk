@@ -105,6 +105,14 @@
                     Customers
                 </a>
             </li>
+            <li class="nav-ele">
+                <a href="screensteps.jsp">
+                    <div class="icon">
+                        <span class="fs1" aria-hidden="true" data-icon="&#xe075;"></span>
+                    </div>
+                    ScreenSteps
+                </a>
+            </li>
             <li class="submenu">
                 <a href="edit-profile.html" class="selected">
                     <div class="icon">
@@ -174,6 +182,9 @@
                                 </li>
                                 <li>
                                     <a href="customers.jsp">Customers</a>
+                                </li>
+                                <li>
+                                    <a href="screensteps.jsp">ScreenSteps</a>
                                 </li>
                                 <li>
                                     <a href="edit-profile.html">Edit Profile</a>

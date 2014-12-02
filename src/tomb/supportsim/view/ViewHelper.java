@@ -1,5 +1,7 @@
 package tomb.supportsim.view;
 
+import com.tombeadman.screensteps.model.Lesson;
+import com.tombeadman.screensteps.model.Manual;
 import org.zendesk.client.v2.model.Group;
 import org.zendesk.client.v2.model.GroupMembership;
 import org.zendesk.client.v2.model.Status;
@@ -27,6 +29,8 @@ public class ViewHelper
   private static ForumManager forumManager = new ForumManager();
   private static GroupManager groupManager = new GroupManager();
   private static GroupMembershipManager groupMembershipManager = new GroupMembershipManager();
+  private static ScreenStepsManager screenStepsManager = new ScreenStepsManager();
+
 
 
   public static ZDOrganisation getOrganisation( final Long organisationId )
@@ -91,6 +95,13 @@ public class ViewHelper
   {
     return topicManager.getOrderedTopics();
   }
+
+  public static List<Lesson> getLessons()
+  {
+    return screenStepsManager.getLessons();
+  }
+
+  public static List<Manual> getManuals() { return screenStepsManager.getManuals(); }
 
   public static ZDForum getForum( final Long forumId )
   {

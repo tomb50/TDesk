@@ -13,4 +13,7 @@ public interface PropertyKeys
   String ZENDESK_USER = "zendesk.user";
   String ZENDESK_PASSWORD = "zendesk.password";
   String ZENDESK_TOKEN = "zendesk.token";
+  String SCREENSTEPS_USER = "screensteps.username";
+  String SCREENSTEPS_PASSWORD = "screensteps.password";
+  String SCREENSTEPS_DOMAIN = "screensteps.domain";
 }
