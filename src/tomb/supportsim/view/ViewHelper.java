@@ -29,7 +29,7 @@ public class ViewHelper
   private static ForumManager forumManager = new ForumManager();
   private static GroupManager groupManager = new GroupManager();
   private static GroupMembershipManager groupMembershipManager = new GroupMembershipManager();
-  private static ScreenStepsManager screenStepsManager = new ScreenStepsManager();
+  private static SSManager screenStepsManager = new SSManager();
 
 
 
