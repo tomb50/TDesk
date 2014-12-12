@@ -1,11 +1,14 @@
 package tomb.supportsim.app;
 
+import com.atlassian.jira.rest.client.api.JiraRestClient;
 import com.tombeadman.screensteps.ScreenSteps;
 import com.tombeadman.screensteps.model.*;
 import org.zendesk.client.v2.Zendesk;
 import org.zendesk.client.v2.model.*;
 import tomb.supportsim.control.Cache;
 import tomb.supportsim.models.ConvertUtil;
+import tomb.supportsim.util.jira.JiraBatchImporter;
+import java.net.URISyntaxException;
 import java.util.Map;
 
 /**
@@ -15,11 +18,15 @@ public class DataImporter
 {
   private Zendesk zendesk;
   private ScreenSteps screenSteps;
+  private JiraRestClient jiraClient;
+  private JiraBatchImporter jiraBatchImporter;
 
-  public DataImporter( final Zendesk zendesk, final ScreenSteps screenSteps )
+  public DataImporter( final Zendesk zendesk, final ScreenSteps screenSteps, final JiraRestClient jiraClient )
   {
     this.zendesk = zendesk;
     this.screenSteps = screenSteps;
+    this.jiraClient = jiraClient;
+    jiraBatchImporter = new JiraBatchImporter( jiraClient );
   }
 
 
@@ -27,6 +34,49 @@ public class DataImporter
   {
     importZendeskData();
     importScreenstepsData();
+    importJiraData();
+  }
+
+  public void importJiraData()
+  {
+
+    //persist Spaces
+    long time = System.currentTimeMillis();
+    System.out.println( "Importing bugs from JIRA" );
+    saveJiraBugs();
+    System.out.println( "Jira bugs saved" );
+    System.out.println( ( System.currentTimeMillis() - time ) / 1000 );
+    time = System.currentTimeMillis();
+
+    //persist Manuals
+    System.out.println( "Importing features from JIRA" );
+    saveJiraFeatures();
+    System.out.println( "Jira features saved" );
+    System.out.println( ( System.currentTimeMillis() - time ) / 1000 );
+  }
+
+  private void saveJiraBugs()
+  {
+    try
+    {
+      jiraBatchImporter.importBugs();
+    }
+    catch ( URISyntaxException e )
+    {
+      e.printStackTrace();
+    }
+  }
+
+  private void saveJiraFeatures()
+  {
+    try
+    {
+      jiraBatchImporter.importFeatures();
+    }
+    catch ( URISyntaxException e )
+    {
+      e.printStackTrace();
+    }
   }
 
   public void importScreenstepsData()
@@ -93,7 +143,6 @@ public class DataImporter
             System.out.println( "saving" + space.getId() + "-" + asset.toString() );
             final Manual manual = screenSteps.getManual( space.getId(), asset.getId() );
             Cache.getInstance().insertManual( manual );
-
           }
         }
       }

@@ -1,15 +1,17 @@
 package tomb.supportsim.app;
 
+import com.atlassian.jira.rest.client.api.JiraRestClient;
 import com.tombeadman.screensteps.ScreenSteps;
-import com.tombeadman.screensteps.model.*;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.zendesk.client.v2.Zendesk;
-import tomb.supportsim.control.Cache;
-import tomb.supportsim.view.ViewHelper;
+import tomb.supportsim.util.jira.CustomAsynchronousJiraRestClientFactory;
+
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Properties;
 
 import static tomb.supportsim.util.PropertyKeys.*;
@@ -26,9 +28,9 @@ public class TDeskApp
   public static void main( String[] args )
     throws IOException
   {
-    /*TDeskApp tDeskApp = new TDeskApp();
-    tDeskApp.dataImporter.importScreenstepsData();
-    for ( Manual manual : ViewHelper.getManuals() )
+    TDeskApp tDeskApp = new TDeskApp();
+    tDeskApp.dataImporter.importJiraData();
+    /*for ( Manual manual : ViewHelper.getManuals() )
     {
       for ( Chapter chapter  : manual.getChapters() )
       {
@@ -40,12 +42,13 @@ public class TDeskApp
           String title = thinLesson.getTitle();
           String url = thinLesson.getUrl();
 
+          boolean found = true;
           System.out.println(spaceName + manualName + chapterName + title + url);
 
         }
       }
 
-    }*/
+    } */
   }
 
   private static TDeskApp instance;
@@ -60,6 +63,7 @@ public class TDeskApp
 
   private Zendesk zd;
   private ScreenSteps ss;
+  private JiraRestClient jira;
   private DataImporter dataImporter;
 
   private TDeskApp() throws IOException
@@ -67,7 +71,8 @@ public class TDeskApp
     properties = loadProperties();
     zd = configureZendesk();
     ss = configureScreenSteps();
-    dataImporter = new DataImporter( zd,ss);
+    jira = configureJira();
+    dataImporter = new DataImporter( zd,ss,jira);
   }
 
   private ScreenSteps configureScreenSteps()
@@ -88,6 +93,28 @@ public class TDeskApp
       .setUsername( user )
       .setPassword( password ) // or we can do .setToken("...")  instead
       .build();
+  }
+
+  private JiraRestClient configureJira()
+  {
+    final String userName = properties.getProperty( JIRA_USERNAME );
+    final String passWord = properties.getProperty( JIRA_PASSWORD );
+    final String URLString = properties.getProperty( JIRA_URL );
+    final int timeout = Integer.valueOf( properties.getProperty( JIRA_TIMEOUT ));
+    URI jiraServerUri = null;
+
+    try
+    {
+      jiraServerUri = new URI(URLString);
+    }
+    catch ( URISyntaxException e )
+    {
+      throw new RuntimeException( e );
+    }
+    CustomAsynchronousJiraRestClientFactory factory = new CustomAsynchronousJiraRestClientFactory();
+    JiraRestClient restClient = factory.createWithBasicHttpAuthentication( jiraServerUri, userName, passWord, timeout );
+
+    return restClient;
   }
 
   private Properties loadProperties() throws IOException

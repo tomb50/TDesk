@@ -16,4 +16,8 @@ public interface PropertyKeys
   String SCREENSTEPS_USER = "screensteps.username";
   String SCREENSTEPS_PASSWORD = "screensteps.password";
   String SCREENSTEPS_DOMAIN = "screensteps.domain";
+  String JIRA_URL = "jira.url";
+  String JIRA_USERNAME = "jira.username";
+  String JIRA_PASSWORD = "jira.password";
+  String JIRA_TIMEOUT = "jira.timeout"; // seconds
 }

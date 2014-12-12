@@ -1,5 +1,6 @@
 package tomb.supportsim.control;
 
+import com.atlassian.jira.rest.client.api.domain.Issue;
 import com.tombeadman.screensteps.model.*;
 import org.zendesk.client.v2.model.Group;
 import org.zendesk.client.v2.model.GroupMembership;
@@ -35,6 +36,9 @@ public class Cache
   private Map<String, Manual> manualMap;
   private Map<String, Lesson> lessonMap;
 
+  //Jira Store
+  private Map<String, Issue> bugMap;
+  private Map<String, Issue> featureMap;
 
 
   private static Cache instance;
@@ -275,5 +279,33 @@ public class Cache
       lessonMap = new HashMap<>(  );
     }
     return lessonMap;
+  }
+
+  public void insertBug( final Issue issue )
+  {
+    getBugMap().put(issue.getKey(),issue);
+  }
+
+  private Map<String, Issue> getBugMap()
+  {
+    if( bugMap == null)
+    {
+      bugMap = new HashMap<>(  );
+    }
+    return bugMap;
+  }
+
+  public void insertFeature( final Issue issue )
+  {
+    getFeatureMap().put(issue.getKey(),issue);
+  }
+
+  private Map<String, Issue> getFeatureMap()
+  {
+    if( featureMap == null)
+    {
+      featureMap = new HashMap<>(  );
+    }
+    return featureMap;
   }
 }
