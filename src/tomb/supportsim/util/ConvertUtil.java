@@ -1,8 +1,11 @@
-package tomb.supportsim.models;
+package tomb.supportsim.util;
 
+import com.atlassian.jira.rest.client.api.domain.Issue;
 import org.zendesk.client.v2.model.Forum;
 import org.zendesk.client.v2.model.Organization;
 import org.zendesk.client.v2.model.Topic;
+import tomb.supportsim.models.*;
+import tomb.supportsim.models.jira.IssueShell;
 
 /**
  * Created with IntelliJ IDEA. User: tombeadman Date: 10/10/2014 Time: 16:04
@@ -131,5 +134,26 @@ public class ConvertUtil
     zdForum.setCreatedAt( forum.getCreatedAt() );
     zdForum.setUpdatedAt( forum.getUpdatedAt() );
     return zdForum;
+  }
+
+  public static IssueShell toShellIssue(final Issue issue)
+  {
+    final IssueShell issueShell = new IssueShell();
+    issueShell.setSelf( issue.getSelf() );
+    issueShell.setKey( issue.getKey() );
+    issueShell.setId( issue.getId() );
+    issueShell.setStatus( issue.getStatus() );
+    issueShell.setIssueType( issue.getIssueType() );
+    issueShell.setProject( issue.getProject() );
+    issueShell.setTransitionsUri( issue.getTransitionsUri() );
+    issueShell.setSummary( issue.getSummary() );
+    issueShell.setDescription( issue.getDescription() );
+    issueShell.setReporter( issue.getReporter() );
+    issueShell.setAssignee( issue.getAssignee() );
+    issueShell.setResolution( issue.getResolution() );
+    issueShell.setCreationDate( issue.getCreationDate() );
+    issueShell.setUpdateDate( issue.getUpdateDate() );
+    return issueShell;
+
   }
 }

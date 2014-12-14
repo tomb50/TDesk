@@ -1,11 +1,11 @@
 package tomb.supportsim.control;
 
-import com.atlassian.jira.rest.client.api.domain.Issue;
 import com.tombeadman.screensteps.model.*;
 import org.zendesk.client.v2.model.Group;
 import org.zendesk.client.v2.model.GroupMembership;
 import org.zendesk.client.v2.model.Status;
 import tomb.supportsim.models.*;
+import tomb.supportsim.models.jira.IssueShell;
 import tomb.supportsim.util.ScreenStepsKeyUtil;
 
 import java.util.ArrayList;
@@ -37,9 +37,68 @@ public class Cache
   private Map<String, Lesson> lessonMap;
 
   //Jira Store
-  private Map<String, Issue> bugMap;
-  private Map<String, Issue> featureMap;
+  private Map<String, IssueShell> bugMap;
+  private Map<String, IssueShell> featureMap;
 
+  public void setOrganisationMap( final Map<Long, ZDOrganisation> organisationMap )
+  {
+    this.organisationMap = organisationMap;
+  }
+
+  public void setUserMap( final Map<Long, ZDUser> userMap )
+  {
+    this.userMap = userMap;
+  }
+
+  public void setTicketMap( final Map<Long, ZDTicket> ticketMap )
+  {
+    this.ticketMap = ticketMap;
+  }
+
+  public void setTopicMap( final Map<Long, ZDTopic> topicMap )
+  {
+    this.topicMap = topicMap;
+  }
+
+  public void setForumMap( final Map<Long, ZDForum> forumMap )
+  {
+    this.forumMap = forumMap;
+  }
+
+  public void setGroupMap( final Map<Long, Group> groupMap )
+  {
+    this.groupMap = groupMap;
+  }
+
+  public void setGroupMembershipMap( final Map<Long, GroupMembership> groupMembershipMap )
+  {
+    this.groupMembershipMap = groupMembershipMap;
+  }
+
+  public void setSpaceMap( final Map<String, Space> spaceMap )
+  {
+    this.spaceMap = spaceMap;
+  }
+
+  public void setManualMap( final Map<String, Manual> manualMap )
+  {
+    this.manualMap = manualMap;
+  }
+
+  public void setLessonMap( final Map<String, Lesson> lessonMap )
+  {
+    this.lessonMap = lessonMap;
+  }
+
+  public void setBugMap( final Map<String, IssueShell> bugMap )
+  {
+    this.bugMap = bugMap;
+  }
+
+  public void setFeatureMap( final Map<String, IssueShell> featureMap )
+  {
+    this.featureMap = featureMap;
+  }
 
   private static Cache instance;
 
@@ -281,12 +340,12 @@ public class Cache
     return lessonMap;
   }
 
-  public void insertBug( final Issue issue )
+  public void insertBug( final IssueShell issue )
   {
     getBugMap().put(issue.getKey(),issue);
   }
 
-  private Map<String, Issue> getBugMap()
+  public Map<String, IssueShell> getBugMap()
   {
     if( bugMap == null)
     {
@@ -295,12 +354,12 @@ public class Cache
     return bugMap;
   }
 
-  public void insertFeature( final Issue issue )
+  public void insertFeature( final IssueShell issue )
   {
     getFeatureMap().put(issue.getKey(),issue);
   }
 
-  private Map<String, Issue> getFeatureMap()
+  public Map<String, IssueShell> getFeatureMap()
   {
     if( featureMap == null)
     {

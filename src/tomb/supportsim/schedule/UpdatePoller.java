@@ -3,9 +3,8 @@ package tomb.supportsim.schedule;
 import org.zendesk.client.v2.model.IncrementalTicket;
 import tomb.supportsim.app.TDeskApp;
 import tomb.supportsim.control.Cache;
-import tomb.supportsim.models.ConvertUtil;
+import tomb.supportsim.util.ConvertUtil;
 import tomb.supportsim.models.ZDTicket;
-import tomb.supportsim.view.ViewHelper;
 
 import java.util.Date;
 import java.util.List;

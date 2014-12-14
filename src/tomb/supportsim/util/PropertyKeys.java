@@ -20,4 +20,5 @@ public interface PropertyKeys
   String JIRA_USERNAME = "jira.username";
   String JIRA_PASSWORD = "jira.password";
   String JIRA_TIMEOUT = "jira.timeout"; // seconds
+  String LOCAL_DATA = "app.data.local";
 }

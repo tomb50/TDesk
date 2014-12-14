@@ -20,7 +20,7 @@ public class DataImporter
     this.jiraClient = jiraClient;
   }
 
-  protected void fullImport()
+  public void fullImport()
   {
     ZendeskImporter zendeskImporter = new ZendeskImporter( zendesk );
     zendeskImporter.start();

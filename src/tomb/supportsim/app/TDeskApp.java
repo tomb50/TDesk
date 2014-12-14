@@ -4,6 +4,8 @@ import com.atlassian.jira.rest.client.api.JiraRestClient;
 import com.tombeadman.screensteps.ScreenSteps;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.zendesk.client.v2.Zendesk;
+import tomb.supportsim.control.imports.DataImporter;
+import tomb.supportsim.control.imports.DataRestorer;
 import tomb.supportsim.util.jira.CustomAsynchronousJiraRestClientFactory;
 
 
@@ -28,8 +30,7 @@ public class TDeskApp
   public static void main( String[] args )
     throws IOException
   {
-    TDeskApp tDeskApp = new TDeskApp();
-    tDeskApp.dataImporter.importJiraData();
+
     /*for ( Manual manual : ViewHelper.getManuals() )
     {
       for ( Chapter chapter  : manual.getChapters() )
@@ -54,6 +55,7 @@ public class TDeskApp
   private static TDeskApp instance;
   private static boolean running = false;
   private Properties properties;
+  private static boolean local;
 
 
   public Zendesk getZd()
@@ -73,6 +75,14 @@ public class TDeskApp
     ss = configureScreenSteps();
     jira = configureJira();
     dataImporter = new DataImporter( zd,ss,jira);
+    local = isLocal();
+  }
+
+  private boolean isLocal()
+  {
+    String property = properties.getProperty( LOCAL_DATA );
+    boolean local = Boolean.valueOf( property );
+    return local;
   }
 
   private ScreenSteps configureScreenSteps()
@@ -155,9 +165,15 @@ public class TDeskApp
     if ( !running )
     {
       running = true;
-
-      dataImporter.fullImport();
-
+      if(local)
+      {
+        DataRestorer dataRestorer = new DataRestorer();
+        dataRestorer.unserializeData();
+      }
+      else
+      {
+        dataImporter.fullImport();
+      }
       System.out.println( "Setting up scheudling" );
       new ClassPathXmlApplicationContext( "Spring-TaskScheduler.xml" );
     }
