@@ -113,6 +113,14 @@
                     ScreenSteps
                 </a>
             </li>
+            <li class="nav-ele">
+                <a href="jira.jsp">
+                    <div class="icon">
+                        <span class="fs1" aria-hidden="true" data-icon="&#xe075;"></span>
+                    </div>
+                    JIRA
+                </a>
+            </li>
             <li class="submenu">
                 <a href="edit-profile.html" class="selected">
                     <div class="icon">
@@ -159,7 +167,6 @@
                   <span class="icon-bar">
                   </span>
                         </a>
-
                         <div class="nav-collapse collapse navbar-responsive-collapse">
                             <ul class="nav">
                                 <li>
@@ -185,6 +192,9 @@
                                 </li>
                                 <li>
                                     <a href="screensteps.jsp">ScreenSteps</a>
+                                </li>
+                                <li>
+                                    <a href="jira.jsp">JIRA</a>
                                 </li>
                                 <li>
                                     <a href="edit-profile.html">Edit Profile</a>
