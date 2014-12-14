@@ -5,6 +5,7 @@ import com.atlassian.jira.rest.client.api.SearchRestClient;
 import com.atlassian.jira.rest.client.api.domain.Issue;
 import com.atlassian.jira.rest.client.api.domain.SearchResult;
 import tomb.supportsim.control.Cache;
+import tomb.supportsim.util.ConvertUtil;
 
 import java.net.URISyntaxException;
 
@@ -46,7 +47,7 @@ public class JiraBatchImporter
       Iterable<Issue> issues = result.getIssues();
       for ( Issue issue : issues )
       {
-        Cache.getInstance().insertBug( issue );
+        Cache.getInstance().insertBug( ConvertUtil.toShellIssue( issue ) );
       }
       startingIndex += maxResults;
     }
@@ -77,7 +78,7 @@ public class JiraBatchImporter
       Iterable<Issue> issues = result.getIssues();
       for ( Issue issue : issues )
       {
-        Cache.getInstance().insertFeature( issue );
+        Cache.getInstance().insertFeature( ConvertUtil.toShellIssue(issue) );
       }
       startingIndex += maxResults;
     }
