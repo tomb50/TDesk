@@ -2,6 +2,9 @@
 <%@ page import="com.tombeadman.screensteps.model.Lesson" %>
 <%@ page import="com.tombeadman.screensteps.model.Manual" %>
 <%@ page import="com.tombeadman.screensteps.model.Chapter" %>
+<%@ page import="tomb.supportsim.models.jira.IssueShell" %>
+<%@ page import="org.joda.time.DateTime" %>
+<%@ page import="java.util.Date" %>
 <div class="row-fluid">
     <div class="span">
         <div class="widget">
@@ -23,35 +26,30 @@
                     </tr>
                     </thead>
 
-                    <% for ( Manual manual : ViewHelper.getManuals() )
+                    <% for ( IssueShell issueShell : ViewHelper.getJiraBugs() )
                     {
-                        for ( Chapter chapter : manual.getChapters() )
-                        {
-                            for ( Lesson lesson : chapter.getLessons() )
-                            {
-                                String spaceName = manual.getSpace().getTitle();
-                                String manualName = manual.getTitle();
-                                String chapterName = chapter.getTitle();
-                                String lessonTitle = lesson.getTitle();
-                                String url = lesson.getUrl();
+                        String id = issueShell.getKey();
+                        String title = issueShell.getSummary();
+                        String status = issueShell.getStatus().getName();
+                        Date creationDate = issueShell.getCreationDate().toDate();
+
 
                     %>
-                    <tr class="clickableRow" href=<%=url%>>
+                    <tr class="clickableRow" href=<%=id%>>
                         <td style="word-wrap: break-word;min-width: 350px;max-width: 450px;">
-                            <%=spaceName%>
+                            <%=id%>
                         </td>
-                        <td><%= manualName %>
+                        <td><%= title %>
                         </td>
-                        <td><%= chapterName %>
+                        <td><%= status %>
                         </td>
-                        <td><%= lessonTitle %>
+                        <td><%= creationDate %>
                         </td>
                         <!--td> //here
                         </td-->
                     </tr>
                     <%
-                                }
-                            }
+
                         }
                     %>
 

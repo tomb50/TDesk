@@ -7,6 +7,7 @@ import org.zendesk.client.v2.model.GroupMembership;
 import org.zendesk.client.v2.model.Status;
 import tomb.supportsim.control.*;
 import tomb.supportsim.models.*;
+import tomb.supportsim.models.jira.IssueShell;
 import tomb.supportsim.util.LinkUtil;
 import tomb.supportsim.util.UserOrganisationComparator;
 
@@ -30,7 +31,6 @@ public class ViewHelper
   private static GroupManager groupManager = new GroupManager();
   private static GroupMembershipManager groupMembershipManager = new GroupMembershipManager();
   private static SSManager screenStepsManager = new SSManager();
-
 
 
   public static ZDOrganisation getOrganisation( final Long organisationId )
@@ -101,7 +101,10 @@ public class ViewHelper
     return screenStepsManager.getLessons();
   }
 
-  public static List<Manual> getManuals() { return screenStepsManager.getManuals(); }
+  public static List<Manual> getManuals()
+  {
+    return screenStepsManager.getManuals();
+  }
 
   public static ZDForum getForum( final Long forumId )
   {
@@ -221,5 +224,10 @@ public class ViewHelper
     final Group group = groupManager.getGroup( groupId );
 
     return group != null ? group.getName() : "";
+  }
+
+  public static List<IssueShell> getJiraBugs()
+  {
+    return Cache.getInstance().getJiraBugs();
   }
 }

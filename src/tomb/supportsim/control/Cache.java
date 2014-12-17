@@ -367,4 +367,9 @@ public class Cache
     }
     return featureMap;
   }
+
+  public List<IssueShell> getJiraBugs()
+  {
+    return new ArrayList<>( getBugMap().values() );
+  }
 }
