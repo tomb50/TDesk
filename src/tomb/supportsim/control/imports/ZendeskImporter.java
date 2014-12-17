@@ -5,6 +5,9 @@ import org.zendesk.client.v2.model.*;
 import tomb.supportsim.control.Cache;
 import tomb.supportsim.util.ConvertUtil;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Created with IntelliJ IDEA. User: tombeadman Date: 14/12/14 Time: 14:43
  */
@@ -12,70 +15,54 @@ public class ZendeskImporter extends Importer
 {
   private final Zendesk zendesk;
 
-  public ZendeskImporter(final Zendesk zendesk)
+  public ZendeskImporter( final Zendesk zendesk )
   {
     super();
-    this.zendesk=zendesk;
+    this.zendesk = zendesk;
   }
 
   @Override
   public void run()
   {
-   importZendeskData();
+    setActive( true );
+    long time = System.currentTimeMillis();
+    importZendeskData();
+    System.out.println( "All data imported from Zendesk" );
+    System.out.println( ( "Zendesk - Time taken: " + (System.currentTimeMillis() - time ) / 1000) );
+    setActive( false );
+
   }
 
   private void importZendeskData()
   {
-
-    long time = System.currentTimeMillis();
     //persist Users
+    Logger.getLogger( "Data" ).log( Level.INFO, "ZENDESK IMPORT" );
     System.out.println( "Importing Users from Zendesk" );
     saveUsers();
-    System.out.println( "Users saved" );
-    System.out.println( ( System.currentTimeMillis() - time ) / 1000 );
-    time = System.currentTimeMillis();
 
     //persist tickets
     System.out.println( "Importing Tickets from Zendesk" );
     saveTickets();
-    System.out.println( "Tickets saved" );
-    System.out.println( ( System.currentTimeMillis() - time ) / 1000 );
-    time = System.currentTimeMillis();
 
     //persist Organisations
     System.out.println( "Importing Organisations from ZenDesk" );
     saveOrganisations();
-    System.out.println( "Organisations saved" );
-    System.out.println( ( System.currentTimeMillis() - time ) / 1000 );
-    time = System.currentTimeMillis();
 
     //persist GroupMemberships
     System.out.println( "Importing Group Memberships from ZenDesk" );
     saveGroupMemberships();
-    System.out.println( "Memberships saved" );
-    System.out.println( ( System.currentTimeMillis() - time ) / 1000 );
-    time = System.currentTimeMillis();
-
 
     //persist GroupMemberships
     System.out.println( "Importing Groups from ZenDesk" );
     saveGroups();
-    System.out.println( "Memberships saved" );
-    System.out.println( ( System.currentTimeMillis() - time ) / 1000 );
-    time = System.currentTimeMillis();
 
     //persist Forums
     System.out.println( "Importing Forums from ZenDesk" );
     saveForums();
-    System.out.println( "Forums saved" );
-    System.out.println( ( System.currentTimeMillis() - time ) / 1000 );
-    time = System.currentTimeMillis();
 
     //persist Topics
     System.out.println( "Importing Topics from ZenDesk" );
     saveTopics();
-    System.out.println( "Topics saved" );
-    System.out.println( ( System.currentTimeMillis() - time ) / 1000 );
   }
 
 

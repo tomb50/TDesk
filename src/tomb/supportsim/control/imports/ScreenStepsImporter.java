@@ -24,25 +24,24 @@ public class ScreenStepsImporter extends Importer
   @Override
   public void run()
   {
+    setActive( true );
+    long time = System.currentTimeMillis();
     importScreenstepsData();
+    System.out.println( "All data imported from ScreenSteps" );
+    System.out.println( ( "ScreenSteps - Time taken: " + (System.currentTimeMillis() - time ) / 1000) );
+    setActive( false );
   }
 
   public void importScreenstepsData()
   {
     //persist Spaces
-    long time = System.currentTimeMillis();
+
     System.out.println( "Importing Spaces from Screensteps" );
     saveSpaces();
-    System.out.println( "Spaces saved" );
-    System.out.println( ( System.currentTimeMillis() - time ) / 1000 );
-    time = System.currentTimeMillis();
 
     //persist Manuals
     System.out.println( "Importing Manuals from Screensteps" );
     saveManuals();
-    System.out.println( "Spaces saved" );
-    System.out.println( ( System.currentTimeMillis() - time ) / 1000 );
-
 
     //testMethod();
 
@@ -68,10 +67,7 @@ public class ScreenStepsImporter extends Importer
           System.out.println(lesson.getTitle() + "-" + lesson.getUrl());
         }
     }
-
-
   }
-
 }   */
 
   /*
@@ -88,7 +84,6 @@ public class ScreenStepsImporter extends Importer
         {
           if ( asset.getAssetType().equals( "Manual" ) )
           {
-            System.out.println( "saving" + space.getId() + "-" + asset.toString() );
             final Manual manual = screenSteps.getManual( space.getId(), asset.getId() );
             Cache.getInstance().insertManual( manual );
           }

@@ -1,11 +1,11 @@
 package tomb.supportsim.util;
 
-import com.atlassian.jira.rest.client.api.domain.Issue;
+import com.atlassian.jira.rest.client.api.domain.*;
 import org.zendesk.client.v2.model.Forum;
 import org.zendesk.client.v2.model.Organization;
 import org.zendesk.client.v2.model.Topic;
 import tomb.supportsim.models.*;
-import tomb.supportsim.models.jira.IssueShell;
+import tomb.supportsim.models.jira.*;
 
 /**
  * Created with IntelliJ IDEA. User: tombeadman Date: 10/10/2014 Time: 16:04
@@ -136,24 +136,88 @@ public class ConvertUtil
     return zdForum;
   }
 
-  public static IssueShell toShellIssue(final Issue issue)
+  public static IssueShell toShellIssue( final Issue issue )
   {
     final IssueShell issueShell = new IssueShell();
     issueShell.setSelf( issue.getSelf() );
     issueShell.setKey( issue.getKey() );
     issueShell.setId( issue.getId() );
-    issueShell.setStatus( issue.getStatus() );
-    issueShell.setIssueType( issue.getIssueType() );
-    issueShell.setProject( issue.getProject() );
+    issueShell.setStatus( toStatusShell( issue.getStatus() ) );
+    issueShell.setIssueTypeShell( toIssueTypeShell( issue.getIssueType() ) );
+    issueShell.setProject( toBasicProjectShell( issue.getProject() ) );
     issueShell.setTransitionsUri( issue.getTransitionsUri() );
     issueShell.setSummary( issue.getSummary() );
     issueShell.setDescription( issue.getDescription() );
-    issueShell.setReporter( issue.getReporter() );
-    issueShell.setAssignee( issue.getAssignee() );
-    issueShell.setResolution( issue.getResolution() );
+    issueShell.setReporter( toUserShell( issue.getReporter() ) );
+    issueShell.setAssignee( toUserShell( issue.getAssignee() ) );
+    issueShell.setResolutionShell( toResolutionShell( issue.getResolution() ) );
     issueShell.setCreationDate( issue.getCreationDate() );
     issueShell.setUpdateDate( issue.getUpdateDate() );
     return issueShell;
+  }
 
+  public static UserShell toUserShell( final User user )
+  {
+    final UserShell userShell = new UserShell();
+    if ( user != null )
+    {
+      userShell.setSelf( user.getSelf() );
+      userShell.setDisplayName( user.getDisplayName() );
+      userShell.setEmailAddress( user.getEmailAddress() );
+    }
+    return userShell;
+  }
+
+  public static ResolutionShell toResolutionShell( final Resolution resolution )
+  {
+    final ResolutionShell resolutionShell = new ResolutionShell();
+    if ( resolution != null )
+    {
+      resolutionShell.setSelf( resolution.getSelf() );
+      resolutionShell.setDescription( resolution.getDescription() );
+      resolutionShell.setId( resolution.getId() );
+      resolutionShell.setName( resolution.getName() );
+    }
+    return resolutionShell;
+  }
+
+  public static IssueTypeShell toIssueTypeShell( final IssueType issueType )
+  {
+    final IssueTypeShell issueTypeShell = new IssueTypeShell();
+    if ( issueType != null )
+    {
+      issueTypeShell.setId( issueType.getId() );
+      issueTypeShell.setSelf( issueType.getSelf() );
+      issueTypeShell.setDescription( issueType.getDescription() );
+      issueTypeShell.setName( issueType.getName() );
+      issueTypeShell.setSubtask( issueType.isSubtask() );
+    }
+    return issueTypeShell;
+  }
+
+  public static BasicProjectShell toBasicProjectShell( final BasicProject basicProject )
+  {
+    final BasicProjectShell basicProjectShell = new BasicProjectShell();
+    if ( basicProject != null )
+    {
+      basicProjectShell.setName( basicProject.getName() );
+      basicProjectShell.setId( basicProject.getId() );
+      basicProjectShell.setSelf( basicProject.getSelf() );
+      basicProjectShell.setKey( basicProject.getKey() );
+    }
+    return basicProjectShell;
+  }
+
+  public static StatusShell toStatusShell( final Status status )
+  {
+    final StatusShell statusShell = new StatusShell();
+    if ( status != null )
+    {
+      statusShell.setName( status.getName() );
+      statusShell.setSelf( status.getSelf() );
+      statusShell.setId( status.getId() );
+      statusShell.setDescription( status.getDescription() );
+    }
+    return statusShell;
   }
 }

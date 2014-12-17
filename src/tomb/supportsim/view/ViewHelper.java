@@ -171,7 +171,8 @@ public class ViewHelper
 
     for ( ZDTicket ticket : allTickets )
     {
-      if ( ticket.getGroupId().equals( group.getId() ) )
+
+      if ( ticket.getGroupId() != null && ticket.getGroupId().equals( group.getId() ) )
       {
         suitableTickets.put( ticket.getId(), ticket );
       }

@@ -15,15 +15,15 @@ public class IssueShell implements Serializable
   private URI self;
   private String key;
   private Long id;
-  private Status status;
-  private IssueType issueType;
-  private BasicProject project;
+  private StatusShell status;
+  private IssueTypeShell issueType;
+  private BasicProjectShell project;
   private URI transitionsUri;
   private String summary;
   private String description;
-  private User reporter;
-  private User assignee;
-  private Resolution resolution;
+  private UserShell reporter;
+  private UserShell assignee;
+  private ResolutionShell resolution;
   private DateTime creationDate;
   private DateTime updateDate;
 
@@ -57,32 +57,32 @@ public class IssueShell implements Serializable
     this.id = id;
   }
 
-  public Status getStatus()
+  public StatusShell getStatus()
   {
     return status;
   }
 
-  public void setStatus( final Status status )
+  public void setStatus( final StatusShell status )
   {
     this.status = status;
   }
 
-  public IssueType getIssueType()
+  public IssueTypeShell getIssueType()
   {
     return issueType;
   }
 
-  public void setIssueType( final IssueType issueType )
+  public void setIssueTypeShell( final IssueTypeShell issueType )
   {
     this.issueType = issueType;
   }
 
-  public BasicProject getProject()
+  public BasicProjectShell getProject()
   {
     return project;
   }
 
-  public void setProject( final BasicProject project )
+  public void setProject( final BasicProjectShell project )
   {
     this.project = project;
   }
@@ -117,32 +117,32 @@ public class IssueShell implements Serializable
     this.description = description;
   }
 
-  public User getReporter()
+  public UserShell getReporter()
   {
     return reporter;
   }
 
-  public void setReporter( final User reporter )
+  public void setReporter( final UserShell reporter )
   {
     this.reporter = reporter;
   }
 
-  public User getAssignee()
+  public UserShell getAssignee()
   {
     return assignee;
   }
 
-  public void setAssignee( final User assignee )
+  public void setAssignee( final UserShell assignee )
   {
     this.assignee = assignee;
   }
 
-  public Resolution getResolution()
+  public ResolutionShell getResolution()
   {
     return resolution;
   }
 
-  public void setResolution( final Resolution resolution )
+  public void setResolutionShell( final ResolutionShell resolution )
   {
     this.resolution = resolution;
   }

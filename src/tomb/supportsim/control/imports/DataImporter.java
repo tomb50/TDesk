@@ -9,30 +9,33 @@ import org.zendesk.client.v2.Zendesk;
  */
 public class DataImporter
 {
-  private Zendesk zendesk;
-  private ScreenSteps screenSteps;
-  private JiraRestClient jiraClient;
+  final ZendeskImporter zendeskImporter;
+  final ScreenStepsImporter screenStepsImporter;
+  final JiraImporter jiraImporter;
+
 
   public DataImporter( final Zendesk zendesk, final ScreenSteps screenSteps, final JiraRestClient jiraClient )
   {
-    this.zendesk = zendesk;
-    this.screenSteps = screenSteps;
-    this.jiraClient = jiraClient;
+    zendeskImporter = new ZendeskImporter( zendesk );
+    screenStepsImporter = new ScreenStepsImporter( screenSteps );
+    jiraImporter = new JiraImporter( jiraClient );
   }
 
   public void fullImport()
   {
-    ZendeskImporter zendeskImporter = new ZendeskImporter( zendesk );
     zendeskImporter.start();
-
-    ScreenStepsImporter screenStepsImporter = new ScreenStepsImporter( screenSteps );
     screenStepsImporter.start();
-
-    JiraImporter jiraImporter = new JiraImporter( jiraClient );
     jiraImporter.start();
-
-    //Back up data to disk - for dev
-    DataSerializer dataSerializer = new DataSerializer();
-    dataSerializer.serializeData();
   }
+
+
+
+  public boolean isImporting()
+  {
+    return zendeskImporter.isActive() || screenStepsImporter.isActive() || jiraImporter.isActive();
+  }
+
+
+
+
 }

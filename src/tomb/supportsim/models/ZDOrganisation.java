@@ -1,11 +1,12 @@
 package tomb.supportsim.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA. User: tombeadman Date: 10/10/2014 Time: 19:09
  */
-public class ZDOrganisation
+public class ZDOrganisation implements Serializable
 {
   private java.lang.Long id;
   private java.lang.String externalId;

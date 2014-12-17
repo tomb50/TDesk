@@ -22,25 +22,25 @@ public class JiraImporter extends Importer
   @Override
   public void run()
   {
+    setActive( true );
+    long time = System.currentTimeMillis();
     importJiraData();
+    System.out.println("All data imported from JIRA");
+    System.out.println( ( "JIRA - Time taken: " + (System.currentTimeMillis() - time ) / 1000) );
+    setActive( false );
   }
 
   public void importJiraData()
   {
 
     //persist Spaces
-    long time = System.currentTimeMillis();
+
     System.out.println( "Importing bugs from JIRA" );
     saveJiraBugs();
-    System.out.println( "Jira bugs saved" );
-    System.out.println( ( System.currentTimeMillis() - time ) / 1000 );
-    time = System.currentTimeMillis();
 
     //persist Manuals
     System.out.println( "Importing features from JIRA" );
     saveJiraFeatures();
-    System.out.println( "Jira features saved" );
-    System.out.println( ( System.currentTimeMillis() - time ) / 1000 );
   }
 
   private void saveJiraBugs()

@@ -6,6 +6,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.zendesk.client.v2.Zendesk;
 import tomb.supportsim.control.imports.DataImporter;
 import tomb.supportsim.control.imports.DataRestorer;
+import tomb.supportsim.control.imports.DataSerializer;
 import tomb.supportsim.util.jira.CustomAsynchronousJiraRestClientFactory;
 
 
@@ -30,6 +31,25 @@ public class TDeskApp
   public static void main( String[] args )
     throws IOException
   {
+    TDeskApp tDeskApp = new TDeskApp();
+    if ( !running )
+    {
+      running = true;
+      if(local)
+      {
+        DataRestorer dataRestorer = new DataRestorer();
+        dataRestorer.unserializeData();
+      }
+      else
+      {
+        tDeskApp.dataImporter.fullImport();
+      }
+      System.out.println( "Setting up scheudling" );
+      new ClassPathXmlApplicationContext( "Spring-TaskScheduler.xml" );
+    }
+
+
+
 
     /*for ( Manual manual : ViewHelper.getManuals() )
     {
@@ -173,6 +193,23 @@ public class TDeskApp
       else
       {
         dataImporter.fullImport();
+
+        while ( dataImporter.isImporting() )
+        {
+          try
+          {
+            Thread.sleep( 10000 ); //10 secs
+          }
+          catch ( InterruptedException ex )
+          {
+            Thread.currentThread().interrupt();
+          }
+        }
+
+        //Back up data to disk - for dev
+        DataSerializer dataSerializer = new DataSerializer();
+        dataSerializer.serializeData();
+
       }
       System.out.println( "Setting up scheudling" );
       new ClassPathXmlApplicationContext( "Spring-TaskScheduler.xml" );

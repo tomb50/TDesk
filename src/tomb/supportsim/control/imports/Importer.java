@@ -6,6 +6,19 @@ package tomb.supportsim.control.imports;
 public abstract class Importer implements Runnable
 {
   private Thread t;
+  private boolean active = true;
+
+  public boolean isActive()
+  {
+    return active;
+  }
+
+  protected void setActive( final boolean active )
+  {
+    this.active = active;
+  }
+
+
 
   public void start()
   {

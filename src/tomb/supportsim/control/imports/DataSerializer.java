@@ -16,8 +16,9 @@ import java.util.Map;
  */
 public class DataSerializer
 {
-  protected void serializeData()
+  public void serializeData()
   {
+    System.out.println("Serializing data");
     serializeZendeskData();
     serializeScreenstepsData();
     serialzeJiraData();
