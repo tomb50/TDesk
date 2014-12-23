@@ -1,9 +1,5 @@
 <%@ page import="tomb.supportsim.view.ViewHelper" %>
-<%@ page import="com.tombeadman.screensteps.model.Lesson" %>
-<%@ page import="com.tombeadman.screensteps.model.Manual" %>
-<%@ page import="com.tombeadman.screensteps.model.Chapter" %>
 <%@ page import="tomb.supportsim.models.jira.IssueShell" %>
-<%@ page import="org.joda.time.DateTime" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="tomb.supportsim.util.LinkUtil" %>
 <div class="row-fluid">
@@ -25,7 +21,7 @@
                         <th>Creation Date</th>
                     </tr>
                     </thead>
-                    <% for ( IssueShell issueShell : ViewHelper.getJiraBugs() )
+                    <% for ( IssueShell issueShell : ViewHelper.getJiraIssues() )
                     {
                         final String id = issueShell.getKey();
                         final String type = issueShell.getIssueType().getName();
@@ -37,7 +33,10 @@
                         <td style="word-wrap: break-word;min-width: 100px;max-width: 150px;">
                             <%=id%>
                         </td>
-                        <td style="word-wrap: break-word;min-width: 10px;max-width: 10px;"><%= type %>
+                        <td style="word-wrap: break-word;min-width: 50px;max-width: 100px;">
+                            <span id="type-col" class="badge">
+                                <%= type %>
+                            </span>
                         </td>
                         <td><%= title %>
                         </td>
@@ -62,8 +61,11 @@
     $( '#status-col.badge:contains("Open")' ).addClass( 'badge-important' );
     $( '#status-col.badge:contains("Released To Live")' ).addClass( 'badge-info' );
     $( '#status-col.badge:contains("Released For Testing")' ).addClass( 'badge-warning' ); //Not a waring,
-                                                                                            // just a nice colour
-
+                                                                                           // just a nice colour
+</script>
+<script>
+    //$( '#type-col.badge:contains("Bug")' ).addClass( 'badge-inverse' );
+    $( '#type-col.badge:contains("Feature")' ).addClass( 'badge-inverse' );
 </script>
 <script>
     jQuery( document ).ready( function ( $ )

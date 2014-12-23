@@ -8,6 +8,7 @@ import tomb.supportsim.control.imports.DataImporter;
 import tomb.supportsim.control.imports.DataRestorer;
 import tomb.supportsim.control.imports.DataSerializer;
 import tomb.supportsim.util.jira.CustomAsynchronousJiraRestClientFactory;
+import tomb.supportsim.view.JiraIssueSorter;
 
 
 import java.io.FileNotFoundException;
@@ -209,8 +210,8 @@ public class TDeskApp
         //Back up data to disk - for dev
         DataSerializer dataSerializer = new DataSerializer();
         dataSerializer.serializeData();
-
       }
+      JiraIssueSorter.run(); // proactively sort a convenience list
       System.out.println( "Setting up scheudling" );
       new ClassPathXmlApplicationContext( "Spring-TaskScheduler.xml" );
     }

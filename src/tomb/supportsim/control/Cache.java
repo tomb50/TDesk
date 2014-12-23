@@ -39,6 +39,7 @@ public class Cache
   //Jira Store
   private Map<String, IssueShell> bugMap;
   private Map<String, IssueShell> featureMap;
+  private List<IssueShell> jiraIssueList; //Convenience super list;
 
   public void setOrganisationMap( final Map<Long, ZDOrganisation> organisationMap )
   {
@@ -371,5 +372,15 @@ public class Cache
   public List<IssueShell> getJiraBugs()
   {
     return new ArrayList<>( getBugMap().values() );
+  }
+
+  public List<IssueShell> getJiraIssues()
+  {
+    if(jiraIssueList == null)
+    {
+      jiraIssueList = new ArrayList<IssueShell>( getBugMap().values() );
+      jiraIssueList.addAll( getFeatureMap().values() );
+    }
+    return jiraIssueList;
   }
 }

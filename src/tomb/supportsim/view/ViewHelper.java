@@ -230,4 +230,8 @@ public class ViewHelper
   {
     return Cache.getInstance().getJiraBugs();
   }
+  public static List<IssueShell> getJiraIssues()
+  {
+    return Cache.getInstance().getJiraIssues();
+  }
 }

@@ -336,7 +336,7 @@
                                      </span>
                         </td>
 
-                        <td>
+                        <td style="word-wrap: break-word;min-width: 200px;max-width: 250px;">
                                      <span>
                                          <%= ticket.getUpdatedAt()%>
                                      </span>
