@@ -7,11 +7,9 @@ import org.zendesk.client.v2.model.Status;
 import tomb.supportsim.models.*;
 import tomb.supportsim.models.jira.IssueShell;
 import tomb.supportsim.util.ScreenStepsKeyUtil;
+import tomb.supportsim.view.ViewHelper;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA. User: tombeadman Date: 10/10/2014 Time: 22:20
@@ -39,6 +37,10 @@ public class Cache
   //Jira Store
   private Map<String, IssueShell> bugMap;
   private Map<String, IssueShell> featureMap;
+
+
+  //On screen lists
+  private List<ScreenstepsTableEntry> screenstepsEntryList;
   private List<IssueShell> jiraIssueList; //Convenience super list;
 
   public void setOrganisationMap( final Map<Long, ZDOrganisation> organisationMap )
@@ -382,5 +384,35 @@ public class Cache
       jiraIssueList.addAll( getFeatureMap().values() );
     }
     return jiraIssueList;
+  }
+
+  public List<ScreenstepsTableEntry> getScreenstepsEntryList()
+  {
+    if (screenstepsEntryList == null)
+    {
+      screenstepsEntryList = new ArrayList<>(  );
+      populateScreenStepsEntryTable(screenstepsEntryList);
+    }
+    return screenstepsEntryList;
+  }
+
+  private void populateScreenStepsEntryTable( final List<ScreenstepsTableEntry> screenstepsEntryList )
+  {
+    for ( Manual manual : getManuals() )
+    {
+      for ( Chapter chapter : manual.getChapters() )
+      {
+        for ( Lesson lesson : chapter.getLessons() )
+        {
+          final String spaceName = manual.getSpace().getTitle();
+          final String manualName = manual.getTitle();
+          final String chapterName = chapter.getTitle();
+          final String lessonTitle = lesson.getTitle();
+          final String url = lesson.getUrl();
+          screenstepsEntryList.add(
+            new ScreenstepsTableEntry( spaceName, manualName, chapterName, lessonTitle, url ) );
+        }
+      }
+    }
   }
 }

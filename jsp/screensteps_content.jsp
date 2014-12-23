@@ -1,7 +1,5 @@
 <%@ page import="tomb.supportsim.view.ViewHelper" %>
-<%@ page import="com.tombeadman.screensteps.model.Lesson" %>
-<%@ page import="com.tombeadman.screensteps.model.Manual" %>
-<%@ page import="com.tombeadman.screensteps.model.Chapter" %>
+<%@ page import="tomb.supportsim.models.ScreenstepsTableEntry" %>
 <div class="row-fluid">
     <div class="span">
         <div class="widget">
@@ -18,44 +16,31 @@
                         <th>Manual</th>
                         <th>Chapter</th>
                         <th>Title</th>
-                        <!--th>tags</th-->
-
                     </tr>
                     </thead>
-
-                    <% for ( Manual manual : ViewHelper.getManuals() )
-                    {
-                        for ( Chapter chapter : manual.getChapters() )
+                    <%
+                        for ( ScreenstepsTableEntry screenstepsTableEntry : ViewHelper.getSceenstepsTableEntries() )
                         {
-                            for ( Lesson lesson : chapter.getLessons() )
-                            {
-                                String spaceName = manual.getSpace().getTitle();
-                                String manualName = manual.getTitle();
-                                String chapterName = chapter.getTitle();
-                                String lessonTitle = lesson.getTitle();
-                                String url = lesson.getUrl();
-
+                            final String spaceName = screenstepsTableEntry.getSpaceName();
+                            final String manualName = screenstepsTableEntry.getManualName();
+                            final String chapterName = screenstepsTableEntry.getChapterName();
+                            final String lessonTitle = screenstepsTableEntry.getLessonName();
+                            final String url = screenstepsTableEntry.getUrl();
                     %>
                     <tr class="clickableRow" href=<%=url%>>
-                        <td style="word-wrap: break-word;min-width: 350px;max-width: 450px;">
+                        <td style="word-wrap: break-word;min-width: 175px;max-width: 200px;">
                             <%=spaceName%>
                         </td>
-                        <td><%= manualName %>
+                        <td style="word-wrap: break-word;min-width: 175px;max-width: 200px;"><%= manualName %>
                         </td>
-                        <td><%= chapterName %>
+                        <td style="word-wrap: break-word;min-width: 175px;max-width: 200px;"><%= chapterName %>
                         </td>
-                        <td><%= lessonTitle %>
+                        <td style="word-wrap: break-word;min-width: 175px;max-width: 400px;"><%= lessonTitle %>
                         </td>
-                        <!--td> //here
-                        </td-->
                     </tr>
                     <%
-                                }
-                            }
                         }
                     %>
-
-
                 </table>
             </div>
         </div>

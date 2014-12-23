@@ -234,4 +234,9 @@ public class ViewHelper
   {
     return Cache.getInstance().getJiraIssues();
   }
+
+  public static List<ScreenstepsTableEntry> getSceenstepsTableEntries()
+  {
+    return Cache.getInstance().getScreenstepsEntryList();
+  }
 }
