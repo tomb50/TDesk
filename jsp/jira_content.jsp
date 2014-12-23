@@ -5,6 +5,7 @@
 <%@ page import="tomb.supportsim.models.jira.IssueShell" %>
 <%@ page import="org.joda.time.DateTime" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="tomb.supportsim.util.LinkUtil" %>
 <div class="row-fluid">
     <div class="span">
         <div class="widget">
@@ -18,47 +19,52 @@
                     <thead>
                     <tr>
                         <th>Id</th>
+                        <th>Type</th>
                         <th>Title</th>
                         <th>Status</th>
                         <th>Creation Date</th>
-                        <!--th>tags</th-->
-
                     </tr>
                     </thead>
-
                     <% for ( IssueShell issueShell : ViewHelper.getJiraBugs() )
                     {
-                        String id = issueShell.getKey();
-                        String title = issueShell.getSummary();
-                        String status = issueShell.getStatus().getName();
-                        Date creationDate = issueShell.getCreationDate().toDate();
-
-
+                        final String id = issueShell.getKey();
+                        final String type = issueShell.getIssueType().getName();
+                        final String title = issueShell.getSummary();
+                        final String status = issueShell.getStatus().getName();
+                        final Date creationDate = issueShell.getCreationDate().toDate();
                     %>
-                    <tr class="clickableRow" href=<%=id%>>
-                        <td style="word-wrap: break-word;min-width: 350px;max-width: 450px;">
+                    <tr class="clickableRow" href=<%=LinkUtil.getJiraBrowseLink(id)%>>
+                        <td style="word-wrap: break-word;min-width: 100px;max-width: 150px;">
                             <%=id%>
+                        </td>
+                        <td style="word-wrap: break-word;min-width: 10px;max-width: 10px;"><%= type %>
                         </td>
                         <td><%= title %>
                         </td>
-                        <td><%= status %>
+                        <td style="word-wrap: break-word;min-width: 175px;max-width: 200px;">
+                            <span id="status-col" class="badge">
+                                <%= status %>
+                            </span>
                         </td>
-                        <td><%= creationDate %>
+                        <td style="word-wrap: break-word;min-width: 200px;max-width: 250px;"><%= creationDate %>
                         </td>
-                        <!--td> //here
-                        </td-->
                     </tr>
                     <%
-
                         }
                     %>
-
-
                 </table>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $( '#status-col.badge:contains("Closed")' ).addClass( 'badge-success' );
+    $( '#status-col.badge:contains("Open")' ).addClass( 'badge-important' );
+    $( '#status-col.badge:contains("Released To Live")' ).addClass( 'badge-info' );
+    $( '#status-col.badge:contains("Released For Testing")' ).addClass( 'badge-warning' ); //Not a waring,
+                                                                                            // just a nice colour
+
+</script>
 <script>
     jQuery( document ).ready( function ( $ )
                               {

@@ -7,22 +7,36 @@ import tomb.supportsim.app.TDeskApp;
  */
 public class LinkUtil
 {
-  private static final String domain =
+
+  //Zendesk
+  private static final String zendeskDomain =
     (String) TDeskApp.getInstance().getProperties().get( PropertyKeys.ZENDESK_SUBDOMAIN );
-  private static final String baseHttpUrl = "http://".concat( domain ).concat( ".zendesk.com" );
+  private static final String zendeskBaseHttpUrl = "http://".concat( zendeskDomain ).concat( ".zendesk.com" );
+
+  //Jira
+  private static final String jiraDomain =
+    (String) TDeskApp.getInstance().getProperties().get( PropertyKeys.JIRA_URL );
+  private static final String jiraBrowseUrl = jiraDomain.concat( "/browse/" );
+
+
 
   public static String getTicketLink( final Long id )
   {
-    return baseHttpUrl.concat( "/tickets/".concat( String.valueOf( id ) ) );
+    return zendeskBaseHttpUrl.concat( "/tickets/".concat( String.valueOf( id ) ) );
   }
 
   public static String getUserLink( final Long id )
   {
-    return baseHttpUrl.concat( "/users/".concat( String.valueOf( id ) ) );
+    return zendeskBaseHttpUrl.concat( "/users/".concat( String.valueOf( id ) ) );
   }
 
   public static String getTopicLink( final Long id )
   {
-    return baseHttpUrl.concat( "/entries/".concat( String.valueOf( id ) ) );
+    return zendeskBaseHttpUrl.concat( "/entries/".concat( String.valueOf( id ) ) );
+  }
+
+  public static String getJiraBrowseLink(final String key)
+  {
+    return jiraBrowseUrl.concat( key );
   }
 }
