@@ -1,6 +1,6 @@
 <%@ page import="org.apache.commons.lang3.StringUtils" %>
 <%@ page import="tomb.supportsim.models.SupportTicket" %>
-<%@ page import="tomb.supportsim.view.ViewHelper" %>
+<%@ page import="com.tombeadman.tdesk.view.ViewHelper" %>
 <%@ page import="java.lang.reflect.Field" %>
 <%@ page import="java.util.List" %>
 <div class="row-fluid">

@@ -1,6 +1,6 @@
-<%@ page import="tomb.supportsim.models.ZDOrganisation" %>
-<%@ page import="tomb.supportsim.models.ZDUser" %>
-<%@ page import="tomb.supportsim.view.ViewHelper" %>
+<%@ page import="com.tombeadman.tdesk.models.ZDOrganisation" %>
+<%@ page import="com.tombeadman.tdesk.models.ZDUser" %>
+<%@ page import="com.tombeadman.tdesk.view.ViewHelper" %>
 <div class="row-fluid">
     <div class="span">
         <div class="widget">

@@ -1,6 +1,6 @@
-<%@ page import="tomb.supportsim.models.ZDTicket" %>
-<%@ page import="tomb.supportsim.models.ZDUser" %>
-<%@ page import="tomb.supportsim.view.ViewHelper" %>
+<%@ page import="com.tombeadman.tdesk.models.ZDTicket" %>
+<%@ page import="com.tombeadman.tdesk.models.ZDUser" %>
+<%@ page import="com.tombeadman.tdesk.view.ViewHelper" %>
 <%@ page import="java.util.List" %>
 
 <div class="row-fluid">

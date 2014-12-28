@@ -1,7 +1,9 @@
-<%@ page import="tomb.supportsim.view.ViewHelper" %>
-<%@ page import="tomb.supportsim.models.jira.IssueShell" %>
+
 <%@ page import="java.util.Date" %>
-<%@ page import="tomb.supportsim.util.LinkUtil" %>
+<%@ page import="com.tombeadman.tdesk.models.jira.IssueShell" %>
+<%@ page import="com.tombeadman.tdesk.util.LinkUtil" %>
+<%@ page import="com.tombeadman.tdesk.view.ViewHelper" %>
+
 <div class="row-fluid">
     <div class="span">
         <div class="widget">
@@ -29,7 +31,7 @@
                         final String status = issueShell.getStatus().getName();
                         final Date creationDate = issueShell.getCreationDate().toDate();
                     %>
-                    <tr class="clickableRow" href=<%=LinkUtil.getJiraBrowseLink(id)%>>
+                    <tr class="clickableRow" href=<%=LinkUtil.getJiraBrowseLink( id )%>>
                         <td style="word-wrap: break-word;min-width: 100px;max-width: 150px;">
                             <%=id%>
                         </td>

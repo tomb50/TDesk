@@ -1,7 +1,7 @@
 <%@ page import="org.zendesk.client.v2.model.Status" %>
-<%@ page import="tomb.supportsim.models.ZDOrganisation" %>
-<%@ page import="tomb.supportsim.models.ZDTicket" %>
-<%@ page import="tomb.supportsim.view.ViewHelper" %>
+<%@ page import="com.tombeadman.tdesk.models.ZDOrganisation" %>
+<%@ page import="com.tombeadman.tdesk.models.ZDTicket" %>
+<%@ page import="com.tombeadman.tdesk.view.ViewHelper" %>
 <%@ page import="java.math.BigDecimal" %>
 <%@ page import="java.util.List" %>
 <div class="row-fluid">

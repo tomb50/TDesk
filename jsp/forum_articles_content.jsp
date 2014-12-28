@@ -1,5 +1,5 @@
-<%@ page import="tomb.supportsim.models.ZDTopic" %>
-<%@ page import="tomb.supportsim.view.ViewHelper" %>
+<%@ page import="com.tombeadman.tdesk.models.ZDTopic" %>
+<%@ page import="com.tombeadman.tdesk.view.ViewHelper" %>
 <div class="row-fluid">
     <div class="span">
         <div class="widget">
