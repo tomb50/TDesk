@@ -42,7 +42,7 @@ public class EqualsUtil
    */
   public static boolean areEqual( Object aThis, Object aThat )
   {
-    //System.out.println("Object");
+    //Logger.getLogger(getClass().getName()).log( Level.INFO,"Object");
     return aThis == null ? aThat == null : aThis.equals( aThat );
   }
 }

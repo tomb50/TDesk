@@ -8,6 +8,8 @@ import com.tombeadman.screensteps.model.Spaces;
 import tomb.supportsim.control.Cache;
 
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA. User: tombeadman Date: 14/12/14 Time: 14:53
@@ -27,29 +29,27 @@ public class ScreenStepsImporter extends Importer
     setActive( true );
     long time = System.currentTimeMillis();
     importScreenstepsData();
-    System.out.println( "All data imported from ScreenSteps" );
-    System.out.println( ( "ScreenSteps - Time taken: " + (System.currentTimeMillis() - time ) / 1000) );
+    logger.info( "All data imported from ScreenSteps" );
+    logger.info( "ScreenSteps - Time taken: " + ( System.currentTimeMillis() - time ) / 1000 );
     setActive( false );
   }
 
   public void importScreenstepsData()
   {
     //persist Spaces
-
-    System.out.println( "Importing Spaces from Screensteps" );
+    logger.info( "Importing Spaces from Screensteps" );
     saveSpaces();
 
     //persist Manuals
-    System.out.println( "Importing Manuals from Screensteps" );
+    logger.info( "Importing Manuals from Screensteps" );
     saveManuals();
 
     //testMethod();
-
     //persist Lessons
-    //System.out.println( "Importing Lessons from Screensteps" );
+    //Logger.getLogger(getClass().getName()).log( Level.INFO, "Importing Lessons from Screensteps" );
     //saveLessons();
-    //System.out.println( "Spaces saved" );
-    //System.out.println( ( System.currentTimeMillis() - time ) / 1000 );
+    //Logger.getLogger(getClass().getName()).log( Level.INFO, "Spaces saved" );
+    //Logger.getLogger(getClass().getName()).log( Level.INFO, ( System.currentTimeMillis() - time ) / 1000 );
     //time = System.currentTimeMillis();
   }
 
@@ -57,14 +57,14 @@ public class ScreenStepsImporter extends Importer
   {
     Map<String ,Manual> manualMap = Cache.getInstance().getManualMap();
 
-    System.out.println(manualMap.size());
+    Logger.getLogger(getClass().getName()).log( Level.INFO,manualMap.size());
     for(Map.Entry <String,Manual> entry : manualMap.entrySet())
     {
       for( Chapter chapter : entry.getValue().getChapters())
       {
         for (Lesson lesson : chapter.getLessons())
         {
-          System.out.println(lesson.getTitle() + "-" + lesson.getUrl());
+          Logger.getLogger(getClass().getName()).log( Level.INFO,lesson.getTitle() + "-" + lesson.getUrl());
         }
     }
   }

@@ -8,7 +8,8 @@
             </div>
             <div class="widget-body">
                 TO DO <br>
-                Customer related info
+                Customer related info - including location, working hours and project Managers & Analysts.
+                Maybe include a world map and plot HQ coordinates
             </div>
         </div>
     </div>

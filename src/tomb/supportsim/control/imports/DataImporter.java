@@ -13,7 +13,6 @@ public class DataImporter
   final ScreenStepsImporter screenStepsImporter;
   final JiraImporter jiraImporter;
 
-
   public DataImporter( final Zendesk zendesk, final ScreenSteps screenSteps, final JiraRestClient jiraClient )
   {
     zendeskImporter = new ZendeskImporter( zendesk );
@@ -28,14 +27,8 @@ public class DataImporter
     jiraImporter.start();
   }
 
-
-
   public boolean isImporting()
   {
     return zendeskImporter.isActive() || screenStepsImporter.isActive() || jiraImporter.isActive();
   }
-
-
-
-
 }

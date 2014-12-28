@@ -28,7 +28,7 @@
     </div>
     <ul class="mini-nav">
         <li> <!-- Github repo -->
-            <a class ="icomoon-mininav" href="https://github.com/tomb50/SupportSim">
+            <a class ="icomoon-mininav" href="https://github.com/tomb50/TDesk">
                 <div class="fs1" aria-hidden="true" data-icon="&#xe18c;"></div>
 
             </a>
@@ -87,14 +87,6 @@
                         <span class="fs1" aria-hidden="true" data-icon="&#xe096;"></span>
                     </div>
                     Statistics
-                </a>
-            </li>
-            <li class="nav-ele">
-                <a href="project_managers.jsp">
-                    <div class="icon">
-                        <span class="fs1" aria-hidden="true" data-icon="&#xe14a;"></span>
-                    </div>
-                    P.M. List
                 </a>
             </li>
             <li class="nav-ele">
@@ -183,9 +175,6 @@
                                 </li>
                                 <li>
                                     <a href="workloads.jsp">Workloads</a>
-                                </li>
-                                <li>
-                                    <a href="project_managers.jsp">P.M. List</a>
                                 </li>
                                 <li>
                                     <a href="customers.jsp">Customers</a>

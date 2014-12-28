@@ -4,6 +4,8 @@ import com.atlassian.jira.rest.client.api.JiraRestClient;
 import tomb.supportsim.util.jira.JiraBatchImporter;
 
 import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA. User: tombeadman Date: 14/12/14 Time: 14:58
@@ -25,26 +27,19 @@ public class JiraImporter extends Importer
     setActive( true );
     long time = System.currentTimeMillis();
     importJiraData();
-    System.out.println("All data imported from JIRA");
-    System.out.println( ( "JIRA - Time taken: " + (System.currentTimeMillis() - time ) / 1000) );
+    logger.info( "All data imported from JIRA - Time taken: " + ( System.currentTimeMillis() - time ) / 1000 );
     setActive( false );
   }
 
   public void importJiraData()
   {
-
-    //persist Spaces
-
-    System.out.println( "Importing bugs from JIRA" );
     saveJiraBugs();
-
-    //persist Manuals
-    System.out.println( "Importing features from JIRA" );
     saveJiraFeatures();
   }
 
   private void saveJiraBugs()
   {
+    logger.info( "Importing bugs from JIRA" );
     try
     {
       jiraBatchImporter.importBugs();
@@ -57,6 +52,7 @@ public class JiraImporter extends Importer
 
   private void saveJiraFeatures()
   {
+    logger.info( "Importing features from JIRA" );
     try
     {
       jiraBatchImporter.importFeatures();

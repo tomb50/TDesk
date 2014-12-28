@@ -10,15 +10,17 @@ import tomb.supportsim.models.jira.IssueShell;
 
 import java.io.*;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA. User: tombeadman Date: 13/12/14 Time: 11:17
  */
 public class DataSerializer
 {
+  private final Logger logger = Logger.getLogger( getClass().getSimpleName() );
   public void serializeData()
   {
-    System.out.println("Serializing data");
+    logger.info("Serializing data");
     serializeZendeskData();
     serializeScreenstepsData();
     serialzeJiraData();
@@ -51,7 +53,7 @@ public class DataSerializer
   private void serlializeZendeskTopics()
   {
     Map<Long, ZDTopic> topicMap = Cache.getInstance().getTopicMap();
-    System.out.println( "Serializing Zendesk Data - Topics" );
+    logger.info( "Serializing Zendesk Data - Topics" );
     try (
       OutputStream file = new FileOutputStream( "zd-topics.ser" );
       OutputStream buffer = new BufferedOutputStream( file );
@@ -69,7 +71,7 @@ public class DataSerializer
   private void serializeZendeskForums()
   {
     Map<Long, ZDForum> forumMap = Cache.getInstance().getForumMap();
-    System.out.println( "Serliaizing Zendesk Data - Forums" );
+    logger.info( "Serliaizing Zendesk Data - Forums" );
     try (
       OutputStream file = new FileOutputStream( "zd-forums.ser" );
       OutputStream buffer = new BufferedOutputStream( file );
@@ -87,7 +89,7 @@ public class DataSerializer
   private void serializeZendeskTickets()
   {
     Map<Long, ZDTicket> ticketMap = Cache.getInstance().getTicketMap();
-    System.out.println( "Serliaizing Zendesk Data - Tickets" );
+    logger.info( "Serliaizing Zendesk Data - Tickets" );
     try (
       OutputStream file = new FileOutputStream( "zd-tickets.ser" );
       OutputStream buffer = new BufferedOutputStream( file );
@@ -105,7 +107,7 @@ public class DataSerializer
   private void serialzeZendeskOrganisations()
   {
     Map<Long, ZDOrganisation> orgMap = Cache.getInstance().getOrganisationMap();
-    System.out.println( "Serliaizing Zendesk Data - Organisations" );
+    logger.info( "Serliaizing Zendesk Data - Organisations" );
     try (
       OutputStream file = new FileOutputStream( "zd-orgs.ser" );
       OutputStream buffer = new BufferedOutputStream( file );
@@ -123,7 +125,7 @@ public class DataSerializer
   private void serlializseZendeskGroupMemberships()
   {
     Map<Long, GroupMembership> groupMemMap = Cache.getInstance().getGroupMembershipMap();
-    System.out.println( "Serliaizing Zendesk Data - Group Memberships" );
+    logger.info( "Serliaizing Zendesk Data - Group Memberships" );
     try (
       OutputStream file = new FileOutputStream( "zd-group-mem.ser" );
       OutputStream buffer = new BufferedOutputStream( file );
@@ -141,7 +143,7 @@ public class DataSerializer
   private void serializeZendeskGroups()
   {
     Map<Long, Group> groupMap = Cache.getInstance().getGroupMap();
-    System.out.println( "Serliaizing Zendesk Data - Groups" );
+    logger.info( "Serliaizing Zendesk Data - Groups" );
     try (
       OutputStream file = new FileOutputStream( "zd-groups.ser" );
       OutputStream buffer = new BufferedOutputStream( file );
@@ -159,7 +161,7 @@ public class DataSerializer
   private void serliazeZendeskUsers()
   {
     Map<Long, ZDUser> userMap = Cache.getInstance().getUserMap();
-    System.out.println( "Serliaizing Zendesk Data - Users" );
+    logger.info( "Serliaizing Zendesk Data - Users" );
     try (
       OutputStream file = new FileOutputStream( "zd-users.ser" );
       OutputStream buffer = new BufferedOutputStream( file );
@@ -177,7 +179,7 @@ public class DataSerializer
   private void serialzSSSpaces()
   {
     Map<String, Space> spaceMap = Cache.getInstance().getSpaceMap();
-    System.out.println( "Serliaizing Screensteps Data - Spaces" );
+    logger.info( "Serliaizing Screensteps Data - Spaces" );
     try (
       OutputStream file = new FileOutputStream( "ss-spaces.ser" );
       OutputStream buffer = new BufferedOutputStream( file );
@@ -195,7 +197,7 @@ public class DataSerializer
   private void serializeSSManuals()
   {
     Map<String, Manual> manMap = Cache.getInstance().getManualMap();
-    System.out.println( "Serliaizing Screensteps Data - Maps" );
+    logger.info( "Serliaizing Screensteps Data - Maps" );
     try (
       OutputStream file = new FileOutputStream( "ss-mans.ser" );
       OutputStream buffer = new BufferedOutputStream( file );
@@ -213,7 +215,7 @@ public class DataSerializer
   private void serializeBugs()
   {
     Map<String, IssueShell> bugMap = Cache.getInstance().getBugMap();
-    System.out.println( "Serliaizing JIRA Data - bugs" );
+    logger.info( "Serliaizing JIRA Data - bugs" );
     try (
       OutputStream file = new FileOutputStream( "jira-bugs.ser" );
       OutputStream buffer = new BufferedOutputStream( file );
@@ -231,7 +233,7 @@ public class DataSerializer
   private void serlizaleFeatures()
   {
     Map<String, IssueShell> featMap = Cache.getInstance().getFeatureMap();
-    System.out.println( "Serliaizing JIRA Data - Features" );
+    logger.info( "Serliaizing JIRA Data - Features" );
     try (
       OutputStream file = new FileOutputStream( "jira-feat.ser" );
       OutputStream buffer = new BufferedOutputStream( file );

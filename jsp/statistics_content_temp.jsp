@@ -9,6 +9,7 @@
             <div class="widget-body">
                 To Do <br>
                 A page of useful stats, some are already done, just need to determine what information is useful.
+                Playground for the graph/chart css features that are provided
             </div>
         </div>
     </div>

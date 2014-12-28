@@ -10,12 +10,16 @@ import tomb.supportsim.models.jira.IssueShell;
 
 import java.io.*;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA. User: tombeadman Date: 13/12/14 Time: 10:37
  */
 public class DataRestorer
 {
+  private final Logger logger = Logger.getLogger( getClass().getSimpleName() );
+
   public void unserializeData()
   {
     unserializeZendeskData();
@@ -25,7 +29,6 @@ public class DataRestorer
 
   private void unserializeZendeskData()
   {
-
     unserliazeZendeskUsers();
     unserializeZendeskTickets();
     unserialzeZendeskOrganisations();
@@ -45,13 +48,12 @@ public class DataRestorer
   {
     unserializeBugs();
     unserlizaleFeatures();
-
   }
 
   private void unserlializeZendeskTopics()
   {
     Map<Long, ZDTopic> topicMap;
-    System.out.println( "Unserliaizing Zendesk Data - Topics" );
+    logger.info( "Unserliaizing Zendesk Data - Topics" );
     try (
       InputStream file = new FileInputStream( "zd-topics.ser" );
       InputStream buffer = new BufferedInputStream( file );
@@ -66,13 +68,12 @@ public class DataRestorer
       throw new RuntimeException( ex );
     }
     Cache.getInstance().setTopicMap( topicMap );
-
   }
 
   private void unserializeZendeskForums()
   {
     Map<Long, ZDForum> forumMap;
-    System.out.println( "Unserliaizing Zendesk Data - Forums" );
+    logger.info( "Unserliaizing Zendesk Data - Forums" );
     try (
       InputStream file = new FileInputStream( "zd-forums.ser" );
       InputStream buffer = new BufferedInputStream( file );
@@ -87,13 +88,12 @@ public class DataRestorer
       throw new RuntimeException( ex );
     }
     Cache.getInstance().setForumMap( forumMap );
-
   }
 
   private void unserializeZendeskTickets()
   {
     Map<Long, ZDTicket> ticketMap;
-    System.out.println( "Unserliaizing Zendesk Data - Tickets" );
+    logger.info( "Unserliaizing Zendesk Data - Tickets" );
     try (
       InputStream file = new FileInputStream( "zd-tickets.ser" );
       InputStream buffer = new BufferedInputStream( file );
@@ -108,13 +108,12 @@ public class DataRestorer
       throw new RuntimeException( ex );
     }
     Cache.getInstance().setTicketMap( ticketMap );
-
   }
 
   private void unserialzeZendeskOrganisations()
   {
     Map<Long, ZDOrganisation> orgMap;
-    System.out.println( "Unserliaizing Zendesk Data - Organisations" );
+    logger.info( "Unserliaizing Zendesk Data - Organisations" );
     try (
       InputStream file = new FileInputStream( "zd-orgs.ser" );
       InputStream buffer = new BufferedInputStream( file );
@@ -129,13 +128,12 @@ public class DataRestorer
       throw new RuntimeException( ex );
     }
     Cache.getInstance().setOrganisationMap( orgMap );
-
   }
 
   private void unserlializseZendeskGroupMemberships()
   {
     Map<Long, GroupMembership> groupMemMap;
-    System.out.println( "Unserliaizing Zendesk Data - Group Memberships" );
+    logger.info( "Unserliaizing Zendesk Data - Group Memberships" );
     try (
       InputStream file = new FileInputStream( "zd-group-mem.ser" );
       InputStream buffer = new BufferedInputStream( file );
@@ -150,13 +148,12 @@ public class DataRestorer
       throw new RuntimeException( ex );
     }
     Cache.getInstance().setGroupMembershipMap( groupMemMap );
-
   }
 
   private void unserializeZendeskGroups()
   {
     Map<Long, Group> groupMap;
-    System.out.println( "Unserliaizing Zendesk Data - Groups" );
+    logger.info( "Unserliaizing Zendesk Data - Groups" );
     try (
       InputStream file = new FileInputStream( "zd-groups.ser" );
       InputStream buffer = new BufferedInputStream( file );
@@ -171,13 +168,12 @@ public class DataRestorer
       throw new RuntimeException( ex );
     }
     Cache.getInstance().setGroupMap( groupMap );
-
   }
 
   private void unserliazeZendeskUsers()
   {
     Map<Long, ZDUser> userMap;
-    System.out.println( "Unserliaizing Zendesk Data - Users" );
+    logger.info( "Unserliaizing Zendesk Data - Users" );
     try (
       InputStream file = new FileInputStream( "zd-users.ser" );
       InputStream buffer = new BufferedInputStream( file );
@@ -197,7 +193,7 @@ public class DataRestorer
   private void unserialzSSSpaces()
   {
     Map<String, Space> spaceMap;
-    System.out.println( "Unserliaizing Screensteps Data - Spaces" );
+    logger.info( "Unserliaizing Screensteps Data - Spaces" );
     try (
       InputStream file = new FileInputStream( "ss-spaces.ser" );
       InputStream buffer = new BufferedInputStream( file );
@@ -212,13 +208,12 @@ public class DataRestorer
       throw new RuntimeException( ex );
     }
     Cache.getInstance().setSpaceMap( spaceMap );
-
   }
 
   private void unserializeSSManuals()
   {
     Map<String, Manual> manMap;
-    System.out.println( "Unserliaizing Screensteps Data - Maps" );
+    logger.info( "Unserliaizing Screensteps Data - Maps" );
     try (
       InputStream file = new FileInputStream( "ss-mans.ser" );
       InputStream buffer = new BufferedInputStream( file );
@@ -233,13 +228,12 @@ public class DataRestorer
       throw new RuntimeException( ex );
     }
     Cache.getInstance().setManualMap( manMap );
-
   }
 
   private void unserializeBugs()
   {
     Map<String, IssueShell> bugMap;
-    System.out.println( "Unserliaizing JIRA Data - bugs" );
+    logger.info( "Unserliaizing JIRA Data - bugs" );
     try (
       InputStream file = new FileInputStream( "jira-bugs.ser" );
       InputStream buffer = new BufferedInputStream( file );
@@ -254,12 +248,12 @@ public class DataRestorer
       throw new RuntimeException( ex );
     }
     Cache.getInstance().setBugMap( bugMap );
-
   }
+
   private void unserlizaleFeatures()
   {
     Map<String, IssueShell> featMap;
-    System.out.println( "Unserliaizing JIRA Data - Features" );
+    logger.info( "Unserliaizing JIRA Data - Features" );
     try (
       InputStream file = new FileInputStream( "jira-feat.ser" );
       InputStream buffer = new BufferedInputStream( file );
@@ -274,6 +268,5 @@ public class DataRestorer
       throw new RuntimeException( ex );
     }
     Cache.getInstance().setFeatureMap( featMap );
-
   }
 }

@@ -6,13 +6,13 @@ import tomb.supportsim.util.PropertyKeys;
 /**
  * Created with IntelliJ IDEA. User: tombeadman Date: 07/10/2014 Time: 13:44
  */
-public class TicketUpdateTask
+public class UpdateZendeskTicketsTask extends UpdateTask
 {
+  final ZendeskTicketUpdatePoller zendeskTicketUpdatePoller = new ZendeskTicketUpdatePoller();
 
   @Scheduled(cron= PropertyKeys.CRON_UPDATE_TICKETS)
   public void updateTickets()
   {
-    UpdatePoller updatePoller = new UpdatePoller();
-    updatePoller.run();
+    zendeskTicketUpdatePoller.run();
   }
 }

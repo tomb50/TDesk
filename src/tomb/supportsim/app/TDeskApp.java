@@ -18,6 +18,8 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static tomb.supportsim.util.PropertyKeys.*;
 
@@ -46,32 +48,9 @@ public class TDeskApp
       {
         tDeskApp.dataImporter.fullImport();
       }
-      System.out.println( "Setting up scheudling" );
+      Logger.getLogger( "app" ).log( Level.INFO, "Initialising Scheduler" );
       new ClassPathXmlApplicationContext( "Spring-TaskScheduler.xml" );
     }
-
-
-
-
-    /*for ( Manual manual : ViewHelper.getManuals() )
-    {
-      for ( Chapter chapter  : manual.getChapters() )
-      {
-        for ( Lesson thinLesson : chapter.getLessons() )
-        {
-          String spaceName = manual.getSpace().getTitle();
-          String manualName = manual.getTitle();
-          String chapterName = chapter.getTitle();
-          String title = thinLesson.getTitle();
-          String url = thinLesson.getUrl();
-
-          boolean found = true;
-          System.out.println(spaceName + manualName + chapterName + title + url);
-
-        }
-      }
-
-    } */
   }
 
   private static TDeskApp instance;
@@ -214,7 +193,7 @@ public class TDeskApp
       }
       JiraIssueSorter.run(); // proactively sort a convenience list
       ScreenStepsEntrySorter.run();
-      System.out.println( "Setting up scheudling" );
+      Logger.getLogger(getClass().getName()).log( Level.INFO, "Setting up scheudling" );
       new ClassPathXmlApplicationContext( "Spring-TaskScheduler.xml" );
     }
   }

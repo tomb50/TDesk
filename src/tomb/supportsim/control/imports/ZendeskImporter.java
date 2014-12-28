@@ -27,47 +27,26 @@ public class ZendeskImporter extends Importer
     setActive( true );
     long time = System.currentTimeMillis();
     importZendeskData();
-    System.out.println( "All data imported from Zendesk" );
-    System.out.println( ( "Zendesk - Time taken: " + (System.currentTimeMillis() - time ) / 1000) );
+    logger.info( "All data imported from Zendesk Time taken: " + ( System.currentTimeMillis() - time ) / 1000 );
     setActive( false );
-
   }
 
   private void importZendeskData()
   {
-    //persist Users
-    Logger.getLogger( "Data" ).log( Level.INFO, "ZENDESK IMPORT" );
-    System.out.println( "Importing Users from Zendesk" );
+    logger.info( "ZENDESK IMPORT" );
     saveUsers();
-
-    //persist tickets
-    System.out.println( "Importing Tickets from Zendesk" );
     saveTickets();
-
-    //persist Organisations
-    System.out.println( "Importing Organisations from ZenDesk" );
     saveOrganisations();
-
-    //persist GroupMemberships
-    System.out.println( "Importing Group Memberships from ZenDesk" );
     saveGroupMemberships();
-
-    //persist GroupMemberships
-    System.out.println( "Importing Groups from ZenDesk" );
     saveGroups();
-
-    //persist Forums
-    System.out.println( "Importing Forums from ZenDesk" );
     saveForums();
-
-    //persist Topics
-    System.out.println( "Importing Topics from ZenDesk" );
     saveTopics();
   }
 
 
   private void saveGroups()
   {
+    logger.info( "Importing Groups from ZenDesk" );
     for ( Group group : zendesk.getGroups() )
     {
       Cache.getInstance().insertGroup( group );
@@ -76,7 +55,7 @@ public class ZendeskImporter extends Importer
 
   private void saveTickets()
   {
-
+    logger.info( "Importing Tickets from Zendesk" );
     for ( Ticket ticket : zendesk.getTickets() )
     {
       Cache.getInstance().insertTicket( ConvertUtil.toTicket( ticket ) );
@@ -85,6 +64,7 @@ public class ZendeskImporter extends Importer
 
   private void saveUsers()
   {
+    logger.info( "Importing Users from Zendesk" );
     for ( final User user : zendesk.getUsers() )
     {
       if ( user.getActive() )
@@ -96,6 +76,7 @@ public class ZendeskImporter extends Importer
 
   private void saveOrganisations()
   {
+    logger.info( "Importing Organisations from ZenDesk" );
     for ( final Organization organization : zendesk.getOrganizations() )
     {
       Cache.getInstance().insertOrganisation( ConvertUtil.toOrganisation( organization ) );
@@ -104,6 +85,7 @@ public class ZendeskImporter extends Importer
 
   private void saveGroupMemberships()
   {
+    logger.info( "Importing Group Memberships from ZenDesk" );
     for ( GroupMembership groupMembership : zendesk.getGroupMemberships() )
     {
       Cache.getInstance().insertGroupMembership( groupMembership );
@@ -112,6 +94,7 @@ public class ZendeskImporter extends Importer
 
   private void saveForums()
   {
+    logger.info( "Importing Forums from ZenDesk" );
     for ( Forum forum : zendesk.getForums() )
     {
       Cache.getInstance().insertForum( ConvertUtil.toForum( forum ) );
@@ -120,9 +103,9 @@ public class ZendeskImporter extends Importer
 
   private void saveTopics()
   {
+    logger.info( "Importing Topics from ZenDesk" );
     for ( Topic topic : zendesk.getTopics() )
     {
-
       Cache.getInstance().insertTopic( ConvertUtil.toTopic( topic ) );
     }
   }
