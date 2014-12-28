@@ -1,4 +1,4 @@
-package com.tombeadman.tdesk.models;
+package com.tombeadman.tdesk.models.screensteps;
 
 /**
  * Created with IntelliJ IDEA. User: tombeadman Date: 23/12/14 Time: 13:15

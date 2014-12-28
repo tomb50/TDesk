@@ -1,7 +1,8 @@
-package com.tombeadman.tdesk.control;
+package com.tombeadman.tdesk.datastore;
 
-import com.tombeadman.tdesk.models.*;
 import com.tombeadman.screensteps.model.*;
+import com.tombeadman.tdesk.models.screensteps.ScreenstepsTableEntry;
+import com.tombeadman.tdesk.models.zendesk.*;
 import com.tombeadman.tdesk.util.ScreenStepsKeyUtil;
 import org.zendesk.client.v2.model.Group;
 import org.zendesk.client.v2.model.GroupMembership;

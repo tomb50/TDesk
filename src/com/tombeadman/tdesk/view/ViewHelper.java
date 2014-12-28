@@ -1,9 +1,11 @@
 package com.tombeadman.tdesk.view;
 
 import com.tombeadman.tdesk.control.*;
-import com.tombeadman.tdesk.models.*;
 import com.tombeadman.screensteps.model.Lesson;
 import com.tombeadman.screensteps.model.Manual;
+import com.tombeadman.tdesk.datastore.Cache;
+import com.tombeadman.tdesk.models.screensteps.ScreenstepsTableEntry;
+import com.tombeadman.tdesk.models.zendesk.*;
 import com.tombeadman.tdesk.util.LinkUtil;
 import org.zendesk.client.v2.model.Group;
 import org.zendesk.client.v2.model.GroupMembership;

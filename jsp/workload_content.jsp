@@ -1,5 +1,5 @@
-<%@ page import="com.tombeadman.tdesk.models.ZDTicket" %>
-<%@ page import="com.tombeadman.tdesk.models.ZDUser" %>
+<%@ page import="com.tombeadman.tdesk.models.zendesk.ZDTicket" %>
+<%@ page import="com.tombeadman.tdesk.models.zendesk.ZDUser" %>
 <%@ page import="com.tombeadman.tdesk.view.ViewHelper" %>
 <%@ page import="java.util.List" %>
 

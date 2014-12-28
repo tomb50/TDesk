@@ -1,7 +1,7 @@
 package com.tombeadman.tdesk.control.imports;
 
 import com.atlassian.jira.rest.client.api.JiraRestClient;
-import com.tombeadman.tdesk.util.jira.JiraBatchImporter;
+import com.tombeadman.tdesk.util.JiraBatchImporter;
 
 import java.net.URISyntaxException;
 

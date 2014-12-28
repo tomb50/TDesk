@@ -2,9 +2,9 @@ package com.tombeadman.tdesk.schedule;
 
 import org.zendesk.client.v2.model.IncrementalTicket;
 import com.tombeadman.tdesk.app.TDeskApp;
-import com.tombeadman.tdesk.control.Cache;
+import com.tombeadman.tdesk.datastore.Cache;
 import com.tombeadman.tdesk.util.ConvertUtil;
-import com.tombeadman.tdesk.models.ZDTicket;
+import com.tombeadman.tdesk.models.zendesk.ZDTicket;
 
 import java.util.List;
 import java.util.logging.Logger;

@@ -1,4 +1,4 @@
-package com.tombeadman.tdesk.models;
+package com.tombeadman.tdesk.models.zendesk;
 
 import org.zendesk.client.v2.model.Role;
 import org.zendesk.client.v2.model.TicketRestriction;

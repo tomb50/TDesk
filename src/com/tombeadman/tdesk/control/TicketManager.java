@@ -1,7 +1,7 @@
 package com.tombeadman.tdesk.control;
 
 import org.zendesk.client.v2.model.Status;
-import com.tombeadman.tdesk.models.ZDTicket;
+import com.tombeadman.tdesk.models.zendesk.ZDTicket;
 
 import java.util.List;
 

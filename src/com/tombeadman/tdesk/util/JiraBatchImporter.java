@@ -1,11 +1,10 @@
-package com.tombeadman.tdesk.util.jira;
+package com.tombeadman.tdesk.util;
 
 import com.atlassian.jira.rest.client.api.JiraRestClient;
 import com.atlassian.jira.rest.client.api.SearchRestClient;
 import com.atlassian.jira.rest.client.api.domain.Issue;
 import com.atlassian.jira.rest.client.api.domain.SearchResult;
-import com.tombeadman.tdesk.control.Cache;
-import com.tombeadman.tdesk.util.ConvertUtil;
+import com.tombeadman.tdesk.datastore.Cache;
 
 
 import java.net.URISyntaxException;

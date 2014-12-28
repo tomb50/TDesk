@@ -1,4 +1,4 @@
-package com.tombeadman.tdesk.util.jira;
+package com.tombeadman.tdesk.util.jirahttp;
 
 import com.atlassian.httpclient.api.HttpClient;
 import com.atlassian.jira.rest.client.api.AuthenticationHandler;

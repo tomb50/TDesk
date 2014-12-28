@@ -1,5 +1,5 @@
-<%@ page import="com.tombeadman.tdesk.models.ZDOrganisation" %>
-<%@ page import="com.tombeadman.tdesk.models.ZDUser" %>
+<%@ page import="com.tombeadman.tdesk.models.zendesk.ZDOrganisation" %>
+<%@ page import="com.tombeadman.tdesk.models.zendesk.ZDUser" %>
 <%@ page import="com.tombeadman.tdesk.view.ViewHelper" %>
 <div class="row-fluid">
     <div class="span">

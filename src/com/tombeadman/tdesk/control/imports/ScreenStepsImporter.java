@@ -5,7 +5,7 @@ import com.tombeadman.screensteps.model.Asset;
 import com.tombeadman.screensteps.model.Manual;
 import com.tombeadman.screensteps.model.Space;
 import com.tombeadman.screensteps.model.Spaces;
-import com.tombeadman.tdesk.control.Cache;
+import com.tombeadman.tdesk.datastore.Cache;
 
 import java.util.Map;
 

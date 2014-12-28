@@ -1,4 +1,4 @@
-<%@ page import="com.tombeadman.tdesk.models.ZDTopic" %>
+<%@ page import="com.tombeadman.tdesk.models.zendesk.ZDTopic" %>
 <%@ page import="com.tombeadman.tdesk.view.ViewHelper" %>
 <div class="row-fluid">
     <div class="span">

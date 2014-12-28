@@ -1,4 +1,4 @@
-package com.tombeadman.tdesk.models;
+package com.tombeadman.tdesk.models.zendesk;
 
 import com.tombeadman.tdesk.util.EqualsUtil;
 import org.zendesk.client.v2.model.Priority;

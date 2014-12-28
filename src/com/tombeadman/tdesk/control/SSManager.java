@@ -2,6 +2,7 @@ package com.tombeadman.tdesk.control;
 
 import com.tombeadman.screensteps.model.Lesson;
 import com.tombeadman.screensteps.model.Manual;
+import com.tombeadman.tdesk.datastore.Cache;
 
 import java.util.List;
 

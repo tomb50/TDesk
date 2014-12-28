@@ -1,6 +1,6 @@
 package com.tombeadman.tdesk.view;
 
-import com.tombeadman.tdesk.control.Cache;
+import com.tombeadman.tdesk.datastore.Cache;
 import com.tombeadman.tdesk.models.jira.IssueShell;
 
 import java.util.Collections;

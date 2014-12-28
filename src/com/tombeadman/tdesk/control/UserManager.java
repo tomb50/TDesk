@@ -1,6 +1,6 @@
 package com.tombeadman.tdesk.control;
 
-import com.tombeadman.tdesk.models.ZDUser;
+import com.tombeadman.tdesk.models.zendesk.ZDUser;
 import com.tombeadman.tdesk.util.UserOrganisationComparator;
 
 import java.util.Collections;

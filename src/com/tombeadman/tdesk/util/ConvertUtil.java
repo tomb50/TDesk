@@ -1,8 +1,8 @@
 package com.tombeadman.tdesk.util;
 
 import com.atlassian.jira.rest.client.api.domain.*;
-import com.tombeadman.tdesk.models.*;
 import com.tombeadman.tdesk.models.jira.*;
+import com.tombeadman.tdesk.models.zendesk.*;
 import org.zendesk.client.v2.model.Forum;
 import org.zendesk.client.v2.model.Organization;
 import org.zendesk.client.v2.model.Topic;

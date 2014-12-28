@@ -1,5 +1,5 @@
 <%@ page import="com.tombeadman.tdesk.view.ViewHelper" %>
-<%@ page import="com.tombeadman.tdesk.models.ScreenstepsTableEntry" %>
+<%@ page import="com.tombeadman.tdesk.models.screensteps.ScreenstepsTableEntry" %>
 <div class="row-fluid">
     <div class="span">
         <div class="widget">
@@ -19,7 +19,7 @@
                     </tr>
                     </thead>
                     <%
-                        for ( com.tombeadman.tdesk.models.ScreenstepsTableEntry screenstepsTableEntry : com.tombeadman.tdesk.view.ViewHelper.getSceenstepsTableEntries() )
+                        for ( com.tombeadman.tdesk.models.screensteps.ScreenstepsTableEntry screenstepsTableEntry : com.tombeadman.tdesk.view.ViewHelper.getSceenstepsTableEntries() )
                         {
                             final String spaceName = screenstepsTableEntry.getSpaceName();
                             final String manualName = screenstepsTableEntry.getManualName();

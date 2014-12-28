@@ -1,6 +1,6 @@
 package com.tombeadman.tdesk.control;
 
-import com.tombeadman.tdesk.models.ZDTopic;
+import com.tombeadman.tdesk.models.zendesk.ZDTopic;
 import com.tombeadman.tdesk.view.TopicForumComparator;
 
 import java.util.Collections;

@@ -1,6 +1,6 @@
 package com.tombeadman.tdesk.util;
 
-import com.tombeadman.tdesk.models.ZDUser;
+import com.tombeadman.tdesk.models.zendesk.ZDUser;
 import com.tombeadman.tdesk.view.ViewHelper;
 
 import java.util.Comparator;

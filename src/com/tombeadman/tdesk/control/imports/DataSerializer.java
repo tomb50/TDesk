@@ -1,11 +1,11 @@
 package com.tombeadman.tdesk.control.imports;
 
-import com.tombeadman.tdesk.models.*;
 import com.tombeadman.screensteps.model.Manual;
 import com.tombeadman.screensteps.model.Space;
+import com.tombeadman.tdesk.models.zendesk.*;
 import org.zendesk.client.v2.model.Group;
 import org.zendesk.client.v2.model.GroupMembership;
-import com.tombeadman.tdesk.control.Cache;
+import com.tombeadman.tdesk.datastore.Cache;
 import com.tombeadman.tdesk.models.jira.IssueShell;
 
 import java.io.*;

@@ -1,6 +1,6 @@
 package com.tombeadman.tdesk.control.imports;
 
-import com.tombeadman.tdesk.control.Cache;
+import com.tombeadman.tdesk.datastore.Cache;
 import com.tombeadman.tdesk.util.ConvertUtil;
 import org.zendesk.client.v2.Zendesk;
 import org.zendesk.client.v2.model.*;

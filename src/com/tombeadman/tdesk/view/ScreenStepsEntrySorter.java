@@ -1,7 +1,7 @@
 package com.tombeadman.tdesk.view;
 
-import com.tombeadman.tdesk.control.Cache;
-import com.tombeadman.tdesk.models.ScreenstepsTableEntry;
+import com.tombeadman.tdesk.datastore.Cache;
+import com.tombeadman.tdesk.models.screensteps.ScreenstepsTableEntry;
 
 import java.util.Collections;
 import java.util.List;

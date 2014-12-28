@@ -1,6 +1,6 @@
 package com.tombeadman.tdesk.view;
 
-import com.tombeadman.tdesk.models.ScreenstepsTableEntry;
+import com.tombeadman.tdesk.models.screensteps.ScreenstepsTableEntry;
 
 /**
  * Created with IntelliJ IDEA. User: tombeadman Date: 23/12/14 Time: 13:25

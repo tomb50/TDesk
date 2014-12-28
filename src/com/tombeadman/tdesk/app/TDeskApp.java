@@ -9,7 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.zendesk.client.v2.Zendesk;
 import com.tombeadman.tdesk.control.imports.DataImporter;
 import com.tombeadman.tdesk.control.imports.DataRestorer;
-import com.tombeadman.tdesk.util.jira.CustomAsynchronousJiraRestClientFactory;
+import com.tombeadman.tdesk.util.jirahttp.CustomAsynchronousJiraRestClientFactory;
 import com.tombeadman.tdesk.view.ScreenStepsEntrySorter;
 
 

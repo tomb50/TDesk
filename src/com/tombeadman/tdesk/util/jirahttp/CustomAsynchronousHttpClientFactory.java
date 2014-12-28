@@ -1,4 +1,4 @@
-package tomb.supportsim.util.jira;
+package com.tombeadman.tdesk.util.jirahttp;
 
 import com.atlassian.event.api.EventPublisher;
 import com.atlassian.httpclient.apache.httpcomponents.DefaultHttpClient;

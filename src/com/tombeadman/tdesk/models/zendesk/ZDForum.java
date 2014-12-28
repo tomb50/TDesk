@@ -1,4 +1,4 @@
-package com.tombeadman.tdesk.models;
+package com.tombeadman.tdesk.models.zendesk;
 
 import java.io.Serializable;
 import java.util.Date;
