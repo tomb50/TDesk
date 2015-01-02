@@ -21,4 +21,11 @@ public interface PropertyKeys
   String JIRA_PASSWORD = "jira.password";
   String JIRA_TIMEOUT = "jira.timeout"; // seconds
   String LOCAL_DATA = "app.data.local";
+  String ZENDESK_VIEWID_FL = "zendesk.view.firstline.id";
+  String ZENDESK_VIEWID_JAVA = "zendesk.view.java.id";
+  String ZENDESK_VIEWID_CHARACTER = "zendesk.view.character.id";
+  String ZENDESK_VIEWID_DEVELOPMENT = "zendesk.view.development.id";
+  String ZENDESK_VIEWID_BI = "zendesk.view.bi.id";
+  String ZENDESK_VIEWID_PROJECTS = "zendesk.view.projects.id";
+
 }

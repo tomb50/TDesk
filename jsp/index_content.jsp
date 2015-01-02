@@ -4,18 +4,19 @@
 <%@ page import="com.tombeadman.tdesk.view.ViewHelper" %>
 <%@ page import="java.math.BigDecimal" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.tombeadman.tdesk.util.LinkUtil" %>
 <div class="row-fluid">
     <div class="span2">
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe0c2;"></span> Total Tickets
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe0c2;"></span> First Line
                 </div>
             </div>
             <div class="widget-body">
                 <div class="current-statistics">
-                    <div class="clients">
-                        <h3><%= ViewHelper.getTotalTicketCount()%>
+                    <div class="clients clickableRow" href=<%=LinkUtil.getUnassignedFLViewLink()%>>
+                        <h3><%= ViewHelper.getOpenUnassignedTicketCount( "Support" )%>
                         </h3>
                     </div>
                 </div>
@@ -27,31 +28,13 @@
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe088;"></span> First Line
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe088;"></span> Java
                 </div>
             </div>
             <div class="widget-body">
                 <div class="current-statistics">
-                    <div class="products">
-                        <h3><%= ViewHelper.getOpenTicketCount("Support")%>
-                        </h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="span2">
-        <div class="widget">
-            <div class="widget-header">
-                <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe094;"></span> Java
-                </div>
-            </div>
-            <div class="widget-body">
-                <div class="current-statistics">
-                    <div class="sales">
-                        <h3><%= ViewHelper.getOpenTicketCount("Java")%>
+                    <div class="products clickableRow" href=<%=LinkUtil.getUnassignedJavaViewLink()%>>
+                        <h3><%= ViewHelper.getOpenUnassignedTicketCount( "Java" )%>
                         </h3>
                     </div>
                 </div>
@@ -68,8 +51,26 @@
             </div>
             <div class="widget-body">
                 <div class="current-statistics">
-                    <div class="income">
-                        <h3><%= ViewHelper.getOpenTicketCount( "Character" )%>
+                    <div class="sales clickableRow" href=<%=LinkUtil.getUnAssignedCharacterLink()%>>
+                        <h3><%= ViewHelper.getOpenUnassignedTicketCount( "Character" )%>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="span2">
+        <div class="widget">
+            <div class="widget-header">
+                <div class="title">
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe094;"></span> Development
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="current-statistics">
+                    <div class="income clickableRow" href=<%=LinkUtil.getUnAssignedDevelopmentLink()%>>
+                        <h3><%= ViewHelper.getOpenUnassignedTicketCount( "Development" )%>
                         </h3>
                     </div>
                 </div>
@@ -86,8 +87,8 @@
             </div>
             <div class="widget-body">
                 <div class="current-statistics">
-                    <div class="expenses">
-                        <h3><%= ViewHelper.getOpenTicketCount("Projects")%>
+                    <div class="expenses clickableRow" href=<%=LinkUtil.getUnAssignedProjectLink()%>>
+                        <h3><%= ViewHelper.getOpenUnassignedTicketCount( "Projects" )%>
                         </h3>
                     </div>
                 </div>
@@ -99,13 +100,13 @@
         <div class="widget">
             <div class="widget-header">
                 <div class="title">
-                    <span class="fs1" aria-hidden="true" data-icon="&#xe0a4;"></span> Solved
+                    <span class="fs1" aria-hidden="true" data-icon="&#xe0a4;"></span> BI
                 </div>
             </div>
             <div class="widget-body">
                 <div class="current-statistics">
-                    <div class="signups">
-                        <h3><%= ViewHelper.getTicketCountByState( Status.SOLVED)%>
+                    <div class="signups clickableRow" href=<%=LinkUtil.getUnassignedBIViewLink()%>>
+                        <h3><%= ViewHelper.getOpenUnassignedTicketCount( "BI" )%>
                         </h3>
                     </div>
                 </div>

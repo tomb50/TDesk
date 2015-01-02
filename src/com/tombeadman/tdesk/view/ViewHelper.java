@@ -161,22 +161,22 @@ public class ViewHelper
   }
 
 
-  public static Integer getOpenTicketCount( final String groupName )
+  public static Integer getOpenUnassignedTicketCount( final String groupName )
   {
-    final Map<Long, ZDTicket> suitableTickets = getOpenTicketMap( groupName );
+    final Map<Long, ZDTicket> suitableTickets = getOpenUnassignedTicketMap( groupName );
     return suitableTickets != null ? suitableTickets.size() : 0;
   }
 
-  public static Map<Long, ZDTicket> getOpenTicketMap( final String groupName )
+
+  public static Map<Long, ZDTicket> getOpenUnassignedTicketMap( final String groupName )
   {
-    Group group = getGroup( groupName );
-    Map<Long, ZDTicket> suitableTickets = new HashMap<>();
-    List<ZDTicket> allTickets = ticketManager.getTicketByState( Status.OPEN );
+    final Group group = getGroup( groupName );
+    final Map<Long, ZDTicket> suitableTickets = new HashMap<>();
+    final List<ZDTicket> allTickets = ticketManager.getTicketByState( Status.OPEN );
 
-    for ( ZDTicket ticket : allTickets )
+    for ( final ZDTicket ticket : allTickets )
     {
-
-      if ( ticket.getGroupId() != null && ticket.getGroupId().equals( group.getId() ) )
+      if ( ticket.getGroupId() != null && ticket.getGroupId().equals( group.getId() ) && ticket.getAssigneeId() == null)
       {
         suitableTickets.put( ticket.getId(), ticket );
       }
